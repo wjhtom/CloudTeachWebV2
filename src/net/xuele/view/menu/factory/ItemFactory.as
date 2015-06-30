@@ -1,6 +1,5 @@
 package net.xuele.view.menu.factory
 {
-	import net.xuele.view.menu.controller.MenuController;
 	import net.xuele.view.menu.interfaces.IItem;
 	import net.xuele.view.menu.interfaces.IMenuFactory;
 	import net.xuele.view.menu.view.ItemView;
@@ -11,9 +10,9 @@ package net.xuele.view.menu.factory
 		public function ItemFactory()
 		{
 		}
-		public function createMenu(c:MenuController,param:int):IItem
+		public function createMenu(param:int):IItem
 		{
-			var item:IItem=new ItemView(c,param);
+			var item:IItem=new ItemView(param);
 			return item;
 		}
 	}

@@ -1,7 +1,6 @@
 package net.xuele.view
 {
 	import net.xuele.view.blackboard.view.BlackboardView;
-	import net.xuele.view.menu.controller.MenuController;
 	import net.xuele.view.menu.view.MenuView;
 	
 	import org.flexlite.domUI.components.Group;
@@ -46,8 +45,7 @@ package net.xuele.view
 		}
 		private function createMenu():void
 		{
-			var controller:MenuController=new MenuController;
-			var menu:MenuView=new MenuView(controller);
+			var menu:MenuView=new MenuView();
 			this._contentGroup.addElement(menu);
 			menu.bottom=0;
 		}

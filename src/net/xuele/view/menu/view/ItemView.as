@@ -21,11 +21,9 @@ package net.xuele.view.menu.view
 		 */
 		private var _menuType:int;
 		private var _UIMovie:UIMovieClip;
-		private var _controller:MenuController
-		public function ItemView(c:MenuController,t:int)
+		public function ItemView(t:int)
 		{
 			super();
-			this._controller=c;
 			_menuType=t;
 			this.addEventListener(UIEvent.CREATION_COMPLETE,createCom);
 		}

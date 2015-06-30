@@ -4,10 +4,10 @@ package net.xuele.view.menu.view
 	import flash.events.MouseEvent;
 	
 	import net.xuele.utils.PublicOperate;
-	import net.xuele.view.menu.controller.MenuController;
 	import net.xuele.view.menu.interfaces.IItem;
 	
 	import org.flexlite.domUI.components.Group;
+	import org.flexlite.domUI.components.McButton;
 	import org.flexlite.domUI.components.UIMovieClip;
 	import org.flexlite.domUI.events.UIEvent;
 	
@@ -20,7 +20,7 @@ package net.xuele.view.menu.view
 		 * 10：习题作业，11：提分神器，12：保存，13：最大化
 		 */
 		private var _menuType:int;
-		private var _UIMovie:UIMovieClip;
+		private var _UIMovie:McButton;
 		public function ItemView(t:int)
 		{
 			super();
@@ -35,6 +35,7 @@ package net.xuele.view.menu.view
 		private function init():void
 		{
 			createUI();
+			addListener();
 		}
 		public function createUI():void
 		{
@@ -86,7 +87,7 @@ package net.xuele.view.menu.view
 				default:
 					break;
 			}
-			this._UIMovie=new UIMovieClip;
+			this._UIMovie=new McButton;
 			this._UIMovie.skinName=skin;
 			this.addElement(this._UIMovie);
 		}
@@ -95,6 +96,10 @@ package net.xuele.view.menu.view
 			this._UIMovie.addEventListener(MouseEvent.CLICK,clickHandler)
 		}
 		private function clickHandler(e:MouseEvent):void
+		{
+			itemClick();
+		}
+		protected function itemClick():void
 		{
 			click();
 		}

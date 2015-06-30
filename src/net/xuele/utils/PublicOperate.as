@@ -3,6 +3,7 @@ package net.xuele.utils
 	import flash.display.MovieClip;
 	import flash.display.SimpleButton;
 	import flash.display.Sprite;
+	
 
 	public class PublicOperate
 	{

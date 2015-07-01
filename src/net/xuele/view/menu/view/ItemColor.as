@@ -4,6 +4,7 @@ package net.xuele.view.menu.view
 	import fl.controls.ColorPicker;
 	import fl.events.ColorPickerEvent;
 	
+	import net.xuele.view.draw.utils.DrawData;
 	import net.xuele.view.menu.interfaces.IItem;
 	import net.xuele.view.menu.utils.MenuData;
 	
@@ -39,7 +40,7 @@ package net.xuele.view.menu.view
 			rect=new Rect;
 			rect.width=45;
 			rect.height=45;
-			rect.fillColor=MenuData._selectColor;
+			rect.fillColor=DrawData._currentColor;
 			rect.fillAlpha=1;
 			this.addElement(rect);
 			
@@ -54,8 +55,8 @@ package net.xuele.view.menu.view
 		private function selectColorHandler(e:ColorPickerEvent):void
 		{
 			trace("color",e.color);
-			MenuData._selectColor=e.color;
-			rect.fillColor=MenuData._selectColor;
+			DrawData._currentColor=e.color;
+			rect.fillColor=DrawData._currentColor;
 		}
 		public function click():void
 		{

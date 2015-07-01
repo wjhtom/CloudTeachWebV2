@@ -6,6 +6,8 @@ package net.xuele.commond
 	{
 		public static var popView:Group;
 		public static var mainView:Group;
+		public static var drawView:Group;
+		public static var menuView:Group;
 		public function CommondView()
 		{
 		}

@@ -12,5 +12,10 @@ package net.xuele.view.menu.factory
 			var factory:ItemFactory=new ItemFactory;
 			return factory.createMenu(value);
 		}
+		public static function createThickness(value:int):IItem
+		{
+			var factory:ItemFactory=new ItemFactory;
+			return factory.createThickness(value);
+		}
 	}
 }

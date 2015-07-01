@@ -1,6 +1,7 @@
 package net.xuele.view.blackboard.view
 {
 	import org.flexlite.domUI.components.Group;
+	import org.flexlite.domUI.components.Rect;
 	import org.flexlite.domUI.events.UIEvent;
 	
 	public class BlackboardView extends Group
@@ -17,7 +18,16 @@ package net.xuele.view.blackboard.view
 		}
 		private function init():void
 		{
-			
+			createUI();
+		}
+		private function createUI():void
+		{
+			var rect:Rect=new Rect;
+			rect.width=stage.stageWidth;
+			rect.height=stage.stageHeight;
+			rect.fillAlpha=1;
+			rect.fillColor=0x2F6964;
+			this.addElement(rect);
 		}
 	}
 }

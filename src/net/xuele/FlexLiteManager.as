@@ -1,14 +1,10 @@
 package net.xuele
 {
 	import flash.display.Loader;
-	import flash.display.Stage;
-	import flash.events.MouseEvent;
-	import flash.events.ProgressEvent;
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
 	
 	import net.xuele.commond.CommondView;
-	import net.xuele.factory.PopFactory;
 	import net.xuele.utils.InterfaceData;
 	import net.xuele.utils.MainData;
 	import net.xuele.utils.MainTheme;
@@ -101,6 +97,7 @@ package net.xuele
 			}else{
 				timer=new Timer(1000,1);
 				timer.addEventListener(TimerEvent.TIMER,timerHandler);
+				timer.start();
 			}
 		}
 		private function timerHandler(e:TimerEvent):void

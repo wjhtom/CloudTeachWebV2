@@ -1,15 +1,19 @@
 package net.xuele.view
 {
+	import net.xuele.commond.CommondView;
 	import net.xuele.view.blackboard.view.BlackboardView;
+	import net.xuele.view.draw.utils.DrawData;
 	import net.xuele.view.menu.view.MenuView;
 	
 	import org.flexlite.domUI.components.Group;
+	import org.flexlite.domUI.components.Rect;
 	import org.flexlite.domUI.events.UIEvent;
 	
 	public class Main extends Group
 	{
 		private var _bgGroup:Group;
 		private var _contentGroup:Group;
+		private var _drawGroup:Group;
 		private var _menuGroup:Group;
 		public function Main()
 		{
@@ -30,13 +34,30 @@ package net.xuele.view
 			_contentGroup.width=stage.stageWidth;
 			_contentGroup.height=stage.stageHeight;
 			this.addElement(_contentGroup);
+			_drawGroup=new Group;
+			_drawGroup.width=stage.stageWidth;
+			_drawGroup.height=stage.stageHeight;
+			var rect:Rect=new Rect;
+			rect.width=100;
+			rect.height=400;
+			rect.fillAlpha=1;
+			rect.fillColor=0xff0000;
+			_drawGroup.addElement(rect);
+			rect.horizontalCenter=0;
+			rect.bottom=0;
+			this.addElement(_drawGroup);
+			CommondView.drawView=_drawGroup;
+			DrawData._currentCanvas=_drawGroup;
 			_menuGroup=new Group;
+			_menuGroup.horizontalCenter=0;
+			_menuGroup.bottom=0;
 			this.addElement(_menuGroup);
+			
+			
 				
 			createBG();
 			createMenu();
 			createPage();
-			
 		}
 		private function createBG():void
 		{
@@ -46,8 +67,10 @@ package net.xuele.view
 		private function createMenu():void
 		{
 			var menu:MenuView=new MenuView();
-			this._contentGroup.addElement(menu);
-			menu.bottom=0;
+			this._menuGroup.addElement(menu);
+//			menu.horizontalCenter=0;
+//			menu.bottom=0;
+			CommondView.menuView=_menuGroup;
 		}
 		private function createPage():void
 		{

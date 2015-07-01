@@ -16,6 +16,7 @@ package net.xuele.view.menu.factory
 	import net.xuele.view.menu.view.ItemSetTime;
 	import net.xuele.view.menu.view.ItemTools;
 	import net.xuele.view.menu.view.ItemUpScore;
+	import net.xuele.view.menu.view.Thickness;
 	
 	public class ItemFactory implements IMenuFactory
 	{
@@ -78,6 +79,11 @@ package net.xuele.view.menu.factory
 				
 			}
 			
+			return item;
+		}
+		public function createThickness(value:int):IItem
+		{
+			var item:IItem=new Thickness(value);
 			return item;
 		}
 	}

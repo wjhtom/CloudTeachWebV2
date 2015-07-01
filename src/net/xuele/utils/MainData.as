@@ -63,7 +63,7 @@ package net.xuele.utils
 		 * 当前鼠标类型
 		 * 0：鼠标，1：铅笔，2：画直线，3：橡皮，4：文字，5：高亮 
 		 */
-		public static var mouseType:int=0;
+		public static var _mouseType:int=0;
 		/**
 		 * 用于存放UI文件 
 		 */

@@ -1,11 +1,12 @@
 package net.xuele.view.draw.utils
 {
+	import flash.display.BlendMode;
 	import flash.events.MouseEvent;
 	
-	import net.xuele.commond.CommonControl;
 	import net.xuele.commond.MenuEvent;
 	import net.xuele.utils.MainData;
-	import net.xuele.view.menu.utils.MenuData;
+	import net.xuele.view.menu.controller.EraseController;
+	import net.xuele.view.menu.controller.PencilController;
 	
 	import org.flexlite.domUI.components.Group;
 	
@@ -23,24 +24,36 @@ package net.xuele.view.draw.utils
 		}
 		public static function drawPencil():void
 		{
+			DrawData._currentCanvas.blendMode=BlendMode.LAYER;
 			DrawData._currentCanvas.addEventListener(MouseEvent.MOUSE_DOWN,pencilDownHandler);
 			DrawData._currentCanvas.addEventListener(MouseEvent.MOUSE_UP,pencilUpHandler);
+			DrawData._currentCanvas.addEventListener(MouseEvent.RELEASE_OUTSIDE,pencilUpHandler);
 			DrawData._currentCanvas.addEventListener(MouseEvent.MOUSE_MOVE,pencilMoveHandler);
 		}
 		private static var drawGroup:Group;
+		private static var isDown:Boolean=false;
 		private static function pencilDownHandler(e:MouseEvent):void
 		{
+			
 			if(DrawData._pencilThicknessShow){
-				CommonControl.control.dispatchEvent(new MenuEvent(MenuEvent.HIDETHICKNESS));
+				PencilController.control.dispatchEvent(new MenuEvent(MenuEvent.HIDETHICKNESS));
 			}
+			if(DrawData._eraseThicknessShow){
+				EraseController.control.dispatchEvent(new MenuEvent(MenuEvent.HIDETHICKNESS));
+			}
+			
+			isDown=true;
+			drawGroup=new Group;
+			drawGroup.x=e.stageX;
+			drawGroup.y=e.stageY;
+			var thickness:int;
 			if(MainData._mouseType==1){
-				var thickness:int;
 				switch(DrawData._pencilThickness){
 					case 1:
 						thickness=5;
 						break;
 					case 2:
-						thickness=10;
+						thickness=7;
 						break;
 					case 3:
 						thickness=15;
@@ -51,36 +64,50 @@ package net.xuele.view.draw.utils
 					default:
 						break;
 				}
-				drawGroup=new Group;
-				drawGroup.x=e.stageX;
-				drawGroup.y=e.stageY;
-				DrawData._currentCanvas.addElement(drawGroup);
-				drawGroup.graphics.lineStyle(thickness,DrawData._currentColor);
+				drawGroup.blendMode=BlendMode.NORMAL;
 			}else if(MainData._mouseType==3){
-				
+				switch(DrawData._eraseThickness){
+					case 1:
+						thickness=15;
+						break;
+					case 2:
+						thickness=20;
+						break;
+					case 3:
+						thickness=40;
+						break;
+					default:
+						break;
+				}
+				drawGroup.blendMode=BlendMode.ERASE;
 			}
+			DrawData._currentCanvas.addElement(drawGroup);
+			drawGroup.graphics.lineStyle(thickness,DrawData._currentColor);
 		}
 		private static function pencilUpHandler(e:MouseEvent):void
 		{
-			if(MainData._mouseType==1){
-				
-			}else if(MainData._mouseType==3){
-				
-			}
+			isDown=false;
 		}
 		private static function pencilMoveHandler(e:MouseEvent):void
 		{
-			if(MainData._mouseType==1){
-				drawGroup.graphics.lineTo(e.stageX-drawGroup.x,e.stageY-drawGroup.y)
-			}else if(MainData._mouseType==3){
-				
+			if(drawGroup==null){
+				return;
 			}
+			if(!isDown){
+				return;
+			}
+			drawGroup.graphics.lineTo(e.stageX-drawGroup.x,e.stageY-drawGroup.y);
+//			if(MainData._mouseType==1){
+//			}else if(MainData._mouseType==3){
+//				
+//			}
 		}
 		public static function drawLine():void
 		{
-			DrawData._currentCanvas.stage.addEventListener(MouseEvent.MOUSE_DOWN,lineDownHandler);
-			DrawData._currentCanvas.stage.addEventListener(MouseEvent.MOUSE_UP,lineUpHandler);
-			DrawData._currentCanvas.stage.addEventListener(MouseEvent.MOUSE_MOVE,lineMoveHandler);
+			DrawData._currentCanvas.addEventListener(MouseEvent.MOUSE_DOWN,lineDownHandler);
+			DrawData._currentCanvas.addEventListener(MouseEvent.MOUSE_UP,lineUpHandler);
+			DrawData._currentCanvas.addEventListener(MouseEvent.MOUSE_MOVE,lineMoveHandler);
+			DrawData._currentCanvas.addEventListener(MouseEvent.RELEASE_OUTSIDE,lineUpHandler);
 		}
 		private static function lineDownHandler(e:MouseEvent):void
 		{
@@ -112,9 +139,10 @@ package net.xuele.view.draw.utils
 		 */
 		public static function stopDrawPencil():void
 		{
-			DrawData._currentCanvas.stage.removeEventListener(MouseEvent.MOUSE_DOWN,pencilDownHandler);
-			DrawData._currentCanvas.stage.removeEventListener(MouseEvent.MOUSE_UP,pencilUpHandler);
-			DrawData._currentCanvas.stage.removeEventListener(MouseEvent.MOUSE_MOVE,pencilMoveHandler);
+			DrawData._currentCanvas.removeEventListener(MouseEvent.MOUSE_DOWN,pencilDownHandler);
+			DrawData._currentCanvas.removeEventListener(MouseEvent.MOUSE_UP,pencilUpHandler);
+			DrawData._currentCanvas.removeEventListener(MouseEvent.MOUSE_MOVE,pencilMoveHandler);
+			DrawData._currentCanvas.removeEventListener(MouseEvent.RELEASE_OUTSIDE,pencilUpHandler);
 		}
 		/**
 		 * 停止画直线或橡皮功能 
@@ -122,9 +150,10 @@ package net.xuele.view.draw.utils
 		 */
 		public static function stopDrawLine():void
 		{
-			DrawData._currentCanvas.stage.removeEventListener(MouseEvent.MOUSE_DOWN,lineDownHandler);
-			DrawData._currentCanvas.stage.removeEventListener(MouseEvent.MOUSE_UP,lineUpHandler);
-			DrawData._currentCanvas.stage.removeEventListener(MouseEvent.MOUSE_MOVE,lineMoveHandler);
+			DrawData._currentCanvas.removeEventListener(MouseEvent.MOUSE_DOWN,lineDownHandler);
+			DrawData._currentCanvas.removeEventListener(MouseEvent.MOUSE_UP,lineUpHandler);
+			DrawData._currentCanvas.removeEventListener(MouseEvent.MOUSE_MOVE,lineMoveHandler);
+			DrawData._currentCanvas.removeEventListener(MouseEvent.RELEASE_OUTSIDE,lineUpHandler);
 		}
 	}
 }

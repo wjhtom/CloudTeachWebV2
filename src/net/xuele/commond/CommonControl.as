@@ -1,6 +1,5 @@
 package net.xuele.commond
 {
-	import flash.display.Stage;
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
 	
@@ -10,7 +9,6 @@ package net.xuele.commond
 	{
 		private static var isClose:Boolean=false;
 		private static var _control:CommonControl;
-		private static var _stage:Stage;
 		public function CommonControl(target:IEventDispatcher=null)
 		{
 			super(target);

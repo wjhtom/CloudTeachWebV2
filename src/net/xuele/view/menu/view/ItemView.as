@@ -3,12 +3,18 @@ package net.xuele.view.menu.view
 	import flash.display.MovieClip;
 	import flash.events.MouseEvent;
 	
+	import net.xuele.commond.MenuEvent;
+	import net.xuele.utils.MainData;
 	import net.xuele.utils.PublicOperate;
+	import net.xuele.view.draw.utils.DrawData;
+	import net.xuele.view.draw.utils.DrawUtils;
+	import net.xuele.view.menu.controller.EraseController;
+	import net.xuele.view.menu.controller.LineController;
+	import net.xuele.view.menu.controller.PencilController;
 	import net.xuele.view.menu.interfaces.IItem;
 	
 	import org.flexlite.domUI.components.Group;
 	import org.flexlite.domUI.components.McButton;
-	import org.flexlite.domUI.components.UIMovieClip;
 	import org.flexlite.domUI.events.UIEvent;
 	
 	public class ItemView extends Group implements IItem
@@ -101,7 +107,36 @@ package net.xuele.view.menu.view
 		}
 		protected function itemClick():void
 		{
-			click();
+			initMouseType();
+		}
+		private function initMouseType():void
+		{
+			if(MainData._mouseType==0){
+				return;
+			}
+			switch(MainData._mouseType){
+				case 1:
+					if(DrawData._pencilThicknessShow){
+						PencilController.control.dispatchEvent(new MenuEvent(MenuEvent.HIDETHICKNESS));
+					}
+					DrawUtils.stopDrawPencil();
+					break;
+				case 2:
+					if(DrawData._lineStyleShow){
+						LineController.control.dispatchEvent(new MenuEvent(MenuEvent.HIDETLINESTYLE));
+					}
+					DrawUtils.stopDrawLine();
+					break;
+				case 3:
+					if(DrawData._eraseThicknessShow){
+						EraseController.control.dispatchEvent(new MenuEvent(MenuEvent.HIDETHICKNESS));
+					}
+					DrawUtils.stopDrawPencil();
+					break;
+				default:
+					break;
+			}
+			MainData._mouseType=0;
 		}
 		public function click():void
 		{

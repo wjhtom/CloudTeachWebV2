@@ -4,12 +4,12 @@ package net.xuele.view.menu.view
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
 	
-	import net.xuele.commond.CommonControl;
 	import net.xuele.commond.CommondView;
 	import net.xuele.commond.MenuEvent;
 	import net.xuele.utils.MainData;
 	import net.xuele.view.draw.utils.DrawData;
 	import net.xuele.view.draw.utils.DrawUtils;
+	import net.xuele.view.menu.controller.PencilController;
 	import net.xuele.view.menu.factory.MenuFactory;
 	
 	import org.flexlite.domUI.components.Group;
@@ -33,17 +33,22 @@ package net.xuele.view.menu.view
 			thicknessLayout.gap=0;
 			_thicknessGroup.layout=thicknessLayout;
 		}
+		
 		override protected function itemClick():void
 		{
+			if(MainData._mouseType!=1){
+				super.itemClick();
+			}
 			if(_thicknessShow){
 				removeThickness();
+				MainData._mouseType=0;
+				DrawUtils.stopDrawPencil();
 			}else{
 				createThickness();
 				addListener();
-				
+				MainData._mouseType=1;
+				DrawUtils.drawPencil();
 			}
-			DrawUtils.drawPencil();
-			
 		}
 		private var _thickness1:Thickness;
 		private var _thickness2:Thickness;
@@ -73,11 +78,11 @@ package net.xuele.view.menu.view
 			
 			this._thicknessShow=true;
 			DrawData._pencilThicknessShow=true;
-			CommonControl.control.addEventListener(MenuEvent.HIDETHICKNESS,removeThicknessHandler)
+			PencilController.control.addEventListener(MenuEvent.HIDETHICKNESS,removeThicknessHandler);
 		}
 		private function removeThicknessHandler(e:MenuEvent):void
 		{
-			CommonControl.control.removeEventListener(MenuEvent.HIDETHICKNESS,removeThicknessHandler)
+			PencilController.control.removeEventListener(MenuEvent.HIDETHICKNESS,removeThicknessHandler)
 			removeThickness();
 		}
 		private function timerHandler(e:TimerEvent):void
@@ -135,7 +140,7 @@ package net.xuele.view.menu.view
 				this._currentThicknessID=Thickness(e.currentTarget)._id;
 				DrawData._pencilThickness=Thickness(e.currentTarget)._id;
 				MainData._mouseType=1;
-				
+				DrawUtils.drawPencil();
 				this.removeThickness();
 //			}
 		}

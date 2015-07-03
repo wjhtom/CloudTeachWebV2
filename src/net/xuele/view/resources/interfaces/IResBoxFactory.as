@@ -4,6 +4,7 @@ package net.xuele.view.resources.interfaces
 
 	public interface IResBoxFactory
 	{
-		function createRes(resVo:ResourceVo):IResBox;
+		function createResBox(resVo:ResourceVo):IResBox;
+		function createResShow(resVo:ResourceVo):IResShow;
 	}
 }

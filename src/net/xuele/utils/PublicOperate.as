@@ -4,6 +4,8 @@ package net.xuele.utils
 	import flash.display.SimpleButton;
 	import flash.display.Sprite;
 	
+	import net.xuele.vo.ResourceVo;
+	
 
 	public class PublicOperate
 	{
@@ -31,5 +33,6 @@ package net.xuele.utils
 			}
 			return obj;
 		}
+		
 	}
 }

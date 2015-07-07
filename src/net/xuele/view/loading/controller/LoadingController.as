@@ -15,7 +15,6 @@ package net.xuele.view.loading.controller
 		public function setProValue(bar:ProgressBar):void
 		{
 			bar.value=LoadingData.loadingNum;
-			trace("loadingController:",bar.value)
 		}
 	}
 }

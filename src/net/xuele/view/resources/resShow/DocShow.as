@@ -17,14 +17,14 @@ package net.xuele.view.resources.resShow
 			super();
 		}
 		
-		public function editRes():void
-		{
-		}
 		
 		public function createUI(resVo:ResourceVo):void
 		{
 		}
 		
+		public function editRes():void
+		{
+		}
 		public function resetRes():void
 		{
 		}

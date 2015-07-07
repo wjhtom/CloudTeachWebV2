@@ -6,17 +6,18 @@ package net.xuele.view.resources.interfaces
 
 	public interface IResShow extends IVisualElement
 	{
-		/**
-		 * 编辑资源（图片资源用） 
-		 * 
-		 */
-		function editRes():void;
+		
 		/**
 		 * 创建资源 
 		 * @param resVo
 		 * 
 		 */
 		function createUI(resVo:ResourceVo):void;
+		/**
+		 * 编辑资源（图片资源用） 
+		 * 
+		 */
+		function editRes():void;
 		/**
 		 * 重置资源 
 		 * 

@@ -54,7 +54,6 @@ package net.xuele.view.menu.view
 		}
 		private function selectColorHandler(e:ColorPickerEvent):void
 		{
-			trace("color",e.color);
 			DrawData._currentColor=e.color;
 			rect.fillColor=DrawData._currentColor;
 		}

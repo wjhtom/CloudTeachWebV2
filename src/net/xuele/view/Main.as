@@ -1,9 +1,16 @@
 package net.xuele.view
 {
+	import flash.events.MouseEvent;
+	
+	import net.xuele.commond.CommondFactory;
 	import net.xuele.commond.CommondView;
 	import net.xuele.view.blackboard.view.BlackboardView;
 	import net.xuele.view.draw.utils.DrawData;
 	import net.xuele.view.menu.view.MenuView;
+	import net.xuele.view.pages.factorys.PageFactory;
+	import net.xuele.view.pages.interfaces.IBigPage;
+	import net.xuele.view.pages.interfaces.IPageFactory;
+	import net.xuele.view.pages.utils.PagesData;
 	
 	import org.flexlite.domUI.components.Group;
 	import org.flexlite.domUI.components.Rect;
@@ -32,16 +39,20 @@ package net.xuele.view
 			
 			_bgGroup=new Group;
 			this.addElement(_bgGroup);
+			_bgGroup.name="bg";
 			
 			_contentGroup=new Group;
-			this._contentGroup.width=920;
-			this._contentGroup.height=588;
+//			this._contentGroup.width=stage.stageWidth;
+//			this._contentGroup.height=588;
 			_contentGroup.width=stage.stageWidth;
 			_contentGroup.height=stage.stageHeight-50;
 			this.addElement(_contentGroup);
+			_contentGroup.name="content";
 			_contentGroup.horizontalCenter=0;
 			_contentGroup.top=0;
+			
 			CommondView.resShowView=this._contentGroup;
+			
 			
 			_drawGroup=new Group;
 			_drawGroup.width=stage.stageWidth;
@@ -55,6 +66,7 @@ package net.xuele.view
 //			rect.horizontalCenter=0;
 			rect.bottom=0;
 			this.addElement(_drawGroup);
+			_drawGroup.name="draw";
 //			_drawGroup.horizontalCenter=0;
 			_drawGroup.top=0;
 			CommondView.drawView=_drawGroup;
@@ -92,7 +104,13 @@ package net.xuele.view
 		}
 		private function createPage():void
 		{
-			
+			var factory:IPageFactory=new PageFactory;
+			CommondFactory._pageFactory=factory;
+			var page:IBigPage=factory.createPage();
+			CommondView.resShowView.addElement(page);
+			page.createUI();
+			CommondView.contentView=page;
+			PagesData._currentPage=page;
 		}
 		
 	}

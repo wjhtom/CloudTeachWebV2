@@ -1,6 +1,5 @@
 package net.xuele.utils
 {
-	import flash.errors.IOError;
 	import flash.events.IOErrorEvent;
 	import flash.events.ProgressEvent;
 	
@@ -10,7 +9,6 @@ package net.xuele.utils
 	import net.xuele.factory.PopFactory;
 	import net.xuele.interfaces.IPop;
 	import net.xuele.interfaces.IPopFactory;
-	import net.xuele.view.pop.AlertPop;
 	import net.xuele.view.loading.LoadingEvent;
 	import net.xuele.view.loading.factory.LoadingFactory;
 	import net.xuele.view.loading.utils.LoadingData;
@@ -21,10 +19,14 @@ package net.xuele.utils
 		public function PopUtils()
 		{
 		}
-		public static function IOError(e:IOErrorEvent,n:int=0):void
+		public static function IOError(e:IOErrorEvent=null,n:int=0):void
 		{
 			trace(e.errorID)
-			setAlert("加载错误")
+			var p:IPop=CommondView.popView.getChildByName("loading") as LoadingPop;
+			if(p!=null){
+				p.removeUI();
+			}
+			setAlert("加载错误");
 		}
 		private static function setAlert(str:String):void
 		{

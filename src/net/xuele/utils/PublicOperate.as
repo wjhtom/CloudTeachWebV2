@@ -6,6 +6,8 @@ package net.xuele.utils
 	
 	import net.xuele.vo.ResourceVo;
 	
+	import org.flexlite.domUI.components.Alert;
+	
 
 	public class PublicOperate
 	{
@@ -33,6 +35,11 @@ package net.xuele.utils
 			}
 			return obj;
 		}
-		
+		public static function setAlert(title:String="",content:String=""):void
+		{
+			var alert:Alert=Alert.show(content,title);
+			alert.showCloseButton=false;
+			
+		}
 	}
 }

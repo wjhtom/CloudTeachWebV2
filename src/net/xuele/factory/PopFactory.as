@@ -17,12 +17,14 @@ package net.xuele.factory
 			var p:IPop;
 			if(pop is AlertFactory){
 				p=pop.createPop();
+				p.name="alert";
 				if(p is AlertPop){
 					CommondView.popView.addElement(p);
 					p.createUI();
 				}
 			}else if(pop is LoadingFactory){
 				p=pop.createPop();
+				p.name="loading";
 				if(p is LoadingPop){
 					CommondView.popView.addElement(p);
 					p.horizontalCenter=p.verticalCenter=0;

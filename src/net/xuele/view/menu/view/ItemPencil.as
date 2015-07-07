@@ -72,13 +72,14 @@ package net.xuele.view.menu.view
 			CommondView.menuView.addElement(_thicknessGroup);
 			_thicknessGroup.top=-105;
 			_thicknessGroup.left=this.x;
-			_timer=new Timer(10,1);
-			_timer.addEventListener(TimerEvent.TIMER,timerHandler);
-			_timer.start();
 			
 			this._thicknessShow=true;
 			DrawData._pencilThicknessShow=true;
 			PencilController.control.addEventListener(MenuEvent.HIDETHICKNESS,removeThicknessHandler);
+			
+			_timer=new Timer(50,1);
+			_timer.addEventListener(TimerEvent.TIMER,timerHandler);
+			_timer.start();
 		}
 		private function removeThicknessHandler(e:MenuEvent):void
 		{

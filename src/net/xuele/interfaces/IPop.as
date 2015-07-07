@@ -5,5 +5,6 @@ package net.xuele.interfaces
 	public interface IPop extends IVisualElement
 	{
 		function createUI():void;
+		function removeUI():void;
 	}
 }

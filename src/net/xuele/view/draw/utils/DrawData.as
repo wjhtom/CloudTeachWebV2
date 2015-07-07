@@ -32,6 +32,11 @@ package net.xuele.view.draw.utils
 		 * 当前颜色 
 		 */
 		public static var _currentColor:uint=0x000000;
+		/**
+		 * 直线样式
+		 * 0：箭头直线，1：虚线，2：直线，3：双直线，4：波浪线
+		 */
+		public static var _lineType:int;
 		public function DrawData()
 		{
 		}

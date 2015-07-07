@@ -59,14 +59,14 @@ package net.xuele.view.loading.view
 		public function setValue(e:LoadingEvent):void
 		{
 			if(LoadingData.loadingNum>=100){
-				CommonControl.control.removeEventListener(LoadingEvent.CHANGEPROVALUE,setValue);
 				removeUI();
 			}else{
 				this._controller.setProValue(proBar);
 			}
 		}
-		private function removeUI():void
+		public function removeUI():void
 		{
+			CommonControl.control.removeEventListener(LoadingEvent.CHANGEPROVALUE,setValue);
 			PopUtils.upPop(this);
 		}
 	}

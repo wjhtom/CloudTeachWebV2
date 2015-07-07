@@ -90,10 +90,10 @@ package net.xuele.view.draw.utils
 		}
 		private static function pencilMoveHandler(e:MouseEvent):void
 		{
-			if(drawGroup==null){
+			if(!isDown){
 				return;
 			}
-			if(!isDown){
+			if(drawGroup==null){
 				return;
 			}
 			drawGroup.graphics.lineTo(e.stageX-drawGroup.x,e.stageY-drawGroup.y);

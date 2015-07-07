@@ -6,7 +6,7 @@ package
 	import net.xuele.utils.InterfaceData;
 	import net.xuele.utils.MainData;
 	
-	[SWF(width="1024", height="630", backgroundColor="#ffffff")]
+	[SWF(width="1000", height="630", backgroundColor="#ffffff")]
 	public class CloudTeachWebV2 extends Sprite
 	{
 		public function CloudTeachWebV2()

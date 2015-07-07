@@ -3,6 +3,7 @@ package net.xuele.view.resources.resBox
 	import flash.display.MovieClip;
 	import flash.events.MouseEvent;
 	
+	import net.xuele.commond.CommondView;
 	import net.xuele.utils.MainData;
 	import net.xuele.utils.PublicOperate;
 	import net.xuele.view.resources.factory.ResFactory;
@@ -10,10 +11,13 @@ package net.xuele.view.resources.resBox
 	import net.xuele.view.resources.utils.ResData;
 	
 	import org.flexlite.domUI.components.Group;
+	import org.flexlite.domUI.components.Rect;
+	import org.flexlite.domUI.components.Scroller;
 	import org.flexlite.domUI.components.UIMovieClip;
 	import org.flexlite.domUI.events.UIEvent;
 	import org.flexlite.domUI.layouts.HorizontalLayout;
 	import org.flexlite.domUI.layouts.TileLayout;
+	import org.flexlite.domUI.layouts.VerticalLayout;
 	
 	/**
 	 * 用户资源盒 
@@ -49,37 +53,76 @@ package net.xuele.view.resources.resBox
 		private var _userTag:UIMovieClip;
 		private function init():void
 		{
+			this._factory=new ResFactory;
+			createGroup();
+			createTags();
+			createUI();
+			addListener();
+		}
+		private function createGroup():void
+		{
+			var verLayout:VerticalLayout=new VerticalLayout;
+			verLayout.gap=0;
+			this.layout=verLayout;
 			this._resLayout=new TileLayout;
 			this._resLayout.horizontalGap=10;
 			this._resLayout.verticalGap=5;
-			this._factory=new ResFactory;
-			createUI();
-		}
-		private function createTags():void
-		{
+			this._resLayout.requestedColumnCount=8;
+			
+			
 			this._tagsGroup=new Group;
 			var tagLayout:HorizontalLayout=new HorizontalLayout;
 			tagLayout.gap=0;
 			this._tagsGroup.layout=tagLayout;
+			this.addElement(this._tagsGroup);
+			
+			this._resGroup=new Group;
+			this._resGroup.layout=this._resLayout;
+			
+			var bg:Rect=new Rect;
+			bg.fillAlpha=1;
+			bg.fillColor=0xffffff;
+			bg.width=875;
+			bg.height=288;
+			
+			var scl:Scroller=new Scroller;
+			scl.width=875;
+			scl.height=288;
+			scl.viewport=this._resGroup;
+			
+			var content:Group=new Group;
+			content.addElement(bg);
+			content.addElement(scl);
+			this.addElement(content);
+		}
+		private function createTags():void
+		{
+			
 			this._systemTag=new UIMovieClip;
-			this._systemTag.skinName=PublicOperate.getUI("","movieclip") as MovieClip;
+			this._systemTag.name="systemTag";
+			this._systemTag.skinName=PublicOperate.getUI("SystemTag","movieclip") as MovieClip;
 			this._userTag=new UIMovieClip;
-			this._userTag.skinName=PublicOperate.getUI("","movieclip") as MovieClip;
+			this._userTag.name="userTag";
+			this._userTag.skinName=PublicOperate.getUI("UserTag","movieclip") as MovieClip;
 			this._tagsGroup.addElement(this._systemTag);
+			this._tagsGroup.addElement(this._userTag);
+			
 			
 			
 			if(ResData._currentResBox==0){
 				this._systemTag.gotoAndStop(1);
+				this._userTag.gotoAndStop(0);
 			}else if(ResData._currentResBox==1){
 				this._userTag.gotoAndStop(1);
+				this._systemTag.gotoAndStop(0);
 			}
 		}
 		private function tagClickHandler(e:MouseEvent):void
 		{
-			
-			if(ResData._currentResBox==0&&this._systemTag.currentFrame==1 || ResData._currentResBox==1&&this._userTag.currentFrame==1){
+			if(ResData._currentResBox==0&&this._systemTag.currentFrame==1&&UIMovieClip(e.currentTarget).name=="systemTag" || ResData._currentResBox==1&&this._userTag.currentFrame==1&&UIMovieClip(e.currentTarget).name=="userTag"){
 				return;
 			}
+			this.clearGroup();
 			if(ResData._currentResBox==0){
 				this._systemTag.gotoAndStop(0);
 				this._userTag.gotoAndStop(1);
@@ -88,8 +131,8 @@ package net.xuele.view.resources.resBox
 				this._userTag.gotoAndStop(0);
 				this._systemTag.gotoAndStop(1);
 				ResData._currentResBox=0;
-				
 			}
+			createUI();
 		}
 		private function createUI():void
 		{
@@ -100,7 +143,7 @@ package net.xuele.view.resources.resBox
 					}
 					break;
 				case 1:
-					if(MainData.systemResourcesAry.length>0){
+					if(MainData.myResourcesAry.length>0){
 						userRes();
 					}
 					break;
@@ -111,18 +154,36 @@ package net.xuele.view.resources.resBox
 		}
 		private function systemRes():void
 		{
-			this._resGroup=new Group;
-			this._resGroup.layout=this._resLayout;
 			var len:int=MainData.systemResourcesAry.length;
 			for(var i:int=0;i<len;i++){
 				this._resView=this._factory.createResBox(MainData.systemResourcesAry[i]);
+				this._resView.createUI();
+				this._resGroup.addElement(this._resView);
+				this._resView.addEventListener(MouseEvent.MOUSE_DOWN,resDownHandler);
 			}
 		}
 		private function userRes():void
 		{
 			var len:int=MainData.myResourcesAry.length;
 			for(var i:int=0;i<len;i++){
+				this._resView=this._factory.createResBox(MainData.myResourcesAry[i]);
+				this._resView.createUI();
+				this._resGroup.addElement(this._resView);
+				this._resView.addEventListener(MouseEvent.MOUSE_DOWN,resDownHandler);
 				
+			}
+		}
+		private function resDownHandler(e:MouseEvent):void
+		{
+			var dragIco:IResBox=this._factory.createDragRes(IResBox(e.currentTarget).resVo);
+			CommondView.popView.addElement(dragIco);
+		}
+		private function clearGroup():void
+		{
+			while(this._resGroup.numElements>0){
+				IResBox(this._resGroup.getElementAt(this._resGroup.numElements-1)).removeEventListener(MouseEvent.MIDDLE_MOUSE_DOWN,resDownHandler);
+				IResBox(this._resGroup.getElementAt(this._resGroup.numElements-1)).removeListener();
+				this._resGroup.removeElementAt(this._resGroup.numElements-1);
 			}
 		}
 		private function addListener():void
@@ -134,6 +195,7 @@ package net.xuele.view.resources.resBox
 		{
 			this._systemTag.removeEventListener(MouseEvent.CLICK,tagClickHandler);
 			this._userTag.removeEventListener(MouseEvent.CLICK,tagClickHandler);
+			clearGroup();
 		}
 	}
 }

@@ -3,6 +3,7 @@ package net.xuele.view.menu.view
 	import flash.display.MovieClip;
 	import flash.events.MouseEvent;
 	
+	import net.xuele.commond.CommondView;
 	import net.xuele.commond.MenuEvent;
 	import net.xuele.utils.MainData;
 	import net.xuele.utils.PublicOperate;
@@ -12,6 +13,8 @@ package net.xuele.view.menu.view
 	import net.xuele.view.menu.controller.LineController;
 	import net.xuele.view.menu.controller.PencilController;
 	import net.xuele.view.menu.interfaces.IItem;
+	import net.xuele.view.menu.utils.MenuData;
+	import net.xuele.view.resources.resBox.ResBoxView;
 	
 	import org.flexlite.domUI.components.Group;
 	import org.flexlite.domUI.components.McButton;
@@ -108,7 +111,32 @@ package net.xuele.view.menu.view
 		protected function itemClick():void
 		{
 			initMouseType();
+			initMenu();
 		}
+		/**
+		 * 初使化菜单  
+		 * 
+		 */
+		private function initMenu():void
+		{
+			if(MenuData._isResBoxShow){
+				ResBoxView(CommondView.menuView.getElementAt(0)).removeListener();
+				MenuData._isResBoxShow=false;
+			}
+			if(DrawData._eraseThicknessShow){
+				EraseController.control.dispatchEvent(new MenuEvent(MenuEvent.HIDETHICKNESS));
+				DrawData._eraseThicknessShow=false;
+			}
+			if(DrawData._pencilThicknessShow){
+				PencilController.control.dispatchEvent(new MenuEvent(MenuEvent.HIDETHICKNESS));
+				DrawData._pencilThicknessShow=false;
+			}
+			CommondView.menuView.removeAllElements();
+		}
+		/**
+		 * 初使化鼠标类型 
+		 * 
+		 */
 		private function initMouseType():void
 		{
 			if(MainData._mouseType==0){

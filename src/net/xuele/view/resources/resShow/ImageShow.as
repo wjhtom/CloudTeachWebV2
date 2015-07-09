@@ -19,7 +19,7 @@ package net.xuele.view.resources.resShow
 	 */
 	public class ImageShow extends EditResBase
 	{
-		private var _resVo:ResourceVo;
+//		private var _resVo:ResourceVo;
 		public function ImageShow()
 		{
 			super();

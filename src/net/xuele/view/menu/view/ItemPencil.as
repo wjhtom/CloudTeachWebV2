@@ -47,6 +47,7 @@ package net.xuele.view.menu.view
 				createThickness();
 				addListener();
 				MainData._mouseType=1;
+//				DrawData._currentCanvas=CommondView.drawView;
 				DrawUtils.drawPencil();
 			}
 		}

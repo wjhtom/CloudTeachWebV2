@@ -24,6 +24,7 @@ package net.xuele.view.draw.utils
 		}
 		public static function drawPencil():void
 		{
+			DrawData._currentCanvas.mouseEnabled=true;
 			DrawData._currentCanvas.blendMode=BlendMode.LAYER;
 			DrawData._currentCanvas.addEventListener(MouseEvent.MOUSE_DOWN,pencilDownHandler);
 			DrawData._currentCanvas.addEventListener(MouseEvent.MOUSE_UP,pencilUpHandler);
@@ -139,6 +140,7 @@ package net.xuele.view.draw.utils
 		 */
 		public static function stopDrawPencil():void
 		{
+			DrawData._currentCanvas.mouseEnabled=false;
 			DrawData._currentCanvas.removeEventListener(MouseEvent.MOUSE_DOWN,pencilDownHandler);
 			DrawData._currentCanvas.removeEventListener(MouseEvent.MOUSE_UP,pencilUpHandler);
 			DrawData._currentCanvas.removeEventListener(MouseEvent.MOUSE_MOVE,pencilMoveHandler);

@@ -108,6 +108,7 @@ package net.xuele.view
 			CommondFactory._pageFactory=factory;
 			var page:IBigPage=factory.createPage();
 			CommondView.resShowView.addElement(page);
+			Group(page).mouseEnabled=false;
 			page.createUI();
 			CommondView.contentView=page;
 			PagesData._currentPage=page;

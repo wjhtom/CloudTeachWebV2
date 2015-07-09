@@ -1,5 +1,7 @@
 package net.xuele.view.resources.utils
 {
+	import com.senocular.display.TransformTool;
+	
 	import net.xuele.view.resources.interfaces.IResShow;
 
 	public class ResData
@@ -16,6 +18,10 @@ package net.xuele.view.resources.utils
 		 * 当前编辑资源 
 		 */
 		public static var _currentEditRes:IResShow;
+		/**
+		 *  
+		 */
+		public static var _currentTools:TransformTool;
 		public function ResData()
 		{
 		}

@@ -92,6 +92,9 @@ package com.senocular.display {
 			
 		private var _maxScaleX:Number = Infinity;
 		private var _maxScaleY:Number = Infinity;
+		private var _minScaleX:Number = Infinity;
+		private var _minScaleY:Number = Infinity;
+		private var _minScaleEnabled:Boolean=false;
 		
 		private var _boundsTopLeft:Point = new Point();
 		private var _boundsTop:Point = new Point();
@@ -254,6 +257,7 @@ package com.senocular.display {
 		}
 		
 		/**
+		 * 缩放点的大小
 		 * Controls the default Control sizes of controls used by the tool
 		 */
 		public function get controlSize():Number {
@@ -328,6 +332,7 @@ package com.senocular.display {
 		}
 		
 		/**
+		 * 注册点设置
 		 * The location of the registration point in the tool. Note: registration
 		 * points are tool-specific.  If you change the registration point of a
 		 * target, the new registration will only be reflected in the tool used
@@ -351,6 +356,7 @@ package com.senocular.display {
 		}
 		
 		/**
+		 * 当前控制器
 		 * The current control being used in the tool if being manipulated.
 		 * This value is null if the user is not transforming the tool.
 		 */
@@ -359,6 +365,7 @@ package com.senocular.display {
 		}
 		
 		/**
+		 * 是否可拖动
 		 * Allows or disallows users to move the tool
 		 */
 		public function get moveEnabled():Boolean {
@@ -372,6 +379,7 @@ package com.senocular.display {
 		}
 		
 		/**
+		 * 注册点是否可见并移动
 		 * Allows or disallows users to see and move the registration point
 		 * @see registration
 		 * @see rememberRegistration
@@ -387,6 +395,7 @@ package com.senocular.display {
 		}
 		
 		/**
+		 * 是否支持旋转
 		 * Allows or disallows users to see and adjust rotation controls
 		 */
 		public function get rotationEnabled():Boolean {
@@ -400,6 +409,7 @@ package com.senocular.display {
 		}
 		
 		/**
+		 * 是否支持缩放
 		 * Allows or disallows users to see and adjust scale controls
 		 */
 		public function get scaleEnabled():Boolean {
@@ -413,6 +423,7 @@ package com.senocular.display {
 		}
 		
 		/**
+		 * 是否扭曲变形
 		 * Allows or disallows users to see and adjust skew controls
 		 */
 		public function get skewEnabled():Boolean {
@@ -439,6 +450,7 @@ package com.senocular.display {
 		}
 		
 		/**
+		 * 光标
 		 * Allows or disallows users to see native cursors
 		 * @see addCursor
 		 * @see removeCursor
@@ -504,6 +516,7 @@ package com.senocular.display {
 		}
 		
 		/**
+		 * 同比例缩放
 		 * Allows constraining of scale transformations that scale along both X and Y.
 		 * @see constrainRotation
 		 */
@@ -556,8 +569,20 @@ package com.senocular.display {
 		public function set maxScaleX(n:Number):void {
 			_maxScaleX = n;
 		}
+		/**
+		 * 缩放最小比例X 
+		 * @return 
+		 * 
+		 */
+		public function get minScaleX():Number {
+			return _minScaleX;
+		}
+		public function set minScaleX(n:Number):void {
+			_minScaleX=n;
+		}
 		
 		/**
+		 * 缩放最大比例Y
 		 * The maximum scaleY allowed to be applied to a target
 		 */
 		public function get maxScaleY():Number {
@@ -565,6 +590,30 @@ package com.senocular.display {
 		}
 		public function set maxScaleY(n:Number):void {
 			_maxScaleY = n;
+		}
+		/**
+		 * 缩放最小比例Y 
+		 * @return 
+		 * 
+		 */
+		public function get minScaleY():Number {
+			return _minScaleY;
+		}
+		public function set minScaleY(n:Number):void {
+			_minScaleY=n;
+		}
+		/**
+		 * 是否限制最小比例 
+		 * @return 
+		 * 
+		 */
+		public function get minScaleEnabled():Boolean
+		{
+			return _scaleEnabled;
+		}
+		public function set minScaleEnabled(v:Boolean):void
+		{
+			_minScaleEnabled=v;
 		}
 		
 		public function get boundsTopLeft():Point { return _boundsTopLeft.clone(); }
@@ -799,6 +848,46 @@ package com.senocular.display {
 		// Interaction Handlers
 		private function startInteractionHandler(event:MouseEvent):void {
 			_currentControl = event.currentTarget as TransformToolControl;
+			trace("当前控制",_currentControl.name,_toolMatrix.a,_toolMatrix.b)
+			updateMatrix();
+			setNewRegistation();
+//			updateControlsVisible();
+			switch(_currentControl.name){
+				case "scaleBottomRight":
+					this.registration = new Point(boundsTopLeft.x,boundsTopLeft.y);
+					break;
+				case "scaleBottomLeft":
+					this.registration = new Point(boundsTopRight.x,boundsTopRight.y);
+					break;
+				case "scaleTopLeft":
+					this.registration = new Point(_boundsBottomRight.x,_boundsBottomRight.y);
+					break;
+				case "scaleTopRight":
+					this.registration = new Point(_boundsBottomLeft.x,_boundsBottomLeft.y);
+					break;
+				case "scaleRight":
+					this.registration = new Point(_boundsLeft.x,_boundsLeft.y);
+					break;
+				case "scaleLeft":
+					this.registration = new Point(_boundsRight.x,_boundsRight.y);
+					break;
+				case "scaleTop":
+					this.registration = new Point(_boundsBottom.x,_boundsBottom.y);
+					break;
+				case "scaleBottom":
+					this.registration = new Point(_boundsTop.x,_boundsTop.y);
+					break;
+				case "rotationTopLeft":
+				case "rotationTopRight":
+				case "rotationBottomLeft":
+				case "rotationBottomRight":
+					this.registration = new Point(_boundsCenter.x,_boundsCenter.y);
+					break;
+				default:
+					break;
+					
+			}
+//			updateRegistration()
 			if (_currentControl) {
 				setupInteraction();
 			}
@@ -1155,7 +1244,12 @@ package com.senocular.display {
 				_globalMatrix.b = Math.sin(angle) * _maxScaleX;
 				enforced = true;
 			}
-			
+			if(_minScaleEnabled&&_minScaleX!=Infinity&&currScale<_minScaleX){
+				angle = Math.atan2(_globalMatrix.b, _globalMatrix.a);
+				_globalMatrix.a = Math.cos(angle) * _minScaleX;
+				_globalMatrix.b = Math.sin(angle) * _minScaleX;
+				enforced = true;
+			}
 			// check current scale in Y
 			currScale = Math.sqrt(_globalMatrix.c * _globalMatrix.c + _globalMatrix.d * _globalMatrix.d);
 			if (currScale > _maxScaleY) {
@@ -1165,7 +1259,12 @@ package com.senocular.display {
 				_globalMatrix.c = Math.sin(angle) * _maxScaleY;
 				enforced = true;
 			}
-			
+			if(_minScaleEnabled&&_minScaleY!=Infinity&&currScale<_minScaleY){
+				angle= Math.atan2(_globalMatrix.c, _globalMatrix.d);
+				_globalMatrix.d = Math.cos(angle) * _minScaleY;
+				_globalMatrix.c = Math.sin(angle) * _minScaleY;
+				enforced = true;
+			}
 			
 			// if scale was enforced, apply to _toolMatrix
 			if (enforced) {
@@ -1435,7 +1534,8 @@ class TransformToolRotateControl extends TransformToolInternalControl {
 	override public function draw(event:Event = null):void {
 		graphics.clear();
 		if (!_skin) {
-			graphics.beginFill(0xFF, 0);
+			graphics.lineStyle(1, 0,0);
+			graphics.beginFill(0xffffff, 0);
 			graphics.drawCircle(0, 0, _transformTool.controlSize*2);
 			graphics.endFill();
 		}
@@ -1445,8 +1545,28 @@ class TransformToolRotateControl extends TransformToolInternalControl {
 	override public function position(event:Event = null):void {
 		if (locationName in _transformTool) {
 			var location:Point = _transformTool[locationName];
-			x = location.x;
-			y = location.y;
+//			x = location.x;
+//			y = location.y;
+			switch(locationName){
+				case "boundsTopLeft":
+					x=location.x-10;
+					y=location.y-10;
+					break;
+				case "boundsTopRight":
+					x=location.x+10;
+					y=location.y-10;
+					break;
+				case "boundsBottomLeft":
+					x=location.x-10;
+					y=location.y+10;
+					break;
+				case "boundsBottomRight":
+					x=location.x+10;
+					y=location.y+10;
+					break;
+				default:
+					break;
+			}
 		}
 	}
 }

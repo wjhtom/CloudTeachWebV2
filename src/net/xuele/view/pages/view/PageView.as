@@ -1,5 +1,7 @@
 package net.xuele.view.pages.view
 {
+	import com.senocular.display.TransformTool;
+	
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
@@ -7,11 +9,14 @@ package net.xuele.view.pages.view
 	import flash.utils.getTimer;
 	
 	import net.xuele.commond.CommondView;
+	import net.xuele.utils.MainData;
 	import net.xuele.view.pages.interfaces.IBigPage;
+	import net.xuele.view.resources.events.ResEvent;
 	import net.xuele.view.resources.interfaces.IResShow;
 	import net.xuele.view.resources.resShow.DocShow;
 	import net.xuele.view.resources.resShow.ImageShow;
 	import net.xuele.view.resources.utils.ResData;
+	import net.xuele.view.resources.utils.ResTransform;
 	
 	import org.flexlite.domUI.components.Group;
 	
@@ -20,6 +25,7 @@ package net.xuele.view.pages.view
 		public function PageView()
 		{
 			super();
+			
 		}
 		public function createUI():void
 		{
@@ -32,15 +38,30 @@ package net.xuele.view.pages.view
 			Timer(e.currentTarget).removeEventListener(TimerEvent.TIMER,timerHandler);
 			init();
 		}
+		
+		private var defaultTool:TransformTool;
+		// custom tool with some custom options
+		private var customTool:TransformTool;
 		private function init():void
 		{
-//			this.width=stage.stageWidth;
-//			this.height=stage.stageHeight-50;
+			defaultTool=new TransformTool;
+			customTool=new TransformTool;
+			ResData._currentTools=defaultTool;
+			ResData._currentTools.skewEnabled=false;
+			ResData._currentTools.constrainScale=true;
+			ResData._currentTools.minScaleEnabled=true;
+			ResData._currentTools.minScaleX=0.1;
+			ResData._currentTools.minScaleY=0.1;
+			trace(ResData._currentTools.boundsBottomLeft);
+			
+			this.addElement(defaultTool);
+			this.addElement(customTool);
+			this.width=stage.stageWidth;
+			this.height=stage.stageHeight-50;
 			addListener();
 		}
 		private function addListener():void
 		{
-//			this.addEventListener(MouseEvent.CLICK,clickHandler);
 		}
 		private function clickHandler(e:MouseEvent):void
 		{
@@ -49,11 +70,10 @@ package net.xuele.view.pages.view
 		public function addRes(res:IResShow):void
 		{
 			this.addElement(res);
+			Group(res).mouseEnabled=false;
 			if(res is ImageShow || res is DocShow){
-//				res.x=(stage.stageWidth-res.width)/2;
-//				res.y=0;
-				res.horizontalCenter=0;
-				res.top=0;
+				res.x=(stage.stageWidth-res.width)/2;
+				res.y=0;
 			}else{
 				res.x=this.mouseX;
 				res.y=this.mouseY;
@@ -61,25 +81,35 @@ package net.xuele.view.pages.view
 			res.addEventListener(MouseEvent.MOUSE_DOWN,downHandler);
 			res.addEventListener(MouseEvent.MOUSE_UP,upHandler);
 		}
-		private static function resClickHandler(e:MouseEvent):void
-		{
-			IResShow(e.currentTarget).editRes();
-		}
 		private static var downTime:Number;
 		private static function downHandler(e:MouseEvent):void
 		{
-			downTime=getTimer();
-			IResShow(e.currentTarget).startResDrag();
+			var tempRes:IResShow=IResShow(e.currentTarget)
+			if(tempRes is ImageShow || tempRes is DocShow){
+				downTime=getTimer();
+			}
+			Group(e.currentTarget).startDrag();
 		}
 		private static function upHandler(e:MouseEvent):void
 		{
-			if(getTimer()-downTime<150){
-				IResShow(e.currentTarget).editRes();
-				ResData._currentEditRes=IResShow(e.currentTarget);
-				IResShow(e.currentTarget).removeEventListener(MouseEvent.MOUSE_DOWN,downHandler);
-				IResShow(e.currentTarget).removeEventListener(MouseEvent.MOUSE_UP,upHandler);
+			var tempRes:IResShow=IResShow(e.currentTarget)
+			if(tempRes is ImageShow || tempRes is DocShow){
+				if(getTimer()-downTime<150){
+					if(ResData._currentEditRes!=null){
+						ResTransform.removeTransRes();
+					}
+					tempRes.removeEventListener(MouseEvent.MOUSE_DOWN,downHandler);
+					tempRes.removeEventListener(MouseEvent.MOUSE_UP,upHandler);
+					tempRes.addEventListener(ResEvent.ADDRESLISTENER,addListenerHandler);
+					ResTransform.setTransRes(tempRes);
+				}
 			}
-			IResShow(e.currentTarget).stopResDrag();
+			Group(tempRes).stopDrag();
+		}
+		private static function addListenerHandler(e:ResEvent):void
+		{
+			ResData._currentEditRes.addEventListener(MouseEvent.MOUSE_DOWN,downHandler);
+			ResData._currentEditRes.addEventListener(MouseEvent.MOUSE_UP,upHandler);
 		}
 		public function createSmallPage():void
 		{

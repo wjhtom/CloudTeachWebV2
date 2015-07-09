@@ -2,6 +2,7 @@ package net.xuele.view.resources.interfaces
 {
 	import net.xuele.vo.ResourceVo;
 	
+	import org.flexlite.domUI.components.Group;
 	import org.flexlite.domUI.core.IVisualElement;
 
 	public interface IResShow extends IVisualElement
@@ -14,11 +15,6 @@ package net.xuele.view.resources.interfaces
 		 */
 		function createUI(resVo:ResourceVo):void;
 		/**
-		 * 编辑资源（图片资源用） 
-		 * 
-		 */
-		function editRes():void;
-		/**
 		 * 重置资源 
 		 * 
 		 */
@@ -29,14 +25,10 @@ package net.xuele.view.resources.interfaces
 		 */
 		function removeListener():void;
 		/**
-		 * 开始拖动 
+		 * 获取资源画布 
+		 * @return 
 		 * 
 		 */
-		function startResDrag():void;
-		/**
-		 * 停止拖动 
-		 * 
-		 */
-		function stopResDrag():void;
+		function get drawGroup():Group;
 	}
 }

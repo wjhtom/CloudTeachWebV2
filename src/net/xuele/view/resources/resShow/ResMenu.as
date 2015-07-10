@@ -1,16 +1,25 @@
 package net.xuele.view.resources.resShow
 {
 	import flash.events.MouseEvent;
+	import flash.geom.Matrix;
+	import flash.geom.Point;
 	
+	import net.xuele.utils.MainData;
 	import net.xuele.utils.PublicOperate;
 	import net.xuele.view.resources.utils.ResData;
 	import net.xuele.view.resources.utils.ResDrawUtil;
+	import net.xuele.view.resources.utils.ResTransform;
 	
 	import org.flexlite.domUI.components.Group;
 	import org.flexlite.domUI.components.McButton;
 	import org.flexlite.domUI.events.UIEvent;
 	import org.flexlite.domUI.layouts.HorizontalLayout;
 	
+	/**
+	 * 图片PPT等资源操作菜单 （重置，铅笔，橡皮）
+	 * @author jianhua
+	 * 
+	 */
 	public class ResMenu extends Group
 	{
 		private var resetBtn:McButton;
@@ -24,7 +33,7 @@ package net.xuele.view.resources.resShow
 			super();
 			this.addEventListener(UIEvent.CREATION_COMPLETE,createCom);
 		}
-		private function createCom():void
+		private function createCom(e:UIEvent):void
 		{
 			this.removeEventListener(UIEvent.CREATION_COMPLETE,createCom);
 			init();
@@ -36,7 +45,9 @@ package net.xuele.view.resources.resShow
 			var menuLayout:HorizontalLayout=new HorizontalLayout;
 			menuLayout.gap=0;
 			_menuGroup.layout=menuLayout;
+			this.addElement(_menuGroup);
 			createUI();
+			addListener();
 		}
 		private function createUI():void
 		{
@@ -65,7 +76,7 @@ package net.xuele.view.resources.resShow
 		}
 		private function resetHandler(e:MouseEvent):void
 		{
-			ResData._currentEditRes.resetRes();
+			ResTransform.resetRes();
 		}
 		private var _isErase:Boolean=false;
 		private var _isPencil:Boolean=false;
@@ -76,7 +87,11 @@ package net.xuele.view.resources.resShow
 			}
 			_isPencil=!_isPencil;
 			if(_isPencil){
-				ResDrawUtil.drawPencil(ResData._currentEditRes.drawGroup,0);
+				PublicOperate.setMouseType(6);
+				ResDrawUtil.drawPencil(ResData._currentEditRes.drawGroup);
+			}else{
+				PublicOperate.setMouseType(0);
+				ResDrawUtil.stopDrawPencil();
 			}
 		}
 		
@@ -87,7 +102,14 @@ package net.xuele.view.resources.resShow
 			}
 			_isErase=!_isErase;
 			if(_isErase){
-				ResDrawUtil.drawPencil(ResData._currentEditRes.drawGroup,1);
+				if(ResData._currentTools!=null){
+					ResData._currentTools.moveEnabled=false;
+				}
+				PublicOperate.setMouseType(7);
+				ResDrawUtil.drawPencil(ResData._currentEditRes.drawGroup);
+			}else{
+				PublicOperate.setMouseType(0);
+				ResDrawUtil.stopDrawPencil();
 			}
 		}
 	}

@@ -7,6 +7,7 @@ package net.xuele.view.menu.view
 	import net.xuele.commond.CommondView;
 	import net.xuele.commond.MenuEvent;
 	import net.xuele.utils.MainData;
+	import net.xuele.utils.PublicOperate;
 	import net.xuele.view.draw.utils.DrawData;
 	import net.xuele.view.draw.utils.DrawUtils;
 	import net.xuele.view.menu.controller.EraseController;
@@ -40,12 +41,12 @@ package net.xuele.view.menu.view
 			}
 			if(this._thicknessShow){
 				removeThickness();
-				MainData._mouseType=0;
+				PublicOperate.setMouseType(0);
 				DrawUtils.stopDrawPencil();
 			}else{
 				createThickness();
 				addListener();
-				MainData._mouseType=3;
+				PublicOperate.setMouseType(3);
 				DrawUtils.drawPencil();
 			}
 		}
@@ -124,7 +125,7 @@ package net.xuele.view.menu.view
 		{
 			var thickness:UIMovieClip=Thickness(e.currentTarget).thicknessMovie;
 			DrawData._eraseThickness=Thickness(e.currentTarget)._id;
-			MainData._mouseType=3;
+			PublicOperate.setMouseType(3);
 			DrawUtils.drawPencil();
 			this.removeThickness();
 		}

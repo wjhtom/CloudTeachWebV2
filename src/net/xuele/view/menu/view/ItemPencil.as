@@ -7,6 +7,7 @@ package net.xuele.view.menu.view
 	import net.xuele.commond.CommondView;
 	import net.xuele.commond.MenuEvent;
 	import net.xuele.utils.MainData;
+	import net.xuele.utils.PublicOperate;
 	import net.xuele.view.draw.utils.DrawData;
 	import net.xuele.view.draw.utils.DrawUtils;
 	import net.xuele.view.menu.controller.PencilController;
@@ -41,12 +42,12 @@ package net.xuele.view.menu.view
 			}
 			if(_thicknessShow){
 				removeThickness();
-				MainData._mouseType=0;
+				PublicOperate.setMouseType(0);
 				DrawUtils.stopDrawPencil();
 			}else{
 				createThickness();
 				addListener();
-				MainData._mouseType=1;
+				PublicOperate.setMouseType(1);
 //				DrawData._currentCanvas=CommondView.drawView;
 				DrawUtils.drawPencil();
 			}
@@ -141,7 +142,7 @@ package net.xuele.view.menu.view
 //				thickness.gotoAndStop(1);
 				this._currentThicknessID=Thickness(e.currentTarget)._id;
 				DrawData._pencilThickness=Thickness(e.currentTarget)._id;
-				MainData._mouseType=1;
+				PublicOperate.setMouseType(1);
 				DrawUtils.drawPencil();
 				this.removeThickness();
 //			}

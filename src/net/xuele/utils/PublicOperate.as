@@ -41,5 +41,9 @@ package net.xuele.utils
 			alert.showCloseButton=false;
 			
 		}
+		public static function setMouseType(t:int):void
+		{
+			MainData._mouseType=t;
+		}
 	}
 }

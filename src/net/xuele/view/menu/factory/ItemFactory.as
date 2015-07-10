@@ -10,6 +10,7 @@ package net.xuele.view.menu.factory
 	import net.xuele.view.menu.view.ItemHighLight;
 	import net.xuele.view.menu.view.ItemHomework;
 	import net.xuele.view.menu.view.ItemInput;
+	import net.xuele.view.menu.view.ItemMouse;
 	import net.xuele.view.menu.view.ItemPencil;
 	import net.xuele.view.menu.view.ItemResBox;
 	import net.xuele.view.menu.view.ItemSave;
@@ -28,7 +29,7 @@ package net.xuele.view.menu.factory
 		 * 菜单类型 
 		 * 0：选择颜色，1：高亮，2：输入文字，3：铅笔，4：画直线
 		 * 5：橡皮，6：点名，7：计时器，8：工具，9：打开资源盒
-		 * 10：习题作业，11：提分神器，12：保存，13：最大化
+		 * 10：习题作业，11：提分神器，12：保存，13：最大化,14:鼠标
 		 */
 		public function createMenu(param:int):IItem
 		{
@@ -76,7 +77,9 @@ package net.xuele.view.menu.factory
 				case 13:
 					item=new ItemFullScreen(param);
 					break;
-				
+				case 14:
+					item=new ItemMouse(param);
+					break;
 			}
 			
 			return item;

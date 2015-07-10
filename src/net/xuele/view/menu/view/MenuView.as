@@ -36,6 +36,8 @@ package net.xuele.view.menu.view
 			var color:IItem=MenuFactory.createItem(0);
 			itemGroup.addElement(color);
 			itemGroup.addElement(createEmpty());
+			var mouse:IItem=MenuFactory.createItem(14);
+			itemGroup.addElement(mouse);
 			var highlight:IItem=MenuFactory.createItem(1);
 			itemGroup.addElement(highlight);
 			var pencil:IItem=MenuFactory.createItem(2);

@@ -4,10 +4,11 @@ package net.xuele.view.resources.resShow
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.geom.Rectangle;
 	
 	import net.xuele.commond.CommondView;
 	import net.xuele.utils.PopUtils;
-	import net.xuele.vo.ResourceVo;
+	import net.xuele.view.resources.events.ResEvent;
 	
 	import org.flexlite.domUI.components.UIAsset;
 	import org.flexlite.domUtils.DomLoader;
@@ -19,7 +20,7 @@ package net.xuele.view.resources.resShow
 	 */
 	public class ImageShow extends EditResBase
 	{
-//		private var _resVo:ResourceVo;
+		
 		public function ImageShow()
 		{
 			super();
@@ -36,6 +37,7 @@ package net.xuele.view.resources.resShow
 			this._resVo._path="http://panfile.xuele.net/s/42354244304533344432364642343035453136384441333035443845414246342e6a7067";
 			DomLoader.loadBitmapData(this._resVo._path,comHandler,PopUtils.loadingPro,PopUtils.IOError);
 		}
+		
 		private function comHandler(data:BitmapData):void
 		{
 			var ui:UIAsset=new UIAsset;
@@ -57,6 +59,11 @@ package net.xuele.view.resources.resShow
 				scale=1;
 			}
 			ui.scaleX=ui.scaleY=scale;
+			this.drawGroup.width=ui.width;
+			this.drawGroup.height=ui.height;
+			this.drawGroup.scaleX=this.drawGroup.scaleY=scale;
+			this.dispatchEvent(new ResEvent(ResEvent.LOADRESCOM));
 		}
+		
 	}
 }

@@ -1536,7 +1536,7 @@ class TransformToolRotateControl extends TransformToolInternalControl {
 		if (!_skin) {
 			graphics.lineStyle(1, 0,0);
 			graphics.beginFill(0xffffff, 0);
-			graphics.drawCircle(0, 0, _transformTool.controlSize*2);
+			graphics.drawCircle(0, 0, _transformTool.controlSize*3);
 			graphics.endFill();
 		}
 		super.draw();
@@ -1545,8 +1545,9 @@ class TransformToolRotateControl extends TransformToolInternalControl {
 	override public function position(event:Event = null):void {
 		if (locationName in _transformTool) {
 			var location:Point = _transformTool[locationName];
-//			x = location.x;
-//			y = location.y;
+			x = location.x;
+			y = location.y;
+			/*
 			switch(locationName){
 				case "boundsTopLeft":
 					x=location.x-10;
@@ -1567,6 +1568,7 @@ class TransformToolRotateControl extends TransformToolInternalControl {
 				default:
 					break;
 			}
+			*/
 		}
 	}
 }

@@ -14,15 +14,14 @@ package net.xuele.view.resources.utils
 		{
 		}
 		private static var _canvas:Group;
-		/**
-		 * 类型：0：铅笔，1：橡皮 
-		 */
-		private static var _type:int;
-		public static function drawPencil(canvas:Group,t:int):void
+		public static function drawPencil(canvas:Group):void
 		{
 			_canvas=canvas;
-			_type=t;
+			_canvas.mouseEnabled=true;
 			_canvas.blendMode=BlendMode.LAYER;
+			if(ResData._currentTools!=null){
+				ResData._currentTools.moveEnabled=false;
+			}
 			_canvas.addEventListener(MouseEvent.MOUSE_DOWN,pencilDownHandler);
 			_canvas.addEventListener(MouseEvent.MOUSE_UP,pencilUpHandler);
 			_canvas.addEventListener(MouseEvent.RELEASE_OUTSIDE,pencilUpHandler);
@@ -32,15 +31,17 @@ package net.xuele.view.resources.utils
 		private static var isDown:Boolean=false;
 		private static function pencilDownHandler(e:MouseEvent):void
 		{
-			
+			if(MainData._mouseType==0){
+				return;
+			}
 			isDown=true;
 			drawGroup=new Group;
-			drawGroup.x=e.stageX;
-			drawGroup.y=e.stageY;
+			drawGroup.x=_canvas.mouseX;
+			drawGroup.y=_canvas.mouseY;
 			var thickness:int;
-			if(_type==0){
+			if(MainData._mouseType==6){
 				drawGroup.blendMode=BlendMode.NORMAL;
-			}else if(_type==1){
+			}else if(MainData._mouseType==7){
 				drawGroup.blendMode=BlendMode.ERASE;
 			}
 			_canvas.addElement(drawGroup);
@@ -58,7 +59,22 @@ package net.xuele.view.resources.utils
 			if(drawGroup==null){
 				return;
 			}
-			drawGroup.graphics.lineTo(e.stageX-drawGroup.x,e.stageY-drawGroup.y);
+			drawGroup.graphics.lineTo(_canvas.mouseX-drawGroup.x-drawGroup.parent.x,_canvas.mouseY-drawGroup.y-drawGroup.parent.y);
+		}
+		/**
+		 * 停止画铅笔或橡皮功能
+		 * 
+		 */
+		public static function stopDrawPencil():void
+		{
+			_canvas.mouseEnabled=false;
+			if(ResData._currentTools!=null){
+				ResData._currentTools.moveEnabled=true;
+			}
+			_canvas.removeEventListener(MouseEvent.MOUSE_DOWN,pencilDownHandler);
+			_canvas.removeEventListener(MouseEvent.MOUSE_UP,pencilUpHandler);
+			_canvas.removeEventListener(MouseEvent.MOUSE_MOVE,pencilMoveHandler);
+			_canvas.removeEventListener(MouseEvent.RELEASE_OUTSIDE,pencilUpHandler);
 		}
 	}
 }

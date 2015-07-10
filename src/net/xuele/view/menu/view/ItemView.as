@@ -15,6 +15,8 @@ package net.xuele.view.menu.view
 	import net.xuele.view.menu.interfaces.IItem;
 	import net.xuele.view.menu.utils.MenuData;
 	import net.xuele.view.resources.resBox.ResBoxView;
+	import net.xuele.view.resources.utils.ResData;
+	import net.xuele.view.resources.utils.ResDrawUtil;
 	
 	import org.flexlite.domUI.components.Group;
 	import org.flexlite.domUI.components.McButton;
@@ -26,7 +28,7 @@ package net.xuele.view.menu.view
 		 * 菜单类型 
 		 * 0：选择颜色，1：高亮，2：输入文字，3：铅笔，4：画直线
 		 * 5：橡皮，6：点名，7：计时器，8：工具，9：打开资源盒
-		 * 10：习题作业，11：提分神器，12：保存，13：最大化
+		 * 10：习题作业，11：提分神器，12：保存，13：最大化,14:鼠标
 		 */
 		private var _menuType:int;
 		private var _UIMovie:McButton;
@@ -93,6 +95,8 @@ package net.xuele.view.menu.view
 				case 13:
 					skin=PublicOperate.getUI("MenuFullScreen","movieclip") as MovieClip;
 					break;
+				case 14:
+					skin=PublicOperate.getUI("MenuMouse","movieclip") as MovieClip;
 				default:
 					break;
 			}
@@ -161,10 +165,17 @@ package net.xuele.view.menu.view
 					}
 					DrawUtils.stopDrawPencil();
 					break;
+				case 6:
+				case 7:
+					if(ResData._currentTools!=null){
+						ResData._currentTools.moveEnabled=true;
+					}
+					ResDrawUtil.stopDrawPencil();
+					break;
 				default:
 					break;
 			}
-			MainData._mouseType=0;
+			PublicOperate.setMouseType(0);
 		}
 		public function click():void
 		{

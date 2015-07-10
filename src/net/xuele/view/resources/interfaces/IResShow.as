@@ -15,11 +15,6 @@ package net.xuele.view.resources.interfaces
 		 */
 		function createUI(resVo:ResourceVo):void;
 		/**
-		 * 重置资源 
-		 * 
-		 */
-		function resetRes():void;
-		/**
 		 * 移除事件 
 		 * 
 		 */

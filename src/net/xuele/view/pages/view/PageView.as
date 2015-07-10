@@ -5,6 +5,7 @@ package net.xuele.view.pages.view
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
+	import flash.geom.Rectangle;
 	import flash.utils.Timer;
 	import flash.utils.getTimer;
 	
@@ -70,27 +71,35 @@ package net.xuele.view.pages.view
 		public function addRes(res:IResShow):void
 		{
 			this.addElement(res);
-			Group(res).mouseEnabled=false;
 			if(res is ImageShow || res is DocShow){
-				res.x=(stage.stageWidth-res.width)/2;
-				res.y=0;
+				res.addEventListener(ResEvent.LOADRESCOM,function(e:ResEvent):void{loadResComHandler(e,res)});
 			}else{
 				res.x=this.mouseX;
 				res.y=this.mouseY;
+				res.addEventListener(MouseEvent.MOUSE_DOWN,downHandler);
+				res.addEventListener(MouseEvent.MOUSE_UP,upHandler);
 			}
+			
+		}
+		private function loadResComHandler(e:ResEvent,res:IResShow):void
+		{
+			var rect:Rectangle=Group(res).getBounds(this.stage);
+			res.x=(stage.stageWidth-rect.width)/2;
+			res.y=0;
 			res.addEventListener(MouseEvent.MOUSE_DOWN,downHandler);
 			res.addEventListener(MouseEvent.MOUSE_UP,upHandler);
 		}
-		private static var downTime:Number;
-		private static function downHandler(e:MouseEvent):void
+		private  var downTime:Number;
+		private  function downHandler(e:MouseEvent):void
 		{
 			var tempRes:IResShow=IResShow(e.currentTarget)
 			if(tempRes is ImageShow || tempRes is DocShow){
 				downTime=getTimer();
 			}
 			Group(e.currentTarget).startDrag();
+			
 		}
-		private static function upHandler(e:MouseEvent):void
+		private  function upHandler(e:MouseEvent):void
 		{
 			var tempRes:IResShow=IResShow(e.currentTarget)
 			if(tempRes is ImageShow || tempRes is DocShow){
@@ -106,7 +115,7 @@ package net.xuele.view.pages.view
 			}
 			Group(tempRes).stopDrag();
 		}
-		private static function addListenerHandler(e:ResEvent):void
+		private  function addListenerHandler(e:ResEvent):void
 		{
 			ResData._currentEditRes.addEventListener(MouseEvent.MOUSE_DOWN,downHandler);
 			ResData._currentEditRes.addEventListener(MouseEvent.MOUSE_UP,upHandler);

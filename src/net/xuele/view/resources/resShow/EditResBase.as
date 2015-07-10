@@ -1,22 +1,15 @@
 package net.xuele.view.resources.resShow
 {
 	
-	import com.senocular.display.TransformTool;
 	
-	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
-	import flash.utils.getTimer;
 	
-	import net.xuele.commond.CommondView;
-	import net.xuele.utils.PublicOperate;
 	import net.xuele.view.resources.interfaces.IResShow;
-	import net.xuele.view.resources.utils.ResData;
-	import net.xuele.view.resources.utils.ResDrawUtil;
 	import net.xuele.vo.ResourceVo;
 	
 	import org.flexlite.domUI.components.Group;
-	import org.flexlite.domUI.components.McButton;
+	import org.flexlite.domUI.components.UIAsset;
 	
 	/**
 	 * 可编辑资源容器
@@ -54,6 +47,8 @@ package net.xuele.view.resources.resShow
 			this.addElement(this._resGroup);
 			this._drawGroup=new Group;
 			this.addElement(this._drawGroup);
+//			this._drawGroup.width=200;
+//			this._drawGroup.height=300;
 			
 			createRes();
 		}
@@ -69,14 +64,10 @@ package net.xuele.view.resources.resShow
 		}
 		
 		
-		public function resetRes():void
-		{
-		}
 		public function get drawGroup():Group
 		{
 			return this._drawGroup;
 		}
-		
 	}
 }
 

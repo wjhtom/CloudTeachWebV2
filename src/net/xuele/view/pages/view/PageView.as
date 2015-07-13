@@ -20,6 +20,7 @@ package net.xuele.view.pages.view
 	import net.xuele.view.resources.utils.ResTransform;
 	
 	import org.flexlite.domUI.components.Group;
+	import org.flexlite.domUI.core.UIComponent;
 	
 	public class PageView extends Group implements IBigPage
 	{
@@ -71,37 +72,43 @@ package net.xuele.view.pages.view
 		public function addRes(res:IResShow):void
 		{
 			this.addElement(res);
-			if(res is ImageShow || res is DocShow){
+//			if(res is ImageShow || res is DocShow){
 				res.addEventListener(ResEvent.LOADRESCOM,function(e:ResEvent):void{loadResComHandler(e,res)});
-			}else{
-				res.x=this.mouseX;
-				res.y=this.mouseY;
-				res.addEventListener(MouseEvent.MOUSE_DOWN,downHandler);
-				res.addEventListener(MouseEvent.MOUSE_UP,upHandler);
-			}
+//			}else{
+//				res.x=this.mouseX;
+//				res.y=this.mouseY;
+//				res.dragGroup.addEventListener(MouseEvent.MOUSE_DOWN,downHandler);
+//				res.dragGroup.addEventListener(MouseEvent.MOUSE_UP,upHandler);
+//			}
 			
 		}
 		private function loadResComHandler(e:ResEvent,res:IResShow):void
 		{
-			var rect:Rectangle=Group(res).getBounds(this.stage);
-			res.x=(stage.stageWidth-rect.width)/2;
-			res.y=0;
-			res.addEventListener(MouseEvent.MOUSE_DOWN,downHandler);
-			res.addEventListener(MouseEvent.MOUSE_UP,upHandler);
+			if(res is ImageShow || res is DocShow){
+				var rect:Rectangle=Group(res).getBounds(this.stage);
+				res.x=(stage.stageWidth-rect.width)/2;
+				res.y=0;
+			}else{
+				res.x=this.mouseX;
+				res.y=this.mouseY;
+			}
+			res.dragGroup.addEventListener(MouseEvent.MOUSE_DOWN,function(e:MouseEvent):void{downHandler(e,res)});
+			res.dragGroup.addEventListener(MouseEvent.MOUSE_UP,function(e:MouseEvent):void{upHandler(e,res)});
 		}
 		private  var downTime:Number;
-		private  function downHandler(e:MouseEvent):void
+		private  function downHandler(e:MouseEvent,res:IResShow):void
 		{
-			var tempRes:IResShow=IResShow(e.currentTarget)
-			if(tempRes is ImageShow || tempRes is DocShow){
+//			var tempRes:IResShow=IResShow(UIComponent(e.currentTarget).parent);
+			if(res is ImageShow || res is DocShow){
 				downTime=getTimer();
 			}
-			Group(e.currentTarget).startDrag();
+			Group(res).startDrag();
 			
 		}
-		private  function upHandler(e:MouseEvent):void
+		private  function upHandler(e:MouseEvent,res:IResShow):void
 		{
-			var tempRes:IResShow=IResShow(e.currentTarget)
+//			var tempRes:IResShow=IResShow(UIComponent(e.currentTarget).parent);
+			var tempRes:IResShow=res;
 			if(tempRes is ImageShow || tempRes is DocShow){
 				if(getTimer()-downTime<150){
 					if(ResData._currentEditRes!=null){

@@ -34,10 +34,17 @@ package net.xuele.view.resources.resShow
 		{
 			PopUtils.createLoading();
 			
-			this._resVo._path="http://panfile.xuele.net/s/42354244304533344432364642343035453136384441333035443845414246342e6a7067";
-			DomLoader.loadBitmapData(this._resVo._path,comHandler,PopUtils.loadingPro,PopUtils.IOError);
+			if(this._isCreate){
+				DomLoader.loadBitmapData(this._contentVo._property.path,createComHandler,PopUtils.loadingPro,PopUtils.IOError);
+			}else{
+				this._resVo._path="http://panfile.xuele.net/s/42354244304533344432364642343035453136384441333035443845414246342e6a7067";
+				DomLoader.loadBitmapData(this._resVo._path,comHandler,PopUtils.loadingPro,PopUtils.IOError);
+			}
 		}
-		
+		private function createComHandler(data:BitmapData):void
+		{
+			
+		}
 		private function comHandler(data:BitmapData):void
 		{
 			var ui:UIAsset=new UIAsset;
@@ -62,6 +69,7 @@ package net.xuele.view.resources.resShow
 			this.drawGroup.width=ui.width;
 			this.drawGroup.height=ui.height;
 			this.drawGroup.scaleX=this.drawGroup.scaleY=scale;
+			this._dragRect=_resGroup;
 			this.dispatchEvent(new ResEvent(ResEvent.LOADRESCOM));
 		}
 		

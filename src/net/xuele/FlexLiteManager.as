@@ -18,6 +18,7 @@ package net.xuele
 	import org.flexlite.domUI.core.Theme;
 	import org.flexlite.domUI.events.UIEvent;
 	import org.flexlite.domUI.managers.SystemManager;
+	import org.flexlite.domUtils.Debugger;
 	import org.flexlite.domUtils.DomLoader;
 	
 	
@@ -37,6 +38,7 @@ package net.xuele
 		}
 		private function init():void
 		{
+			Debugger.initialize(stage);
 			Injector.mapClass(Theme,MainTheme);
 			createUI();
 			loadInterfaceXML();

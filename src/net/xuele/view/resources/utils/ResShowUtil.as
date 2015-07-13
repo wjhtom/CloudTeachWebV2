@@ -24,11 +24,15 @@ package net.xuele.view.resources.utils
 		{
 			var res:IResShow=_factory.createResShow(resVo);
 			CommondView.contentView.addRes(res);
-//			res.addEventListener(ResEvent.LOADRESCOM,loadComHandler);
 		}
-		private static function loadComHandler():void
+		public static function removeResShow(res:IResShow):void
 		{
-//			CommondView.contentView.addRes(_res);
+			res.removeListener();
+			if(res.isOpen){
+				//从黑板上删除
+			}else{
+				//从缩小图中删除
+			}
 		}
 		
 	}

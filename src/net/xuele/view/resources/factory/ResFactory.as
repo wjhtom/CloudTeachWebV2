@@ -8,7 +8,10 @@ package net.xuele.view.resources.factory
 	import net.xuele.view.resources.interfaces.IResShow;
 	import net.xuele.view.resources.resBox.DragIcon;
 	import net.xuele.view.resources.resBox.ResView;
+	import net.xuele.view.resources.resShow.DocShow;
 	import net.xuele.view.resources.resShow.ImageShow;
+	import net.xuele.view.resources.resShow.SoundShow;
+	import net.xuele.view.resources.resShow.VideoShow;
 	import net.xuele.vo.ResourceVo;
 	
 	import org.flexlite.domUI.components.Group;
@@ -31,7 +34,7 @@ package net.xuele.view.resources.factory
 		}
 		public function createResShow(resVo:ResourceVo):IResShow
 		{
-			resVo._ex="jpg";
+			resVo._ex="mp3";
 			var res:IResShow;
 			switch(resVo._ex){
 				case "png":
@@ -41,21 +44,19 @@ package net.xuele.view.resources.factory
 					res=new ImageShow;
 					break;
 				case "txt":
-					break;
 				case "doc":
 				case "docx":
-					break;
 				case "xls":
 				case "xlsx":
-					break;
 				case "ppt":
 				case "pptx":
-					break;
 				case "pdf":
+					res=new DocShow;
 					break;
 				case "mp3":
 				case "wav":
 				case "wma":
+					res=new SoundShow;
 					break;
 				case "flv":
 				case "avi":
@@ -69,6 +70,7 @@ package net.xuele.view.resources.factory
 				case "mov":
 				case "navi":
 				case "rm":
+					res=new VideoShow;
 					break;
 				case "swf":
 					break;

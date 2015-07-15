@@ -9,6 +9,7 @@ package net.xuele.view.resources.utils
 	import flash.geom.Rectangle;
 	
 	import net.xuele.commond.CommondView;
+	import net.xuele.utils.MainData;
 	import net.xuele.view.resources.events.ResEvent;
 	import net.xuele.view.resources.interfaces.IResShow;
 	import net.xuele.view.resources.resShow.ResMenu;
@@ -59,6 +60,9 @@ package net.xuele.view.resources.utils
 		{
 			if(ResData._currentEditRes==null){
 				return;
+			}
+			if(MainData._mouseType==6||MainData._mouseType==7){
+				ResDrawUtil.stopDrawPencil();
 			}
 			ResData._currentTools.moveEnabled=true;
 			ResData._currentEditRes.dispatchEvent(new ResEvent(ResEvent.ADDRESLISTENER));

@@ -2,6 +2,7 @@ package net.xuele.view.pages.interfaces
 {
 	import net.xuele.view.resources.interfaces.IResShow;
 	
+	import org.flexlite.domUI.components.Group;
 	import org.flexlite.domUI.core.IVisualElement;
 	
 	public interface IBigPage extends IVisualElement
@@ -18,6 +19,12 @@ package net.xuele.view.pages.interfaces
 		 * 
 		 */
 		function addRes(res:IResShow):void;
+		/**
+		 * 获取当前页画布 
+		 * @return 
+		 * 
+		 */
+		function get drawGroup():Group;
 		function removeListener():void;
 	}
 }

@@ -6,20 +6,18 @@ package net.xuele.view.resources.resShow
 	import flash.events.IOErrorEvent;
 	import flash.events.MouseEvent;
 	import flash.events.ProgressEvent;
-	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	import flash.system.LoaderContext;
 	import flash.system.SecurityDomain;
 	
 	import net.xuele.commond.CommondView;
+	import net.xuele.utils.MainData;
 	import net.xuele.utils.PopUtils;
 	import net.xuele.view.resources.events.ResEvent;
-	import net.xuele.vo.ResourceVo;
 	
 	import org.flexlite.domUI.components.Group;
 	import org.flexlite.domUI.components.McButton;
 	import org.flexlite.domUI.components.UIMovieClip;
-	import org.flexlite.domUtils.DomLoader;
 	
 	
 	/**
@@ -42,7 +40,7 @@ package net.xuele.view.resources.resShow
 		override protected function createRes():void
 		{
 			PopUtils.createLoading();
-			this._resVo._path="";
+			this._resVo._path="http://panfile.xuele.net/s/38364537433930303939334135453545333146333339443542304645363835322e707074";
 			_loader=new Loader;
 			var request:URLRequest=new URLRequest;
 			request.contentType="application/x-shockwave-flash";
@@ -56,7 +54,12 @@ package net.xuele.view.resources.resShow
 			_loader.contentLoaderInfo.addEventListener(ProgressEvent.PROGRESS,PopUtils.loadingPro);
 			var lc:LoaderContext=new LoaderContext;
 			lc.securityDomain=SecurityDomain.currentDomain;
-			_loader.load(request,lc);
+			if(MainData._isOnline){
+				_loader.load(request,lc);
+			}else{
+				_loader.load(request);
+			}
+			
 		}
 		private function loadComHandler(e:Event):void
 		{

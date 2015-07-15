@@ -34,7 +34,7 @@ package net.xuele.view.resources.factory
 		}
 		public function createResShow(resVo:ResourceVo):IResShow
 		{
-			resVo._ex="mp3";
+			resVo._ex="jpg";
 			var res:IResShow;
 			switch(resVo._ex){
 				case "png":

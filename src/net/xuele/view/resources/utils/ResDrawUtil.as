@@ -3,6 +3,7 @@ package net.xuele.view.resources.utils
 	import flash.display.BlendMode;
 	import flash.events.MouseEvent;
 	
+	import net.xuele.commond.CommondView;
 	import net.xuele.utils.MainData;
 	import net.xuele.view.draw.utils.DrawData;
 	
@@ -16,6 +17,7 @@ package net.xuele.view.resources.utils
 		private static var _canvas:Group;
 		public static function drawPencil(canvas:Group):void
 		{
+			DrawData._currentCanvas.mouseEnabled=false;
 			_canvas=canvas;
 			_canvas.mouseEnabled=true;
 			_canvas.blendMode=BlendMode.LAYER;
@@ -71,6 +73,7 @@ package net.xuele.view.resources.utils
 			if(ResData._currentTools!=null){
 				ResData._currentTools.moveEnabled=true;
 			}
+			MainData._mouseType=0;
 			_canvas.removeEventListener(MouseEvent.MOUSE_DOWN,pencilDownHandler);
 			_canvas.removeEventListener(MouseEvent.MOUSE_UP,pencilUpHandler);
 			_canvas.removeEventListener(MouseEvent.MOUSE_MOVE,pencilMoveHandler);

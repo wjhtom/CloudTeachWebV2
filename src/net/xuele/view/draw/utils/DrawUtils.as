@@ -3,10 +3,12 @@ package net.xuele.view.draw.utils
 	import flash.display.BlendMode;
 	import flash.events.MouseEvent;
 	
+	import net.xuele.commond.CommondView;
 	import net.xuele.commond.MenuEvent;
 	import net.xuele.utils.MainData;
 	import net.xuele.view.menu.controller.EraseController;
 	import net.xuele.view.menu.controller.PencilController;
+	import net.xuele.view.pages.utils.PagesData;
 	
 	import org.flexlite.domUI.components.Group;
 	
@@ -35,7 +37,7 @@ package net.xuele.view.draw.utils
 		private static var isDown:Boolean=false;
 		private static function pencilDownHandler(e:MouseEvent):void
 		{
-			
+//			DrawData._currentCanvas.mouseEnabled=true;
 			if(DrawData._pencilThicknessShow){
 				PencilController.control.dispatchEvent(new MenuEvent(MenuEvent.HIDETHICKNESS));
 			}
@@ -87,6 +89,7 @@ package net.xuele.view.draw.utils
 		}
 		private static function pencilUpHandler(e:MouseEvent):void
 		{
+			
 			isDown=false;
 		}
 		private static function pencilMoveHandler(e:MouseEvent):void
@@ -152,6 +155,7 @@ package net.xuele.view.draw.utils
 		 */
 		public static function stopDrawLine():void
 		{
+			DrawData._currentCanvas.mouseEnabled=false;
 			DrawData._currentCanvas.removeEventListener(MouseEvent.MOUSE_DOWN,lineDownHandler);
 			DrawData._currentCanvas.removeEventListener(MouseEvent.MOUSE_UP,lineUpHandler);
 			DrawData._currentCanvas.removeEventListener(MouseEvent.MOUSE_MOVE,lineMoveHandler);

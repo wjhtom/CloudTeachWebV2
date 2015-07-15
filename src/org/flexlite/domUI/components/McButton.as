@@ -25,7 +25,11 @@ package org.flexlite.domUI.components
 		{
 			super();
 		}   
-		
+		override protected function measure():void
+		{
+			this.labelDisplay.includeInLayout=false;
+			super.measure();
+		}
 		/**
 		 * 影片剪辑的状态帧标签索引字典
 		 */		

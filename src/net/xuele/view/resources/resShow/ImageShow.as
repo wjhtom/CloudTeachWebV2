@@ -37,7 +37,7 @@ package net.xuele.view.resources.resShow
 			if(this._isCreate){
 				DomLoader.loadBitmapData(this._contentVo._property.path,createComHandler,PopUtils.loadingPro,PopUtils.IOError);
 			}else{
-				this._resVo._path="http://panfile.xuele.net/s/42354244304533344432364642343035453136384441333035443845414246342e6a7067";
+				this._resVo._path="http://panfile.xuele.net/s/30393444364238414535443342313646354533383038423545433345463434362e706e67";
 				DomLoader.loadBitmapData(this._resVo._path,comHandler,PopUtils.loadingPro,PopUtils.IOError);
 			}
 		}

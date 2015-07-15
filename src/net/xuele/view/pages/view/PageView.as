@@ -24,10 +24,11 @@ package net.xuele.view.pages.view
 	
 	public class PageView extends Group implements IBigPage
 	{
+		private var _drawGroup:Group;
+		private var _resGroup:Group;
 		public function PageView()
 		{
 			super();
-			
 		}
 		public function createUI():void
 		{
@@ -56,10 +57,18 @@ package net.xuele.view.pages.view
 			ResData._currentTools.minScaleY=0.1;
 			trace(ResData._currentTools.boundsBottomLeft);
 			
-			this.addElement(defaultTool);
-			this.addElement(customTool);
-			this.width=stage.stageWidth;
-			this.height=stage.stageHeight-50;
+			this._resGroup=new Group;
+			this.addElement(this._resGroup);
+			this._resGroup.mouseEnabled=false;
+			_resGroup.addElement(defaultTool);
+			_resGroup.addElement(customTool);
+			_resGroup.width=stage.stageWidth;
+			_resGroup.height=stage.stageHeight-50;
+			this._drawGroup=new Group;
+			this._drawGroup.width=stage.stageWidth;
+			this._drawGroup.height=stage.stageHeight;
+			this._drawGroup.mouseEnabled=false;
+			this.addElement(_drawGroup);
 			addListener();
 		}
 		private function addListener():void
@@ -71,7 +80,7 @@ package net.xuele.view.pages.view
 		}
 		public function addRes(res:IResShow):void
 		{
-			this.addElement(res);
+			this._resGroup.addElement(res);
 //			if(res is ImageShow || res is DocShow){
 				res.addEventListener(ResEvent.LOADRESCOM,function(e:ResEvent):void{loadResComHandler(e,res)});
 //			}else{
@@ -94,6 +103,7 @@ package net.xuele.view.pages.view
 			}
 			res.dragGroup.addEventListener(MouseEvent.MOUSE_DOWN,function(e:MouseEvent):void{downHandler(e,res)});
 			res.dragGroup.addEventListener(MouseEvent.MOUSE_UP,function(e:MouseEvent):void{upHandler(e,res)});
+			res.dragGroup.addEventListener(MouseEvent.RELEASE_OUTSIDE,function(e:MouseEvent):void{upHandler(e,res)});
 		}
 		private  var downTime:Number;
 		private  function downHandler(e:MouseEvent,res:IResShow):void
@@ -114,8 +124,8 @@ package net.xuele.view.pages.view
 					if(ResData._currentEditRes!=null){
 						ResTransform.removeTransRes();
 					}
-					tempRes.removeEventListener(MouseEvent.MOUSE_DOWN,downHandler);
-					tempRes.removeEventListener(MouseEvent.MOUSE_UP,upHandler);
+					tempRes.dragGroup.removeEventListener(MouseEvent.MOUSE_DOWN,function(e:MouseEvent):void{downHandler(e,res)});
+					tempRes.dragGroup.removeEventListener(MouseEvent.MOUSE_UP,function(e:MouseEvent):void{upHandler(e,res)});
 					tempRes.addEventListener(ResEvent.ADDRESLISTENER,addListenerHandler);
 					ResTransform.setTransRes(tempRes);
 				}
@@ -124,8 +134,9 @@ package net.xuele.view.pages.view
 		}
 		private  function addListenerHandler(e:ResEvent):void
 		{
-			ResData._currentEditRes.addEventListener(MouseEvent.MOUSE_DOWN,downHandler);
-			ResData._currentEditRes.addEventListener(MouseEvent.MOUSE_UP,upHandler);
+			var res:IResShow=ResData._currentEditRes;
+			ResData._currentEditRes.dragGroup.addEventListener(MouseEvent.MOUSE_DOWN,function(e:MouseEvent):void{downHandler(e,res)});
+			ResData._currentEditRes.dragGroup.addEventListener(MouseEvent.MOUSE_UP,function(e:MouseEvent):void{upHandler(e,res)});
 		}
 		public function createSmallPage():void
 		{
@@ -133,6 +144,10 @@ package net.xuele.view.pages.view
 		
 		public function removeListener():void
 		{
+		}
+		public function get drawGroup():Group
+		{
+			return _drawGroup;
 		}
 	}
 }

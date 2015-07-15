@@ -1,6 +1,9 @@
 package net.xuele.view
 {
+	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.events.TimerEvent;
+	import flash.utils.Timer;
 	
 	import net.xuele.commond.CommondFactory;
 	import net.xuele.commond.CommondView;
@@ -21,7 +24,7 @@ package net.xuele.view
 	{
 		private var _bgGroup:Group;
 		private var _contentGroup:Group;
-		private var _drawGroup:Group;
+//		private var _drawGroup:Group;
 		private var _menuGroup:Group;
 		public function Main()
 		{
@@ -50,27 +53,20 @@ package net.xuele.view
 			_contentGroup.name="content";
 			_contentGroup.horizontalCenter=0;
 			_contentGroup.top=0;
-			
+			_contentGroup.mouseEnabled=false;
 			CommondView.resShowView=this._contentGroup;
 			
 			
-			_drawGroup=new Group;
-			_drawGroup.width=stage.stageWidth;
-			_drawGroup.height=588;
-			var rect:Rect=new Rect;
-			rect.width=100;
-			rect.height=400;
-			rect.fillAlpha=1;
-			rect.fillColor=0xff0000;
-			_drawGroup.addElement(rect);
-//			rect.horizontalCenter=0;
-			rect.bottom=0;
-			this.addElement(_drawGroup);
-			_drawGroup.name="draw";
+//			_drawGroup=new Group;
+//			_drawGroup.width=stage.stageWidth;
+//			_drawGroup.height=588;
+//			_drawGroup.addElement(rect);
+//			this.addElement(_drawGroup);
+//			_drawGroup.name="draw";
 //			_drawGroup.horizontalCenter=0;
-			_drawGroup.top=0;
-			CommondView.drawView=_drawGroup;
-			DrawData._currentCanvas=_drawGroup;
+//			_drawGroup.top=0;
+//			CommondView.drawView=_drawGroup;
+//			DrawData._currentCanvas=_drawGroup;
 			
 			
 			_menuGroup=new Group;
@@ -112,7 +108,22 @@ package net.xuele.view
 			page.createUI();
 			CommondView.contentView=page;
 			PagesData._currentPage=page;
+			var timer:Timer=new Timer(20,1);
+			timer.addEventListener(TimerEvent.TIMER,function(e:TimerEvent):void{getDrawView(e,page)});
+			timer.start();
+			
 		}
+		private function getDrawView(e:TimerEvent,page:IBigPage):void
+		{
+			Timer(e.target).removeEventListener(TimerEvent.TIMER,function(e:TimerEvent):void{getDrawView(e,page)});
+			CommondView.drawView=page.drawGroup;
+			DrawData._currentCanvas=page.drawGroup;
+//			this.addEventListener(Event.ENTER_FRAME,enterHandler);
+		}
+//		private function enterHandler(e:Event):void
+//		{
+//			trace(DrawData._currentCanvas.mouseEnabled)
+//		}
 		
 	}
 }

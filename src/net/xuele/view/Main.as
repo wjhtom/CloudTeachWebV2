@@ -7,6 +7,7 @@ package net.xuele.view
 	
 	import net.xuele.commond.CommondFactory;
 	import net.xuele.commond.CommondView;
+	import net.xuele.utils.MainData;
 	import net.xuele.view.blackboard.view.BlackboardView;
 	import net.xuele.view.draw.utils.DrawData;
 	import net.xuele.view.menu.view.MenuView;
@@ -14,6 +15,7 @@ package net.xuele.view
 	import net.xuele.view.pages.interfaces.IBigPage;
 	import net.xuele.view.pages.interfaces.IPageFactory;
 	import net.xuele.view.pages.utils.PagesData;
+	import net.xuele.view.pages.view.PageNumView;
 	
 	import org.flexlite.domUI.components.Group;
 	import org.flexlite.domUI.components.Rect;
@@ -26,6 +28,7 @@ package net.xuele.view
 		private var _contentGroup:Group;
 //		private var _drawGroup:Group;
 		private var _menuGroup:Group;
+		private var _pageNumGroup:Group;
 		public function Main()
 		{
 			super();
@@ -39,6 +42,7 @@ package net.xuele.view
 		}
 		public function createUI():void
 		{
+			MainData._teachType=1;
 			
 			_bgGroup=new Group;
 			this.addElement(_bgGroup);
@@ -74,11 +78,14 @@ package net.xuele.view
 			_menuGroup.bottom=0;
 			this.addElement(_menuGroup);
 			
-			
+			_pageNumGroup=new Group;
+			this.addElement(_pageNumGroup);
+			_pageNumGroup.mouseEnabled=false;
 				
 			createBG();
 			createMenu();
 			createPage();
+			createPageNum();
 		}
 		private function createBG():void
 		{
@@ -108,6 +115,7 @@ package net.xuele.view
 			page.createUI();
 			CommondView.contentView=page;
 			PagesData._currentPage=page;
+			PagesData._currnetPageNum++;
 			var timer:Timer=new Timer(20,1);
 			timer.addEventListener(TimerEvent.TIMER,function(e:TimerEvent):void{getDrawView(e,page)});
 			timer.start();
@@ -116,14 +124,19 @@ package net.xuele.view
 		private function getDrawView(e:TimerEvent,page:IBigPage):void
 		{
 			Timer(e.target).removeEventListener(TimerEvent.TIMER,function(e:TimerEvent):void{getDrawView(e,page)});
-			CommondView.drawView=page.drawGroup;
 			DrawData._currentCanvas=page.drawGroup;
-//			this.addEventListener(Event.ENTER_FRAME,enterHandler);
 		}
-//		private function enterHandler(e:Event):void
-//		{
-//			trace(DrawData._currentCanvas.mouseEnabled)
-//		}
+		private function createPageNum():void
+		{
+			var leftPageNum:PageNumView=new PageNumView;
+			_pageNumGroup.addElement(leftPageNum);
+			leftPageNum.left=0;
+			if(MainData._teachType!=1){
+				var rightPageNum:PageNumView=new PageNumView;
+				_pageNumGroup.addElement(rightPageNum);
+				rightPageNum.right=0;
+			}
+		}
 		
 	}
 }

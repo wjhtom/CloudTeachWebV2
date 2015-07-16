@@ -15,10 +15,12 @@ package net.xuele.view.pages.view
 	import net.xuele.view.menu.view.DelMovie;
 	import net.xuele.view.pages.interfaces.IBigPage;
 	import net.xuele.view.resources.events.ResEvent;
+	import net.xuele.view.resources.factory.ResFactory;
 	import net.xuele.view.resources.interfaces.IResShow;
 	import net.xuele.view.resources.resShow.DocShow;
 	import net.xuele.view.resources.resShow.ImageShow;
 	import net.xuele.view.resources.utils.ResData;
+	import net.xuele.view.resources.utils.ResShowUtil;
 	import net.xuele.view.resources.utils.ResTransform;
 	
 	import org.flexlite.domUI.components.Alert;
@@ -114,6 +116,7 @@ package net.xuele.view.pages.view
 				_resShow.x=this.mouseX;
 				_resShow.y=this.mouseY;
 			}
+			_resShow.isOpen=true;
 			_resShow.dragGroup.addEventListener(MouseEvent.MOUSE_DOWN,downHandler);
 			_resShow.dragGroup.addEventListener(MouseEvent.MOUSE_UP,upHandler);
 			_resShow.dragGroup.addEventListener(MouseEvent.RELEASE_OUTSIDE,upHandler);
@@ -150,8 +153,9 @@ package net.xuele.view.pages.view
 				}
 			}
 			if(_delMC.hitTestPoint(this.mouseX,this.mouseY,true)){
-				tempRes.removeListener();
-				this._resGroup.removeElement(tempRes);
+//				tempRes.removeListener();
+//				this._resGroup.removeElement(tempRes);
+				ResShowUtil.removeResShow(this._resGroup,tempRes);
 			}
 			this.removeElement(_delMC);
 			Group(tempRes).stopDrag();

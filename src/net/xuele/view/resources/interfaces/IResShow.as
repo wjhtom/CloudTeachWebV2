@@ -42,6 +42,12 @@ package net.xuele.view.resources.interfaces
 		 */
 		function get isOpen():Boolean;
 		/**
+		 * 是否缩小 
+		 * @return 
+		 * 
+		 */
+		function set isOpen(value:Boolean):void;
+		/**
 		 * 获取鼠标拖动区域 
 		 * @return 
 		 * 

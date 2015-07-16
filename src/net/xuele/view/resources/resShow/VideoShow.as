@@ -319,7 +319,7 @@ package net.xuele.view.resources.resShow
 				CommondView.popView.removeElementAt(0);
 //				this._vidGroup.width=this._BGWidth;
 //				this._vidGroup.height=this._BGHeight;
-				CommondView.resShowView.addElement(this);
+				Group(CommondView.contentView).addElement(this);
 				this.includeInLayout=false;
 				this._vidUI.scaleX=this._vidUI.scaleY=1;
 				this._vidUI.width=this._vidWidth;

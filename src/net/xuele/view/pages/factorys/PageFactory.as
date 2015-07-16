@@ -22,9 +22,9 @@ package net.xuele.view.pages.factorys
 		{
 //			CommondView.resShowView.removeElement(page);
 		}
-		public function createPageNum():IPageNum
+		public function createPageNum(v:int):IPageNum
 		{
-			return new PageNum;
+			return new PageNum(v);
 		}
 		public function removePageNum(page:IPageNum):void
 		{

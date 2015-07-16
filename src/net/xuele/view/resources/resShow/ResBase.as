@@ -64,6 +64,10 @@ package net.xuele.view.resources.resShow
 		{
 			return this._isOpen;
 		}
+		public function set isOpen(value:Boolean):void
+		{
+			this._isOpen=value;
+		}
 		public function get drawGroup():Group
 		{
 			return null;

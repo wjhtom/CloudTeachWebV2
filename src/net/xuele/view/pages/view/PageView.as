@@ -11,6 +11,8 @@ package net.xuele.view.pages.view
 	
 	import net.xuele.commond.CommondView;
 	import net.xuele.utils.MainData;
+	import net.xuele.utils.PublicOperate;
+	import net.xuele.view.menu.view.DelMovie;
 	import net.xuele.view.pages.interfaces.IBigPage;
 	import net.xuele.view.resources.events.ResEvent;
 	import net.xuele.view.resources.interfaces.IResShow;
@@ -19,6 +21,7 @@ package net.xuele.view.pages.view
 	import net.xuele.view.resources.utils.ResData;
 	import net.xuele.view.resources.utils.ResTransform;
 	
+	import org.flexlite.domUI.components.Alert;
 	import org.flexlite.domUI.components.Group;
 	import org.flexlite.domUI.core.UIComponent;
 	
@@ -26,6 +29,10 @@ package net.xuele.view.pages.view
 	{
 		private var _drawGroup:Group;
 		private var _resGroup:Group;
+		private const _maxResNum:int=10;
+		private var _delMC:DelMovie;
+		
+		private var _resShow:IResShow;
 		public function PageView()
 		{
 			super();
@@ -68,6 +75,7 @@ package net.xuele.view.pages.view
 			this._drawGroup.width=stage.stageWidth;
 			this._drawGroup.height=stage.stageHeight;
 			this._drawGroup.mouseEnabled=false;
+			this._drawGroup.mouseChildren=false;
 			this.addElement(_drawGroup);
 			addListener();
 		}
@@ -80,9 +88,14 @@ package net.xuele.view.pages.view
 		}
 		public function addRes(res:IResShow):void
 		{
-			this._resGroup.addElement(res);
+			if(this._resGroup.numElements>=this._maxResNum){
+				PublicOperate.setAlert("资源已满","当前页面资源数已满，请添加新页面");
+				return;
+			}
+			_resShow=res;
+			this._resGroup.addElement(_resShow);
 //			if(res is ImageShow || res is DocShow){
-				res.addEventListener(ResEvent.LOADRESCOM,function(e:ResEvent):void{loadResComHandler(e,res)});
+			_resShow.addEventListener(ResEvent.LOADRESCOM,loadResComHandler);
 //			}else{
 //				res.x=this.mouseX;
 //				res.y=this.mouseY;
@@ -91,52 +104,64 @@ package net.xuele.view.pages.view
 //			}
 			
 		}
-		private function loadResComHandler(e:ResEvent,res:IResShow):void
+		private function loadResComHandler(e:ResEvent):void
 		{
-			if(res is ImageShow || res is DocShow){
-				var rect:Rectangle=Group(res).getBounds(this.stage);
-				res.x=(stage.stageWidth-rect.width)/2;
-				res.y=0;
+			if(_resShow is ImageShow || _resShow is DocShow){
+				var rect:Rectangle=Group(_resShow).getBounds(this.stage);
+				_resShow.x=(stage.stageWidth-rect.width)/2;
+				_resShow.y=0;
 			}else{
-				res.x=this.mouseX;
-				res.y=this.mouseY;
+				_resShow.x=this.mouseX;
+				_resShow.y=this.mouseY;
 			}
-			res.dragGroup.addEventListener(MouseEvent.MOUSE_DOWN,function(e:MouseEvent):void{downHandler(e,res)});
-			res.dragGroup.addEventListener(MouseEvent.MOUSE_UP,function(e:MouseEvent):void{upHandler(e,res)});
-			res.dragGroup.addEventListener(MouseEvent.RELEASE_OUTSIDE,function(e:MouseEvent):void{upHandler(e,res)});
+			_resShow.dragGroup.addEventListener(MouseEvent.MOUSE_DOWN,downHandler);
+			_resShow.dragGroup.addEventListener(MouseEvent.MOUSE_UP,upHandler);
+			_resShow.dragGroup.addEventListener(MouseEvent.RELEASE_OUTSIDE,upHandler);
 		}
 		private  var downTime:Number;
-		private  function downHandler(e:MouseEvent,res:IResShow):void
+		private  function downHandler(e:MouseEvent):void
 		{
 //			var tempRes:IResShow=IResShow(UIComponent(e.currentTarget).parent);
-			if(res is ImageShow || res is DocShow){
+			if(_resShow is ImageShow || _resShow is DocShow){
 				downTime=getTimer();
 			}
-			Group(res).startDrag();
+			if(ResData._currentEditRes==null){
+				_delMC=new DelMovie;
+				this.addElement(_delMC);
+				_delMC.right=0;
+				_delMC.bottom=0;
+			}
+			Group(_resShow).startDrag();
 			
 		}
-		private  function upHandler(e:MouseEvent,res:IResShow):void
+		private  function upHandler(e:MouseEvent):void
 		{
 //			var tempRes:IResShow=IResShow(UIComponent(e.currentTarget).parent);
-			var tempRes:IResShow=res;
+			var tempRes:IResShow=_resShow;
 			if(tempRes is ImageShow || tempRes is DocShow){
 				if(getTimer()-downTime<150){
 					if(ResData._currentEditRes!=null){
 						ResTransform.removeTransRes();
 					}
-					tempRes.dragGroup.removeEventListener(MouseEvent.MOUSE_DOWN,function(e:MouseEvent):void{downHandler(e,res)});
-					tempRes.dragGroup.removeEventListener(MouseEvent.MOUSE_UP,function(e:MouseEvent):void{upHandler(e,res)});
+					tempRes.dragGroup.removeEventListener(MouseEvent.MOUSE_DOWN,downHandler);
+					tempRes.dragGroup.removeEventListener(MouseEvent.MOUSE_UP,upHandler);
 					tempRes.addEventListener(ResEvent.ADDRESLISTENER,addListenerHandler);
 					ResTransform.setTransRes(tempRes);
 				}
 			}
+			if(_delMC.hitTestPoint(this.mouseX,this.mouseY,true)){
+				tempRes.removeListener();
+				this._resGroup.removeElement(tempRes);
+			}
+			this.removeElement(_delMC);
 			Group(tempRes).stopDrag();
+			
 		}
 		private  function addListenerHandler(e:ResEvent):void
 		{
-			var res:IResShow=ResData._currentEditRes;
-			ResData._currentEditRes.dragGroup.addEventListener(MouseEvent.MOUSE_DOWN,function(e:MouseEvent):void{downHandler(e,res)});
-			ResData._currentEditRes.dragGroup.addEventListener(MouseEvent.MOUSE_UP,function(e:MouseEvent):void{upHandler(e,res)});
+			_resShow.removeEventListener(ResEvent.ADDRESLISTENER,addListenerHandler);
+			_resShow.dragGroup.addEventListener(MouseEvent.MOUSE_DOWN,downHandler);
+			_resShow.dragGroup.addEventListener(MouseEvent.MOUSE_UP,upHandler);
 		}
 		public function createSmallPage():void
 		{
@@ -148,6 +173,10 @@ package net.xuele.view.pages.view
 		public function get drawGroup():Group
 		{
 			return _drawGroup;
+		}
+		public function get resGroup():Group
+		{
+			return _resGroup;
 		}
 	}
 }

@@ -25,6 +25,12 @@ package net.xuele.view.pages.interfaces
 		 * 
 		 */
 		function get drawGroup():Group;
+		/**
+		 * 获取资源容器 
+		 * @return 
+		 * 
+		 */
+		function get resGroup():Group;
 		function removeListener():void;
 	}
 }

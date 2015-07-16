@@ -4,5 +4,7 @@ package net.xuele.view.pages.interfaces
 	{
 		function createPage():IBigPage;
 		function removePage(page:IBigPage):void;
+		function createPageNum():IPageNum;
+		function removePageNum(page:IPageNum):void;
 	}
 }

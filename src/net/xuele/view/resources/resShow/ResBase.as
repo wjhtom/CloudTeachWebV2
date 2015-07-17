@@ -18,6 +18,7 @@ package net.xuele.view.resources.resShow
 		protected var _contentVo:ContentVo;
 		protected var _isOpen:Boolean;
 		protected var _dragRect:UIComponent;
+		protected var _resID:String;
 		/**
 		 * 初使化还是新建（true：初使化，false：新建）
 		 */
@@ -79,6 +80,14 @@ package net.xuele.view.resources.resShow
 			}else{
 				return null;
 			}
+		}
+		public function set resID(v:String):void
+		{
+			this._resID=v;
+		}
+		public function get resID():String
+		{
+			return this._resID;
 		}
 	}
 }

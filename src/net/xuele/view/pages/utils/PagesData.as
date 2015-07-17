@@ -20,6 +20,10 @@ package net.xuele.view.pages.utils
 		 * 页面内容，[IBigPage,IBigPage,IBigPage...] 
 		 */
 		public static var _pagesAry:Array=[];
+		/**
+		 * 当前页id 
+		 */
+		public static var _currentPageID:int;
 		public function PagesData()
 		{
 		}

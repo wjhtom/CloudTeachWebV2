@@ -1,5 +1,7 @@
 package net.xuele.view.pages.interfaces
 {
+	import com.senocular.display.TransformTool;
+	
 	import net.xuele.view.resources.interfaces.IResShow;
 	
 	import org.flexlite.domUI.components.Group;
@@ -31,6 +33,7 @@ package net.xuele.view.pages.interfaces
 		 * 
 		 */
 		function get resGroup():Group;
+		function get defaultTools():TransformTool
 		function removeListener():void;
 	}
 }

@@ -9,13 +9,10 @@ package net.xuele.view.pages.view
 	import flash.utils.Timer;
 	import flash.utils.getTimer;
 	
-	import net.xuele.commond.CommondView;
-	import net.xuele.utils.MainData;
 	import net.xuele.utils.PublicOperate;
 	import net.xuele.view.menu.view.DelMovie;
 	import net.xuele.view.pages.interfaces.IBigPage;
 	import net.xuele.view.resources.events.ResEvent;
-	import net.xuele.view.resources.factory.ResFactory;
 	import net.xuele.view.resources.interfaces.IResShow;
 	import net.xuele.view.resources.resShow.DocShow;
 	import net.xuele.view.resources.resShow.ImageShow;
@@ -23,7 +20,6 @@ package net.xuele.view.pages.view
 	import net.xuele.view.resources.utils.ResShowUtil;
 	import net.xuele.view.resources.utils.ResTransform;
 	
-	import org.flexlite.domUI.components.Alert;
 	import org.flexlite.domUI.components.Group;
 	import org.flexlite.domUI.core.UIComponent;
 	
@@ -34,7 +30,8 @@ package net.xuele.view.pages.view
 		private const _maxResNum:int=10;
 		private var _delMC:DelMovie;
 		
-		private var _resShow:IResShow;
+		private var _smallResView:SmallResView;
+		
 		public function PageView()
 		{
 			super();
@@ -47,7 +44,7 @@ package net.xuele.view.pages.view
 		}
 		private function timerHandler(e:TimerEvent):void
 		{
-			Timer(e.currentTarget).removeEventListener(TimerEvent.TIMER,timerHandler);
+			Timer(e.target).removeEventListener(TimerEvent.TIMER,timerHandler);
 			init();
 		}
 		
@@ -64,7 +61,6 @@ package net.xuele.view.pages.view
 			ResData._currentTools.minScaleEnabled=true;
 			ResData._currentTools.minScaleX=0.1;
 			ResData._currentTools.minScaleY=0.1;
-			trace(ResData._currentTools.boundsBottomLeft);
 			
 			this._resGroup=new Group;
 			this.addElement(this._resGroup);
@@ -79,14 +75,13 @@ package net.xuele.view.pages.view
 			this._drawGroup.mouseEnabled=false;
 			this._drawGroup.mouseChildren=false;
 			this.addElement(_drawGroup);
+			
+			_smallResView=new SmallResView;
+			this.addElement(_smallResView);
 			addListener();
 		}
 		private function addListener():void
 		{
-		}
-		private function clickHandler(e:MouseEvent):void
-		{
-			trace(e.currentTarget);
 		}
 		public function addRes(res:IResShow):void
 		{
@@ -94,53 +89,52 @@ package net.xuele.view.pages.view
 				PublicOperate.setAlert("资源已满","当前页面资源数已满，请添加新页面");
 				return;
 			}
-			_resShow=res;
-			this._resGroup.addElement(_resShow);
-//			if(res is ImageShow || res is DocShow){
-			_resShow.addEventListener(ResEvent.LOADRESCOM,loadResComHandler);
-//			}else{
-//				res.x=this.mouseX;
-//				res.y=this.mouseY;
-//				res.dragGroup.addEventListener(MouseEvent.MOUSE_DOWN,downHandler);
-//				res.dragGroup.addEventListener(MouseEvent.MOUSE_UP,upHandler);
-//			}
+			this._resGroup.addElement(res);
+			res.resID=res.name;
+			res.addEventListener(ResEvent.LOADRESCOM,loadResComHandler);
 			
 		}
 		private function loadResComHandler(e:ResEvent):void
 		{
-			if(_resShow is ImageShow || _resShow is DocShow){
-				var rect:Rectangle=Group(_resShow).getBounds(this.stage);
-				_resShow.x=(stage.stageWidth-rect.width)/2;
-				_resShow.y=0;
+			var res:IResShow=IResShow(e.currentTarget);
+			if(res is ImageShow || res is DocShow){
+				var rect:Rectangle=Group(res).getBounds(this.stage);
+				res.x=(stage.stageWidth-rect.width)/2;
+				res.y=0;
 			}else{
-				_resShow.x=this.mouseX;
-				_resShow.y=this.mouseY;
+				res.x=this.mouseX;
+				res.y=this.mouseY;
 			}
-			_resShow.isOpen=true;
-			_resShow.dragGroup.addEventListener(MouseEvent.MOUSE_DOWN,downHandler);
-			_resShow.dragGroup.addEventListener(MouseEvent.MOUSE_UP,upHandler);
-			_resShow.dragGroup.addEventListener(MouseEvent.RELEASE_OUTSIDE,upHandler);
+			Group(res).mouseEnabled=false;
+			res.isOpen=true;
+			res.dragGroup.addEventListener(MouseEvent.MOUSE_DOWN,downHandler);
+			res.dragGroup.addEventListener(MouseEvent.MOUSE_UP,upHandler);
+			res.dragGroup.addEventListener(MouseEvent.RELEASE_OUTSIDE,upHandler);
 		}
 		private  var downTime:Number;
 		private  function downHandler(e:MouseEvent):void
 		{
-//			var tempRes:IResShow=IResShow(UIComponent(e.currentTarget).parent);
-			if(_resShow is ImageShow || _resShow is DocShow){
+			var tempRes:IResShow=IResShow(UIComponent(e.currentTarget).parent);
+			if(ResData._currentEditRes!=null){
+				ResTransform.removeTransRes();
+			}
+			_resGroup.setElementIndex(tempRes,_resGroup.numElements-1);
+			if(tempRes is ImageShow || tempRes is DocShow){
 				downTime=getTimer();
 			}
-			if(ResData._currentEditRes==null){
+//			if(ResData._currentEditRes==null){
 				_delMC=new DelMovie;
 				this.addElement(_delMC);
 				_delMC.right=0;
 				_delMC.bottom=0;
-			}
-			Group(_resShow).startDrag();
+//			}
+			Group(tempRes).startDrag();
 			
 		}
 		private  function upHandler(e:MouseEvent):void
 		{
-//			var tempRes:IResShow=IResShow(UIComponent(e.currentTarget).parent);
-			var tempRes:IResShow=_resShow;
+			var tempRes:IResShow=IResShow(UIComponent(e.currentTarget).parent);
+//			var tempRes:IResShow=_resShow;
 			if(tempRes is ImageShow || tempRes is DocShow){
 				if(getTimer()-downTime<150){
 					if(ResData._currentEditRes!=null){
@@ -152,20 +146,22 @@ package net.xuele.view.pages.view
 					ResTransform.setTransRes(tempRes);
 				}
 			}
-			if(_delMC.hitTestPoint(this.mouseX,this.mouseY,true)){
-//				tempRes.removeListener();
-//				this._resGroup.removeElement(tempRes);
-				ResShowUtil.removeResShow(this._resGroup,tempRes);
+			if(_delMC!=null){
+				if(_delMC.hitTestPoint(this.mouseX,this.mouseY,true)){
+					ResShowUtil.removeResShow(this._resGroup,tempRes);
+				}
+				this.removeElement(_delMC);
+				_delMC=null;
 			}
-			this.removeElement(_delMC);
 			Group(tempRes).stopDrag();
 			
 		}
 		private  function addListenerHandler(e:ResEvent):void
 		{
-			_resShow.removeEventListener(ResEvent.ADDRESLISTENER,addListenerHandler);
-			_resShow.dragGroup.addEventListener(MouseEvent.MOUSE_DOWN,downHandler);
-			_resShow.dragGroup.addEventListener(MouseEvent.MOUSE_UP,upHandler);
+			var res:IResShow=IResShow(e.target);
+			res.removeEventListener(ResEvent.ADDRESLISTENER,addListenerHandler);
+			res.dragGroup.addEventListener(MouseEvent.MOUSE_DOWN,downHandler);
+			res.dragGroup.addEventListener(MouseEvent.MOUSE_UP,upHandler);
 		}
 		public function createSmallPage():void
 		{
@@ -181,6 +177,10 @@ package net.xuele.view.pages.view
 		public function get resGroup():Group
 		{
 			return _resGroup;
+		}
+		public function get defaultTools():TransformTool
+		{
+			return this.defaultTool;
 		}
 	}
 }

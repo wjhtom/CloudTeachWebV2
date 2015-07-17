@@ -15,12 +15,14 @@ package net.xuele.view
 	import net.xuele.view.pages.interfaces.IBigPage;
 	import net.xuele.view.pages.interfaces.IPageFactory;
 	import net.xuele.view.pages.utils.PagesData;
+	import net.xuele.view.pages.utils.PagesUtil;
 	import net.xuele.view.pages.view.PageNumView;
 	
 	import org.flexlite.domUI.components.Group;
 	import org.flexlite.domUI.components.Rect;
 	import org.flexlite.domUI.events.UIEvent;
 	import org.flexlite.domUI.layouts.VerticalLayout;
+	import org.flexlite.domUI.utils.callLater;
 	
 	public class Main extends Group
 	{
@@ -116,15 +118,16 @@ package net.xuele.view
 			CommondView.contentView=page;
 			PagesData._currentPage=page;
 			PagesData._currnetPageNum++;
+			PagesData._currentPageID=0;
+			PagesData._pagesAry.push(page);
 			var timer:Timer=new Timer(20,1);
-			timer.addEventListener(TimerEvent.TIMER,function(e:TimerEvent):void{getDrawView(e,page)});
+			timer.addEventListener(TimerEvent.TIMER,getDrawView);
 			timer.start();
-			
 		}
-		private function getDrawView(e:TimerEvent,page:IBigPage):void
+		private function getDrawView(e:TimerEvent):void
 		{
-			Timer(e.target).removeEventListener(TimerEvent.TIMER,function(e:TimerEvent):void{getDrawView(e,page)});
-			DrawData._currentCanvas=page.drawGroup;
+			Timer(e.target).removeEventListener(TimerEvent.TIMER,getDrawView);
+			DrawData._currentCanvas=CommondView.contentView.drawGroup;
 		}
 		private function createPageNum():void
 		{

@@ -10,6 +10,7 @@ package net.xuele.view.resources.resShow
 	import net.xuele.utils.PopUtils;
 	import net.xuele.view.resources.events.ResEvent;
 	
+	import org.flexlite.domUI.components.Rect;
 	import org.flexlite.domUI.components.UIAsset;
 	import org.flexlite.domUtils.DomLoader;
 	
@@ -50,6 +51,8 @@ package net.xuele.view.resources.resShow
 			var ui:UIAsset=new UIAsset;
 			ui.skinName=new Bitmap(data);
 			this._resGroup.addElement(ui);
+			this.drawGroup.width=ui.width;
+			this.drawGroup.height=ui.height;
 			var tempW:Number=CommondView.resShowView.width;
 			var tempH:Number=CommondView.resShowView.height-50;
 			if(ui.width>=tempW&&ui.height>=tempH){
@@ -66,10 +69,15 @@ package net.xuele.view.resources.resShow
 				scale=1;
 			}
 			ui.scaleX=ui.scaleY=scale;
-			this.drawGroup.width=ui.width;
-			this.drawGroup.height=ui.height;
+		
 			this.drawGroup.scaleX=this.drawGroup.scaleY=scale;
 			this._dragRect=_resGroup;
+//			Rect(_dragRect).fillAlpha=0;
+//			Rect(_dragRect).fillColor=0x000000;
+//			Rect(_dragRect).width=ui.width;
+//			Rect(_dragRect).height=ui.height;
+//			Rect(_dragRect)..scaleX=Rect(_dragRect).scaleY=scale;
+//			this.addElement(Rect(_dragRect));
 			this.dispatchEvent(new ResEvent(ResEvent.LOADRESCOM));
 		}
 		

@@ -53,6 +53,17 @@ package net.xuele.view.resources.interfaces
 		 * 
 		 */
 		function get dragGroup():UIComponent;
-			
+		/**
+		 * 设置当前资源ID 
+		 * @param v
+		 * 
+		 */
+		function set resID(v:String):void;
+		/**
+		 * 获取当前资源ID 
+		 * @return 
+		 * 
+		 */
+		function get resID():String;
 	}
 }

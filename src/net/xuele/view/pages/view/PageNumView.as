@@ -10,6 +10,7 @@ package net.xuele.view.pages.view
 	import net.xuele.view.pages.factorys.PageFactory;
 	import net.xuele.view.pages.interfaces.IPageNum;
 	import net.xuele.view.pages.utils.PagesData;
+	import net.xuele.view.pages.utils.PagesUtil;
 	
 	import org.flexlite.domUI.components.Group;
 	import org.flexlite.domUI.components.McButton;
@@ -29,6 +30,7 @@ package net.xuele.view.pages.view
 		private var _delPageBtn:McButton;
 		private var _factory:PageFactory;
 		private var _selectedPage:IPageNum;
+//		private var _selectedID:int;
 		
 		private var _contentGroup:Group;
 		private var _numGroup:Group;
@@ -68,7 +70,6 @@ package net.xuele.view.pages.view
 			_numGroup=new Group;
 			_numGroup.layout=numLayout;
 			_contentGroup.addElement(_numGroup);
-			PagesData._currnetPageNum=3;
 			for(var i:int=0;i<PagesData._currnetPageNum;i++){
 				var pageNum:IPageNum=_factory.createPageNum(i);
 				_numGroup.addElement(pageNum);
@@ -100,10 +101,12 @@ package net.xuele.view.pages.view
 			if(_pageNum.pageID==_selectedPage.pageID){
 				return;
 			}
+			PublicOperate.setMouseType(0);
 			_selectedPage.unSelectedPage();
 			_selectedPage=_pageNum;
 			_pageNum.selectedPage();
 			Group(_selectedPage).addElement(this._delPageBtn);
+			PagesUtil.changeBigPage(_selectedPage.pageID);
 		}
 		private function addPageHandler(e:MouseEvent):void
 		{
@@ -111,10 +114,15 @@ package net.xuele.view.pages.view
 				PublicOperate.setAlert("页数满了","页数已满，不能再添加了");
 				return;
 			}
-			PagesData._currnetPageNum++;
+			PagesUtil.addPage();
+			_selectedPage.unSelectedPage();
 			var pageNum:IPageNum=_factory.createPageNum(PagesData._currnetPageNum-1);
 			_numGroup.addElement(pageNum);
-			
+			_selectedPage=pageNum;
+			this.validateNow();
+			_selectedPage.selectedPage();
+			Group(_selectedPage).addElement(this._delPageBtn);
+			pageNum.addEventListener(MouseEvent.CLICK,selectPageHandler);
 		}
 		private function createDelBtn():void
 		{
@@ -136,11 +144,10 @@ package net.xuele.view.pages.view
 				var pageNum:IPageNum=IPageNum(_numGroup.getElementAt(i));
 				pageNum.removeEventListener(MouseEvent.CLICK,selectPageHandler);
 			}
-			this._delPageBtn.removeEventListener(MouseEvent.CLICK,delPage);
+//			this._delPageBtn.removeEventListener(MouseEvent.CLICK,delPage);
 			Group(_selectedPage).removeElement(this._delPageBtn);
 			_numGroup.removeAllElements();
-			PagesData._currnetPageNum--;
-//			PagesData._pagesAry.splice(this._selectedPage.pageID,1);
+			PagesUtil.delPage(_selectedPage.pageID);
 			resetPage();
 		}
 		private function resetPage():void
@@ -148,12 +155,16 @@ package net.xuele.view.pages.view
 			for(var i:int=0;i<PagesData._currnetPageNum;i++){
 				var pageNum:IPageNum=_factory.createPageNum(i);
 				_numGroup.addElement(pageNum);
-				if(i==0){
-					this._selectedPage=pageNum;
+				if(i==PagesData._currentPageID){
+					_selectedPage=pageNum;
 				}
 				pageNum.addEventListener(MouseEvent.CLICK,selectPageHandler);
 			}
+			this.validateNow();
+			this._selectedPage.selectedPage();
+			Group(_selectedPage).addElement(this._delPageBtn);
 		}
+		
 		private function addListener():void
 		{
 			

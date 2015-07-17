@@ -26,6 +26,7 @@ package net.xuele.view.draw.utils
 		}
 		public static function drawPencil():void
 		{
+			trace(DrawData._currentCanvas)
 			DrawData._currentCanvas.mouseEnabled=true;
 			DrawData._currentCanvas.blendMode=BlendMode.LAYER;
 			DrawData._currentCanvas.addEventListener(MouseEvent.MOUSE_DOWN,pencilDownHandler);

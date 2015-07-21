@@ -19,6 +19,9 @@ package net.xuele.view.resources.resShow
 		protected var _isOpen:Boolean;
 		protected var _dragRect:UIComponent;
 		protected var _resID:String;
+		protected var _resScaleX:Number;
+		protected var _resScaleY:Number;
+		
 		/**
 		 * 初使化还是新建（true：初使化，false：新建）
 		 */
@@ -88,6 +91,22 @@ package net.xuele.view.resources.resShow
 		public function get resID():String
 		{
 			return this._resID;
+		}
+		public function set resScaleX(v:Number):void
+		{
+			this._resScaleX=v;
+		}
+		public function get resScaleX():Number
+		{
+			return this._resScaleX;
+		}
+		public function set resScaleY(v:Number):void
+		{
+			this._resScaleY=v;
+		}
+		public function get resScaleY():Number
+		{
+			return this._resScaleY;
 		}
 	}
 }

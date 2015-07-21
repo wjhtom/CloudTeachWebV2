@@ -113,7 +113,7 @@ package net.xuele.view.resources.resShow
 			this.drawGroup.width=_docMovie.width;
 			this.drawGroup.height=_docMovie.height;
 			this.drawGroup.scaleX=this.drawGroup.scaleY=scale;
-			this._dragRect=this._docMovie;
+			this._dragRect=this._resGroup;
 			this.dispatchEvent(new ResEvent(ResEvent.LOADRESCOM));
 			
 		}

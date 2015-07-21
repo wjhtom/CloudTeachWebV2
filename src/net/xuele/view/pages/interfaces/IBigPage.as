@@ -3,6 +3,7 @@ package net.xuele.view.pages.interfaces
 	import com.senocular.display.TransformTool;
 	
 	import net.xuele.view.resources.interfaces.IResShow;
+	import net.xuele.view.resources.resShow.ImageShow;
 	
 	import org.flexlite.domUI.components.Group;
 	import org.flexlite.domUI.core.IVisualElement;
@@ -33,7 +34,14 @@ package net.xuele.view.pages.interfaces
 		 * 
 		 */
 		function get resGroup():Group;
-		function get defaultTools():TransformTool
+		function get defaultTools():TransformTool;
+		/**
+		 * 从缩略图拉到黑板上 
+		 * @param res
+		 * 
+		 */
+		function getResFormSmallView(res:IResShow):void;
+			
 		function removeListener():void;
 	}
 }

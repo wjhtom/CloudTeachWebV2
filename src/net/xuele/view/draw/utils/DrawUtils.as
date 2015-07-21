@@ -48,8 +48,8 @@ package net.xuele.view.draw.utils
 			
 			isDown=true;
 			drawGroup=new Group;
-			drawGroup.x=e.stageX;
-			drawGroup.y=e.stageY;
+			drawGroup.x=drawGroup.mouseX;
+			drawGroup.y=drawGroup.mouseY;
 			var thickness:int;
 			if(MainData._mouseType==1){
 				switch(DrawData._pencilThickness){
@@ -101,7 +101,8 @@ package net.xuele.view.draw.utils
 			if(drawGroup==null){
 				return;
 			}
-			drawGroup.graphics.lineTo(e.stageX-drawGroup.x,e.stageY-drawGroup.y);
+//			drawGroup.graphics.lineTo(e.stageX-drawGroup.x,e.stageY-drawGroup.y);
+			drawGroup.graphics.lineTo(drawGroup.mouseX,drawGroup.mouseY);
 //			if(MainData._mouseType==1){
 //			}else if(MainData._mouseType==3){
 //				

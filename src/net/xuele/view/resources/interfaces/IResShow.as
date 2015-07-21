@@ -65,5 +65,30 @@ package net.xuele.view.resources.interfaces
 		 * 
 		 */
 		function get resID():String;
+		/**
+		 * 设置缩放比例 X
+		 * @param v
+		 * 
+		 */
+		function set resScaleX(v:Number):void;
+		/**
+		 *  获取缩放比例X
+		 * @return 
+		 * 
+		 */
+		function get resScaleX():Number;
+		/**
+		 * 设置缩放比例Y 
+		 * @param v
+		 * 
+		 */
+		function set resScaleY(v:Number):void;
+		/**
+		 * 获取缩放比例Y 
+		 * @return 
+		 * 
+		 */
+		function get resScaleY():Number;
+			
 	}
 }

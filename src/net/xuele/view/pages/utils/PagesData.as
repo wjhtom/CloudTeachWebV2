@@ -1,6 +1,7 @@
 package net.xuele.view.pages.utils
 {
 	import net.xuele.view.pages.interfaces.IBigPage;
+	import net.xuele.view.resources.interfaces.IResShow;
 
 	public class PagesData
 	{
@@ -24,6 +25,10 @@ package net.xuele.view.pages.utils
 		 * 当前页id 
 		 */
 		public static var _currentPageID:int;
+		/**
+		 * 当前输入 
+		 */
+		public static var _currentInput:IResShow;
 		public function PagesData()
 		{
 		}

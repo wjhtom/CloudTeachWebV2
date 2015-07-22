@@ -31,15 +31,19 @@ package net.xuele.view.resources.resShow
 			super();
 		}
 		
-		public function createUI(resVo:ResourceVo):void
+		public function createUI(resVo:ResourceVo=null):void
 		{
-			this._resVo=resVo;
+			if(resVo!=null){
+				this._resVo=resVo;
+			}
 			this._isCreate=false;
 			getThisStage();
 		}
-		public function createResInfo(contentVo:ContentVo):void
+		public function createResInfo(contentVo:ContentVo=null):void
 		{
-			this._contentVo=contentVo;
+			if(contentVo!=null){
+				this._contentVo=contentVo;
+			}
 			this._isCreate=true;
 			getThisStage();
 		}
@@ -57,6 +61,10 @@ package net.xuele.view.resources.resShow
 			init();
 		}
 		
+		/**
+		 * 继承后重写覆盖 
+		 * 
+		 */
 		protected function init():void
 		{
 			

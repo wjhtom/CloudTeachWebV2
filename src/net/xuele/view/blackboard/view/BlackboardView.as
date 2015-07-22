@@ -3,12 +3,18 @@ package net.xuele.view.blackboard.view
 	import flash.events.MouseEvent;
 	
 	import net.xuele.commond.CommondView;
+	import net.xuele.utils.MainData;
+	import net.xuele.view.pages.utils.InputUtil;
+	import net.xuele.view.pages.utils.PagesData;
 	import net.xuele.view.resources.events.ResEvent;
+	import net.xuele.view.resources.interfaces.IResShow;
+	import net.xuele.view.resources.resShow.InputShow;
 	import net.xuele.view.resources.utils.ResData;
 	import net.xuele.view.resources.utils.ResTransform;
 	
 	import org.flexlite.domUI.components.Group;
 	import org.flexlite.domUI.components.Rect;
+	import org.flexlite.domUI.core.DomGlobals;
 	import org.flexlite.domUI.events.UIEvent;
 	
 	public class BlackboardView extends Group
@@ -41,6 +47,19 @@ package net.xuele.view.blackboard.view
 		{
 			if(ResData._currentEditRes!=null){
 				ResTransform.removeTransRes();
+			}
+			if(MainData._mouseType==4){
+				if(PagesData._currentInput==null)
+				{
+					InputUtil.startInput();
+				}else{
+					InputShow(PagesData._currentInput)._contentText.selectable=false;
+					InputShow(PagesData._currentInput).dispatchEvent(new ResEvent(ResEvent.ADDINPUTLISTENER));
+					InputShow(PagesData._currentInput).clearBg();
+					DomGlobals.stage.focus = null;
+					InputUtil.stopInput();
+				}
+				
 			}
 		}
 	}

@@ -8,7 +8,7 @@ package net.xuele.view.resources.interfaces
 	{
 		function createResBox(resVo:ResourceVo):IResBox;
 		function removeResBox(domain:Group,res:IResBox):void;
-		function createResShow(resVo:ResourceVo):IResShow;
+		function createResShow(resVo:ResourceVo=null):IResShow;
 		function removeResShow(domain:Group,res:IResShow):void;
 	}
 }

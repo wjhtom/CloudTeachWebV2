@@ -37,7 +37,7 @@ package net.xuele.view.resources.resShow
 			createRes();
 		}
 		/**
-		 * 创建资源 
+		 * 创建资源 ,继承后重写
 		 * 
 		 */
 		protected function createRes():void

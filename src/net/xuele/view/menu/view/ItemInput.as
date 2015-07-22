@@ -1,5 +1,9 @@
 package net.xuele.view.menu.view
 {
+	import net.xuele.utils.MainData;
+	import net.xuele.utils.PublicOperate;
+	import net.xuele.view.pages.utils.InputUtil;
+
 	/**
 	 * 输入文字 
 	 * @author jianhua
@@ -13,6 +17,10 @@ package net.xuele.view.menu.view
 		}
 		override protected function itemClick():void
 		{
+			if(MainData._mouseType!=4){
+				super.itemClick();
+			}
+			PublicOperate.setMouseType(4);
 			
 		}
 	}

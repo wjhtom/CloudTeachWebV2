@@ -10,6 +10,7 @@ package net.xuele.view.resources.factory
 	import net.xuele.view.resources.resBox.ResView;
 	import net.xuele.view.resources.resShow.DocShow;
 	import net.xuele.view.resources.resShow.ImageShow;
+	import net.xuele.view.resources.resShow.InputShow;
 	import net.xuele.view.resources.resShow.SoundShow;
 	import net.xuele.view.resources.resShow.VideoShow;
 	import net.xuele.vo.ResourceVo;
@@ -32,10 +33,15 @@ package net.xuele.view.resources.factory
 			var dragView:IResBox=new DragIcon(resVo);
 			return dragView;
 		}
-		public function createResShow(resVo:ResourceVo):IResShow
+		public function createResShow(resVo:ResourceVo=null):IResShow
 		{
-			resVo._ex="jpg";
 			var res:IResShow;
+			if(resVo==null){
+				res=new InputShow;
+				res.createUI();
+				return res;
+			}
+			resVo._ex="jpg";
 			switch(resVo._ex){
 				case "png":
 				case "jpeg":

@@ -13,10 +13,13 @@ package net.xuele.view.pages.view
 	import net.xuele.utils.PublicOperate;
 	import net.xuele.view.menu.view.DelMovie;
 	import net.xuele.view.pages.interfaces.IBigPage;
+	import net.xuele.view.pages.utils.PagesData;
 	import net.xuele.view.resources.events.ResEvent;
+	import net.xuele.view.resources.interfaces.IResBox;
 	import net.xuele.view.resources.interfaces.IResShow;
 	import net.xuele.view.resources.resShow.DocShow;
 	import net.xuele.view.resources.resShow.ImageShow;
+	import net.xuele.view.resources.resShow.InputShow;
 	import net.xuele.view.resources.utils.ResData;
 	import net.xuele.view.resources.utils.ResShowUtil;
 	import net.xuele.view.resources.utils.ResTransform;
@@ -138,6 +141,31 @@ package net.xuele.view.pages.view
 			}
 			Group(res).mouseEnabled=false;
 			res.isOpen=true;
+			res.dragGroup.addEventListener(MouseEvent.MOUSE_DOWN,downHandler);
+			res.dragGroup.addEventListener(MouseEvent.MOUSE_UP,upHandler);
+			res.dragGroup.addEventListener(MouseEvent.MOUSE_MOVE,moveHandler);
+			res.dragGroup.addEventListener(MouseEvent.RELEASE_OUTSIDE,upHandler);
+			if(res is InputShow){
+				Group(res).doubleClickEnabled=true;
+				Group(res).addEventListener(MouseEvent.DOUBLE_CLICK,textDoubleClick);
+			}
+		}
+		private function textDoubleClick(e:MouseEvent):void
+		{
+			trace("double");
+			var res:IResShow=IResShow(e.currentTarget);
+			InputShow(res)._contentText.selectable=true;
+			PagesData._currentInput=res;
+			PublicOperate.setMouseType(4);
+			res.dragGroup.removeEventListener(MouseEvent.MOUSE_DOWN,downHandler);
+			res.dragGroup.removeEventListener(MouseEvent.MOUSE_UP,upHandler);
+			res.dragGroup.removeEventListener(MouseEvent.MOUSE_MOVE,moveHandler);
+			res.dragGroup.removeEventListener(MouseEvent.RELEASE_OUTSIDE,upHandler);
+			res.addEventListener(ResEvent.ADDINPUTLISTENER,textMouseEnabled);
+		}
+		private function textMouseEnabled(e:ResEvent):void
+		{
+			var res:IResShow=IResShow(e.target);
 			res.dragGroup.addEventListener(MouseEvent.MOUSE_DOWN,downHandler);
 			res.dragGroup.addEventListener(MouseEvent.MOUSE_UP,upHandler);
 			res.dragGroup.addEventListener(MouseEvent.MOUSE_MOVE,moveHandler);

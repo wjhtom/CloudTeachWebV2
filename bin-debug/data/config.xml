@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <SKConfig>
-  <Parameters>userid|pwd|jcid|kcid|skid|url</Parameters>
+  
   <Interfaces>
     <AllResource url="http://pan.xuele.net/jsons/GetFileByUnitCodeByWebC" desc="所有资源">kcid</AllResource>
     <TeacherEdit url="http://pan.xuele.net/jsons/CoursewareGetByID" desc="编辑,授课时候调用获取课件信息">id|kcid</TeacherEdit>

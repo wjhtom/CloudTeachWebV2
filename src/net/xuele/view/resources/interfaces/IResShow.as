@@ -17,13 +17,13 @@ package net.xuele.view.resources.interfaces
 		 * @param resVo
 		 * 
 		 */
-		function createUI(resVo:ResourceVo):void;
+		function createUI(resVo:ResourceVo=null):void;
 		/**
 		 * 打开保存的资源
 		 * 用于初使化课件时用
 		 * @param contentVo
 		 */
-		function createResInfo(contentVo:ContentVo):void;
+		function createResInfo(contentVo:ContentVo=null):void;
 		/**
 		 * 移除事件 
 		 * 

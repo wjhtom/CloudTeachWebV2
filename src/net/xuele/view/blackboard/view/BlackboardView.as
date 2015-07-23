@@ -53,10 +53,7 @@ package net.xuele.view.blackboard.view
 				{
 					InputUtil.startInput();
 				}else{
-					InputShow(PagesData._currentInput)._contentText.selectable=false;
-					InputShow(PagesData._currentInput).dispatchEvent(new ResEvent(ResEvent.ADDINPUTLISTENER));
-					InputShow(PagesData._currentInput).clearBg();
-					DomGlobals.stage.focus = null;
+					
 					InputUtil.stopInput();
 				}
 				

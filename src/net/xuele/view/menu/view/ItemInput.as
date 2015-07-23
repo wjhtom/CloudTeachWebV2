@@ -1,5 +1,8 @@
 package net.xuele.view.menu.view
 {
+	import flash.display.StageDisplayState;
+	import flash.display.StageScaleMode;
+	
 	import net.xuele.utils.MainData;
 	import net.xuele.utils.PublicOperate;
 	import net.xuele.view.pages.utils.InputUtil;
@@ -21,7 +24,14 @@ package net.xuele.view.menu.view
 				super.itemClick();
 			}
 			PublicOperate.setMouseType(4);
-			
+			if(stage.displayState==StageDisplayState.FULL_SCREEN){
+				stage.displayState=StageDisplayState.NORMAL;
+				this._UIMovie.gotoAndStop(0);
+			}else{
+				stage.displayState=StageDisplayState.FULL_SCREEN;
+				stage.scaleMode=StageScaleMode.EXACT_FIT;
+				this._UIMovie.gotoAndStop(1);
+			}
 		}
 	}
 }

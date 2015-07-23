@@ -13,6 +13,7 @@ package net.xuele.view.pages.view
 	import net.xuele.utils.PublicOperate;
 	import net.xuele.view.menu.view.DelMovie;
 	import net.xuele.view.pages.interfaces.IBigPage;
+	import net.xuele.view.pages.utils.InputUtil;
 	import net.xuele.view.pages.utils.PagesData;
 	import net.xuele.view.resources.events.ResEvent;
 	import net.xuele.view.resources.interfaces.IResBox;
@@ -31,7 +32,7 @@ package net.xuele.view.pages.view
 	{
 		private var _drawGroup:Group;
 		private var _resGroup:Group;
-		private const _maxResNum:int=10;
+		private const _maxResNum:int=12;
 		private var _delMC:DelMovie;
 		
 		private var _smallResView:SmallResView;
@@ -112,6 +113,9 @@ package net.xuele.view.pages.view
 			Group(res).scaleY=res.resScaleY;
 			setResInfo(res);
 			this._smallResView.closeBox();
+			if(res is InputShow){
+				res.dispatchEvent(new ResEvent(ResEvent.ADDINPUTLISTENER));
+			}
 		} 
 		private function setResInfo(res:IResShow):void
 		{
@@ -141,13 +145,20 @@ package net.xuele.view.pages.view
 			}
 			Group(res).mouseEnabled=false;
 			res.isOpen=true;
-			res.dragGroup.addEventListener(MouseEvent.MOUSE_DOWN,downHandler);
-			res.dragGroup.addEventListener(MouseEvent.MOUSE_UP,upHandler);
-			res.dragGroup.addEventListener(MouseEvent.MOUSE_MOVE,moveHandler);
-			res.dragGroup.addEventListener(MouseEvent.RELEASE_OUTSIDE,upHandler);
 			if(res is InputShow){
+				
 				Group(res).doubleClickEnabled=true;
+				res.dragGroup.removeEventListener(MouseEvent.MOUSE_DOWN,downHandler);
+				res.dragGroup.removeEventListener(MouseEvent.MOUSE_UP,upHandler);
+				res.dragGroup.removeEventListener(MouseEvent.MOUSE_MOVE,moveHandler);
+				res.dragGroup.removeEventListener(MouseEvent.RELEASE_OUTSIDE,upHandler);
 				Group(res).addEventListener(MouseEvent.DOUBLE_CLICK,textDoubleClick);
+				res.addEventListener(ResEvent.ADDINPUTLISTENER,textMouseEnabled);
+			}else{
+				res.dragGroup.addEventListener(MouseEvent.MOUSE_DOWN,downHandler);
+				res.dragGroup.addEventListener(MouseEvent.MOUSE_UP,upHandler);
+				res.dragGroup.addEventListener(MouseEvent.MOUSE_MOVE,moveHandler);
+				res.dragGroup.addEventListener(MouseEvent.RELEASE_OUTSIDE,upHandler);
 			}
 		}
 		private function textDoubleClick(e:MouseEvent):void
@@ -157,6 +168,8 @@ package net.xuele.view.pages.view
 			InputShow(res)._contentText.selectable=true;
 			PagesData._currentInput=res;
 			PublicOperate.setMouseType(4);
+			InputShow(res).setStroke();
+			InputUtil.createInputMenu();
 			res.dragGroup.removeEventListener(MouseEvent.MOUSE_DOWN,downHandler);
 			res.dragGroup.removeEventListener(MouseEvent.MOUSE_UP,upHandler);
 			res.dragGroup.removeEventListener(MouseEvent.MOUSE_MOVE,moveHandler);
@@ -213,6 +226,7 @@ package net.xuele.view.pages.view
 			if(_delMC!=null){
 				if(_delMC.hitTestPoint(this.mouseX,this.mouseY,true)){
 					ResShowUtil.removeResShow(this._resGroup,tempRes);
+					this._smallResView.delRes(tempRes);
 				}
 				this.removeElement(_delMC);
 				_delMC=null;

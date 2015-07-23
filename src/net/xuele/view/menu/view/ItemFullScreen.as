@@ -1,5 +1,11 @@
 package net.xuele.view.menu.view
 {
+	import flash.display.StageAlign;
+	import flash.display.StageDisplayState;
+	import flash.display.StageScaleMode;
+	
+	import net.xuele.utils.PublicOperate;
+
 	/**
 	 * 全屏 
 	 * @author jianhua
@@ -13,7 +19,16 @@ package net.xuele.view.menu.view
 		}
 		override protected function itemClick():void
 		{
-			
+			super.itemClick();
+			if(stage.displayState==StageDisplayState.FULL_SCREEN){
+				stage.displayState=StageDisplayState.NORMAL;
+				this._UIMovie.gotoAndStop(0);
+			}else{
+				stage.displayState=StageDisplayState.FULL_SCREEN;
+				stage.scaleMode=StageScaleMode.EXACT_FIT;
+				this._UIMovie.gotoAndStop(1);
+			}
+//			stage.align=StageAlign.TOP;
 		}
 	}
 }

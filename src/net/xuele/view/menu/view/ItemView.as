@@ -14,12 +14,14 @@ package net.xuele.view.menu.view
 	import net.xuele.view.menu.controller.PencilController;
 	import net.xuele.view.menu.interfaces.IItem;
 	import net.xuele.view.menu.utils.MenuData;
+	import net.xuele.view.pages.utils.InputUtil;
 	import net.xuele.view.resources.resBox.ResBoxView;
 	import net.xuele.view.resources.utils.ResData;
 	import net.xuele.view.resources.utils.ResDrawUtil;
 	
 	import org.flexlite.domUI.components.Group;
 	import org.flexlite.domUI.components.McButton;
+	import org.flexlite.domUI.components.UIMovieClip;
 	import org.flexlite.domUI.events.UIEvent;
 	
 	public class ItemView extends Group implements IItem
@@ -31,7 +33,7 @@ package net.xuele.view.menu.view
 		 * 10：习题作业，11：提分神器，12：保存，13：最大化,14:鼠标
 		 */
 		private var _menuType:int;
-		private var _UIMovie:McButton;
+		protected var _UIMovie:UIMovieClip;
 		public function ItemView(t:int)
 		{
 			super();
@@ -77,7 +79,6 @@ package net.xuele.view.menu.view
 					skin=PublicOperate.getUI("MenuSetTime","movieclip") as MovieClip;
 					break;
 				case 8:
-					_menuType
 					skin=PublicOperate.getUI("MenuTools","movieclip") as MovieClip;
 					break;
 				case 9:
@@ -100,9 +101,10 @@ package net.xuele.view.menu.view
 				default:
 					break;
 			}
-			this._UIMovie=new McButton;
+			this._UIMovie=new UIMovieClip;
 			this._UIMovie.skinName=skin;
 			this.addElement(this._UIMovie);
+			this._UIMovie.gotoAndStop(0);
 		}
 		private function addListener():void
 		{
@@ -164,6 +166,9 @@ package net.xuele.view.menu.view
 						EraseController.control.dispatchEvent(new MenuEvent(MenuEvent.HIDETHICKNESS));
 					}
 					DrawUtils.stopDrawPencil();
+					break;
+				case 4:
+					InputUtil.stopInput();
 					break;
 				case 6:
 				case 7:

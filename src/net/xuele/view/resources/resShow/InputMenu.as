@@ -12,6 +12,7 @@ package net.xuele.view.resources.resShow
 	import org.flexlite.domUI.collections.ArrayCollection;
 	import org.flexlite.domUI.components.DropDownList;
 	import org.flexlite.domUI.components.Group;
+	import org.flexlite.domUI.components.Label;
 	import org.flexlite.domUI.components.McButton;
 	import org.flexlite.domUI.components.Rect;
 	import org.flexlite.domUI.components.UIAsset;
@@ -46,7 +47,7 @@ package net.xuele.view.resources.resShow
 		 */
 		private var _colorRect:Rect;
 		private var _colorPick:ColorPicker;
-		
+		private var setupGroup:Group;
 		/**
 		 * 取消文本 
 		 */
@@ -74,14 +75,22 @@ package net.xuele.view.resources.resShow
 			_size=36;
 			_color=0x000000;
 			
-			var layout:HorizontalLayout=new HorizontalLayout;
-			layout.gap=0;
-			this.layout=layout;
+			
+//			this.layout=layout;
 			createUI();
 			addListener();
 		}
 		private function createUI():void
 		{
+			var bg:UIAsset=new UIAsset;
+			bg.skinName=PublicOperate.getUI("TextBg");
+			this.addElement(bg);
+			
+			setupGroup=new Group;
+			var layout:HorizontalLayout=new HorizontalLayout;
+			layout.gap=10;
+			setupGroup.layout=layout;
+			
 			var sizeData:ArrayCollection=new ArrayCollection;
 			sizeData.addItem("36");
 			sizeData.addItem("48");
@@ -89,22 +98,22 @@ package net.xuele.view.resources.resShow
 			sizeData.addItem("96");
 			sizeData.addItem("120");
 			this._textSize=new DropDownList;
-			this.addElement(this._textSize);
+			setupGroup.addElement(this._textSize);
 			this._textSize.prompt="36";
 			this._textSize.width=60;
 			this._textSize.dataProvider=sizeData;
 			
 			this._boldBtn=new UIMovieClip;
 			this._boldBtn.skinName=PublicOperate.getUI("TextBold","movieclip");
-			this.addElement(_boldBtn);
+			setupGroup.addElement(_boldBtn);
 			_boldBtn.gotoAndStop(0);
 			this._italicBtn=new UIMovieClip;
 			this._italicBtn.skinName=PublicOperate.getUI("TextItalic","movieclip");
-			this.addElement(_italicBtn);
+			setupGroup.addElement(_italicBtn);
 			_italicBtn.gotoAndStop(0);
 			this._underlineBtn=new UIMovieClip;
 			this._underlineBtn.skinName=PublicOperate.getUI("TextUnderline","movieclip");
-			this.addElement(_underlineBtn);
+			setupGroup.addElement(_underlineBtn);
 			_underlineBtn.gotoAndStop(0);
 			var colorGroup:Group=new Group;
 			this._textColor=new Group;
@@ -121,12 +130,15 @@ package net.xuele.view.resources.resShow
 			cp.skinName=this._colorPick;
 			colorGroup.addElement(cp);
 			cp.mouseChildren=true;
-			this.addElement(colorGroup);
+			setupGroup.addElement(colorGroup);
 			
 			this._cancelBtn=new McButton;
 			this._cancelBtn.skinName=PublicOperate.getUI("TextCancel","movieclip");
-			this.addElement(this._cancelBtn);
+			setupGroup.addElement(this._cancelBtn);
+			setupGroup.
 			
+			this.addElement(setupGroup);
+			setupGroup.horizontalCenter=setupGroup.verticalCenter=0;
 		}
 		private function addListener():void
 		{

@@ -12,6 +12,7 @@ package net.xuele.view.resources.resShow
 	
 	import org.flexlite.domUI.components.Group;
 	import org.flexlite.domUI.components.McButton;
+	import org.flexlite.domUI.components.UIAsset;
 	import org.flexlite.domUI.events.UIEvent;
 	import org.flexlite.domUI.layouts.HorizontalLayout;
 	
@@ -41,22 +42,28 @@ package net.xuele.view.resources.resShow
 		
 		private function init():void
 		{
-			_menuGroup=new Group;
-			var menuLayout:HorizontalLayout=new HorizontalLayout;
-			menuLayout.gap=0;
-			_menuGroup.layout=menuLayout;
-			this.addElement(_menuGroup);
+			
 			createUI();
 			addListener();
 		}
 		private function createUI():void
 		{
+			var bg:UIAsset=new UIAsset;
+			bg.skinName=PublicOperate.getUI("ResEditBg");
+			this.addElement(bg);
+			
+			_menuGroup=new Group;
+			var menuLayout:HorizontalLayout=new HorizontalLayout;
+			menuLayout.gap=0;
+			_menuGroup.layout=menuLayout;
+			this.addElement(_menuGroup);
+			
 			resetBtn=new McButton;
 			resetBtn.skinName=PublicOperate.getUI("ResReset","movieclip");
 			pencilBtn=new McButton;
-			pencilBtn.skinName=PublicOperate.getUI("MenuPencil","movieclip");
+			pencilBtn.skinName=PublicOperate.getUI("ResPencil","movieclip");
 			eraseBtn=new McButton;
-			eraseBtn.skinName=PublicOperate.getUI("MenuEraser","movieclip");
+			eraseBtn.skinName=PublicOperate.getUI("ResEraser","movieclip");
 			this._menuGroup.addElement(resetBtn);
 			this._menuGroup.addElement(pencilBtn);
 			this._menuGroup.addElement(eraseBtn);

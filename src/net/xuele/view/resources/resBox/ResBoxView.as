@@ -8,9 +8,11 @@ package net.xuele.view.resources.resBox
 	import net.xuele.utils.PublicOperate;
 	import net.xuele.view.resources.factory.ResFactory;
 	import net.xuele.view.resources.interfaces.IResBox;
+	import net.xuele.view.resources.resImport.ResImportView;
 	import net.xuele.view.resources.utils.ResData;
 	
 	import org.flexlite.domUI.components.Group;
+	import org.flexlite.domUI.components.McButton;
 	import org.flexlite.domUI.components.Rect;
 	import org.flexlite.domUI.components.Scroller;
 	import org.flexlite.domUI.components.UIMovieClip;
@@ -165,6 +167,12 @@ package net.xuele.view.resources.resBox
 		private function userRes():void
 		{
 			var len:int=MainData.myResourcesAry.length;
+			if(MainData._teachType==1){
+				var addRes:McButton=new McButton;
+				addRes.skinName=PublicOperate.getUI("AddRes","movieclip");
+				this._resGroup.addElement(addRes);
+				addRes.addEventListener(MouseEvent.CLICK,addResHandler);
+			}
 			for(var i:int=0;i<len;i++){
 				this._resView=this._factory.createResBox(MainData.myResourcesAry[i]);
 				this._resView.createUI();
@@ -172,6 +180,12 @@ package net.xuele.view.resources.resBox
 				this._resView.addEventListener(MouseEvent.MOUSE_DOWN,resDownHandler);
 				
 			}
+		}
+		private function addResHandler(e:MouseEvent):void
+		{
+			var importView:ResImportView=new ResImportView;
+			CommondView.popView.addElement(importView);
+			importView.horizontalCenter=importView.verticalCenter=0;
 		}
 		private function resDownHandler(e:MouseEvent):void
 		{
@@ -181,8 +195,13 @@ package net.xuele.view.resources.resBox
 		private function clearGroup():void
 		{
 			while(this._resGroup.numElements>0){
-				IResBox(this._resGroup.getElementAt(this._resGroup.numElements-1)).removeEventListener(MouseEvent.MIDDLE_MOUSE_DOWN,resDownHandler);
-				IResBox(this._resGroup.getElementAt(this._resGroup.numElements-1)).removeListener();
+				trace(this._resGroup.getElementAt(this._resGroup.numElements-1) is McButton)
+				if(this._resGroup.getElementAt(this._resGroup.numElements-1) is McButton){
+					McButton(this._resGroup.getElementAt(this._resGroup.numElements-1)).removeEventListener(MouseEvent.CLICK,addResHandler);
+				}else{
+					IResBox(this._resGroup.getElementAt(this._resGroup.numElements-1)).removeEventListener(MouseEvent.MIDDLE_MOUSE_DOWN,resDownHandler);
+					IResBox(this._resGroup.getElementAt(this._resGroup.numElements-1)).removeListener();
+				}
 				this._resGroup.removeElementAt(this._resGroup.numElements-1);
 			}
 		}

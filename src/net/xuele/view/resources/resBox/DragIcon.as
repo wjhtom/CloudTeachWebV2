@@ -66,10 +66,9 @@ package net.xuele.view.resources.resBox
 		{
 		}
 		
-		public function reSelect():void
+		public function unSelect():void
 		{
 		}
-		
 		public function get resVo():ResourceVo
 		{
 			return this._resVo;

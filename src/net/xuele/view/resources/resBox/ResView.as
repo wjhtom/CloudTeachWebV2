@@ -1,25 +1,20 @@
 package net.xuele.view.resources.resBox
 {
-	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
 	import flash.text.TextFormatAlign;
 	import flash.utils.Timer;
 	
-	import net.xuele.factory.PopFactory;
-	import net.xuele.utils.PopUtils;
 	import net.xuele.utils.PublicOperate;
 	import net.xuele.view.resources.interfaces.IResBox;
 	import net.xuele.view.resources.utils.ResUtils;
 	import net.xuele.vo.ResourceVo;
 	
-	import org.flexlite.domUI.components.Alert;
 	import org.flexlite.domUI.components.Group;
 	import org.flexlite.domUI.components.Label;
 	import org.flexlite.domUI.components.Rect;
 	import org.flexlite.domUI.components.UIAsset;
-	import org.flexlite.domUI.components.UIMovieClip;
 	import org.flexlite.domUI.layouts.VerticalAlign;
 	import org.flexlite.domUI.layouts.VerticalLayout;
 	
@@ -122,7 +117,7 @@ package net.xuele.view.resources.resBox
 			if(this._isSelected){
 				return;
 			}
-			this.reSelect();
+			this.unSelect();
 //			this._bgUI.gotoAndStop(0);
 		}
 		/**
@@ -140,7 +135,7 @@ package net.xuele.view.resources.resBox
 		 * 取消当前选择 
 		 * 
 		 */
-		public function reSelect():void
+		public function unSelect():void
 		{
 			this._resGroup.removeElement(this._selectUI);
 			this._selectUI=null;
@@ -159,6 +154,10 @@ package net.xuele.view.resources.resBox
 				return null;
 			}
 			return this._resVo;
+		}
+		public function get isSelect():Boolean
+		{
+			return _isSelected;
 		}
 //		public function closeMouseEvent():void
 //		{

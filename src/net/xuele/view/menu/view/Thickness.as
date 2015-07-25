@@ -3,6 +3,7 @@ package net.xuele.view.menu.view
 	import flash.display.MovieClip;
 	import flash.events.MouseEvent;
 	
+	import net.xuele.utils.MainData;
 	import net.xuele.utils.PublicOperate;
 	import net.xuele.view.menu.interfaces.IItem;
 	import net.xuele.view.menu.utils.MenuData;
@@ -43,22 +44,41 @@ package net.xuele.view.menu.view
 		public function createUI():void
 		{
 			var mc:MovieClip;
-			switch(this._thicknessID){
-				case 1:
-					mc=PublicOperate.getUI("Thickness1","movieclip") as MovieClip;
-					break;
-				case 2:
-					mc=PublicOperate.getUI("Thickness2","movieclip") as MovieClip;
-					break;
-				case 3:
-					mc=PublicOperate.getUI("Thickness3","movieclip") as MovieClip;
-					break;
-				case 4:
-					mc=PublicOperate.getUI("Thickness4","movieclip") as MovieClip;
-					break;
-				default:
-					break;
+			if(MainData._mouseType==1){
+				//铅笔
+				switch(this._thicknessID){
+					case 1:
+						mc=PublicOperate.getUI("EraserThickness1","movieclip") as MovieClip;
+						break;
+					case 2:
+						mc=PublicOperate.getUI("EraserThickness2","movieclip") as MovieClip;
+						break;
+					case 3:
+						mc=PublicOperate.getUI("EraserThickness3","movieclip") as MovieClip;
+						break;
+					case 4:
+						mc=PublicOperate.getUI("EraserThickness4","movieclip") as MovieClip;
+						break;
+					default:
+						break;
+				}
+			}else{
+				//橡皮
+				switch(this._thicknessID){
+					case 1:
+						mc=PublicOperate.getUI("PencilThickness1","movieclip") as MovieClip;
+						break;
+					case 2:
+						mc=PublicOperate.getUI("PencilThickness2","movieclip") as MovieClip;
+						break;
+					case 3:
+						mc=PublicOperate.getUI("PencilThickness3","movieclip") as MovieClip;
+						break;
+					default:
+						break;
+				}
 			}
+			
 			uiMC=new UIMovieClip;
 			uiMC.skinName=mc;
 			uiMC.gotoAndStop(0);

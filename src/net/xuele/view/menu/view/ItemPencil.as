@@ -14,6 +14,7 @@ package net.xuele.view.menu.view
 	import net.xuele.view.menu.factory.MenuFactory;
 	
 	import org.flexlite.domUI.components.Group;
+	import org.flexlite.domUI.components.UIAsset;
 	import org.flexlite.domUI.components.UIMovieClip;
 	import org.flexlite.domUI.layouts.VerticalLayout;
 
@@ -26,6 +27,7 @@ package net.xuele.view.menu.view
 	{
 		private var _thicknessShow:Boolean=false;
 		private var _thicknessGroup:Group;
+		private var _g:Group;
 		public function ItemPencil(t:int)
 		{
 			super(t);
@@ -63,6 +65,12 @@ package net.xuele.view.menu.view
 		private var _timer:Timer;
 		private function createThickness():void
 		{
+			_g=new Group;
+			
+			var bg:UIAsset=new UIAsset;
+			bg.skinName=PublicOperate.getUI("ThicknessBg");
+			_g.addElement(bg);
+			
 			for(var i:int=1;i<=4;i++){
 				this["_thickness"+i]=MenuFactory.createThickness(i) as Thickness;
 				this["_thickness"+i]._id=i
@@ -71,9 +79,11 @@ package net.xuele.view.menu.view
 			_thicknessGroup.addElement(this._thickness3);
 			_thicknessGroup.addElement(this._thickness2);
 			_thicknessGroup.addElement(this._thickness1);
-			CommondView.menuView.addElement(_thicknessGroup);
-			_thicknessGroup.top=-105;
-			_thicknessGroup.left=this.x;
+			_g.addElement(_thicknessGroup);
+			_thicknessGroup.top=15;
+			CommondView.menuView.addElement(_g);
+			_g.top=-135;
+			_g.left=this.x;
 			
 			this._thicknessShow=true;
 			DrawData._pencilThicknessShow=true;
@@ -113,8 +123,10 @@ package net.xuele.view.menu.view
 		private function removeThickness():void
 		{
 			removeListener();
+			CommondView.menuView.addElement(_g);
 			this._thicknessGroup.removeAllElements();
 			this._thicknessShow=false;
+			
 			DrawData._pencilThicknessShow=false;
 		}
 		private function addListener():void

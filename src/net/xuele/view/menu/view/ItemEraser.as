@@ -15,6 +15,7 @@ package net.xuele.view.menu.view
 	import net.xuele.view.menu.factory.MenuFactory;
 	
 	import org.flexlite.domUI.components.Group;
+	import org.flexlite.domUI.components.UIAsset;
 	import org.flexlite.domUI.components.UIMovieClip;
 	import org.flexlite.domUI.layouts.VerticalLayout;
 
@@ -26,6 +27,8 @@ package net.xuele.view.menu.view
 	public class ItemEraser extends ItemView
 	{
 		private var _thicknessShow:Boolean=false;
+		
+		private var _g:Group;
 		public function ItemEraser(t:int)
 		{
 			super(t);
@@ -58,6 +61,12 @@ package net.xuele.view.menu.view
 		private var _timer:Timer;
 		private function createThickness():void
 		{
+			_g=new Group;
+			
+			var bg:UIAsset=new UIAsset;
+			bg.skinName=PublicOperate.getUI("ThicknessBg");
+			_g.addElement(bg);
+			
 			for(var i:int=1;i<=3;i++){
 				this["_thickness"+i]=MenuFactory.createThickness(i) as Thickness;
 				this["_thickness"+i]._id=i;
@@ -66,9 +75,13 @@ package net.xuele.view.menu.view
 			this._thicknessGroup.addElement(this._thickness2);
 			this._thicknessGroup.addElement(this._thickness1);
 			
-			CommondView.menuView.addElement(_thicknessGroup);
-			_thicknessGroup.top=-105;
-			_thicknessGroup.left=this.x;
+			_g.addElement(_thicknessGroup);
+			_thicknessGroup.top=15;
+			CommondView.menuView.addElement(_g);
+			_g.top=-135;
+			_g.left=this.x;
+			
+			
 			_timer=new Timer(50,1);
 			_timer.addEventListener(TimerEvent.TIMER,timerHandler);
 			_timer.start();

@@ -44,8 +44,8 @@ package net.xuele.view.menu.view
 		public function createUI():void
 		{
 			var mc:MovieClip;
-			if(MainData._mouseType==1){
-				//铅笔
+			if(MainData._mouseType==3){
+				//橡皮
 				switch(this._thicknessID){
 					case 1:
 						mc=PublicOperate.getUI("EraserThickness1","movieclip") as MovieClip;
@@ -56,14 +56,11 @@ package net.xuele.view.menu.view
 					case 3:
 						mc=PublicOperate.getUI("EraserThickness3","movieclip") as MovieClip;
 						break;
-					case 4:
-						mc=PublicOperate.getUI("EraserThickness4","movieclip") as MovieClip;
-						break;
 					default:
 						break;
 				}
 			}else{
-				//橡皮
+				//铅笔
 				switch(this._thicknessID){
 					case 1:
 						mc=PublicOperate.getUI("PencilThickness1","movieclip") as MovieClip;
@@ -73,6 +70,9 @@ package net.xuele.view.menu.view
 						break;
 					case 3:
 						mc=PublicOperate.getUI("PencilThickness3","movieclip") as MovieClip;
+						break;
+					case 4:
+						mc=PublicOperate.getUI("PencilThickness4","movieclip") as MovieClip;
 						break;
 					default:
 						break;
@@ -86,6 +86,10 @@ package net.xuele.view.menu.view
 			
 		}
 		
+		public function get contentMovie():UIMovieClip
+		{
+			return uiMC;
+		}
 		public function click():void
 		{
 			

@@ -41,7 +41,7 @@ package net.xuele.view.pages.interfaces
 		 * 
 		 */
 		function getResFormSmallView(res:IResShow):void;
-			
+		function get resAry():Array;
 		function removeListener():void;
 	}
 }

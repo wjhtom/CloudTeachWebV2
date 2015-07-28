@@ -95,13 +95,14 @@ package net.xuele.view.resources.resImport
 		}
 		private function createUI():void
 		{
-//			var bg:UIAsset=new UIAsset;
-//			bg.skinName=PublicOperate.getUI("");
-			var bg:Rect=new Rect;
-			bg.width=900;
-			bg.height=500;
-			bg.fillAlpha=1;
-			bg.fillColor=0x0000ff;
+			var bg:UIAsset=new UIAsset;
+			bg.skinName=PublicOperate.getUI("ImportBg");
+//			var bg:Rect=new Rect;
+//			bg.width=900;
+//			bg.height=500;
+//			bg.fillAlpha=1;
+//			bg.fillColor=0x0000ff;
+			
 			this.addElement(bg);
 			
 			
@@ -110,6 +111,9 @@ package net.xuele.view.resources.resImport
 			typeLayout.gap=5;
 			this._typeTitleGroup.layout=typeLayout;
 			this.addElement(this._typeTitleGroup);
+			this._typeTitleGroup.left=10;
+			this._typeTitleGroup.top=5;
+			
 			this._totalRes=new UIMovieClip;
 			this._totalRes.skinName=PublicOperate.getUI("TotalTag","movieclip");
 			this._typeTitleGroup.addElement(this._totalRes);
@@ -159,8 +163,8 @@ package net.xuele.view.resources.resImport
 			resLayout.verticalGap=5;
 			this._resGroup.layout=resLayout;
 			var sc:Scroller=new Scroller;
-			sc.width=880;
-			sc.height=415;
+			sc.width=735;
+			sc.height=300;
 			sc.viewport=this._resGroup;
 			this.addElement(sc);
 			sc.horizontalCenter=0;
@@ -217,7 +221,6 @@ package net.xuele.view.resources.resImport
 		}
 		private function createRes(v:int):void
 		{
-			
 //			var numElemnet:int=this._resGroup.numElements
 //			for(var i:int=0;i<numElemnet;i++){
 //				IResBox(this._resGroup.getElementAt(i)).removeEventListener(MouseEvent.CLICK,resClickHandler);

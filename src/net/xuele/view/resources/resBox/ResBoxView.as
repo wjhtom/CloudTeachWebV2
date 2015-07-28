@@ -15,6 +15,7 @@ package net.xuele.view.resources.resBox
 	import org.flexlite.domUI.components.McButton;
 	import org.flexlite.domUI.components.Rect;
 	import org.flexlite.domUI.components.Scroller;
+	import org.flexlite.domUI.components.UIAsset;
 	import org.flexlite.domUI.components.UIMovieClip;
 	import org.flexlite.domUI.events.UIEvent;
 	import org.flexlite.domUI.layouts.HorizontalLayout;
@@ -63,14 +64,12 @@ package net.xuele.view.resources.resBox
 		}
 		private function createGroup():void
 		{
-			var verLayout:VerticalLayout=new VerticalLayout;
-			verLayout.gap=0;
-			this.layout=verLayout;
-			this._resLayout=new TileLayout;
-			this._resLayout.horizontalGap=10;
-			this._resLayout.verticalGap=5;
-			this._resLayout.requestedColumnCount=8;
-			
+//			var verLayout:VerticalLayout=new VerticalLayout;
+//			verLayout.gap=0;
+//			this.layout=verLayout;
+			var bg:UIAsset=new UIAsset;
+			bg.skinName=PublicOperate.getUI("ResBoxBg");
+			this.addElement(bg);
 			
 			this._tagsGroup=new Group;
 			var tagLayout:HorizontalLayout=new HorizontalLayout;
@@ -78,23 +77,24 @@ package net.xuele.view.resources.resBox
 			this._tagsGroup.layout=tagLayout;
 			this.addElement(this._tagsGroup);
 			
+			this._resLayout=new TileLayout;
+			this._resLayout.horizontalGap=10;
+			this._resLayout.verticalGap=5;
+			this._resLayout.requestedColumnCount=8;
 			this._resGroup=new Group;
 			this._resGroup.layout=this._resLayout;
 			
-			var bg:Rect=new Rect;
-			bg.fillAlpha=1;
-			bg.fillColor=0xffffff;
-			bg.width=875;
-			bg.height=288;
 			
 			var scl:Scroller=new Scroller;
-			scl.width=875;
+			scl.width=890;
 			scl.height=288;
 			scl.viewport=this._resGroup;
 			
 			var content:Group=new Group;
-			content.addElement(bg);
+//			content.addElement(bg);
 			content.addElement(scl);
+			scl.top=50;
+			scl.left=15;
 			this.addElement(content);
 		}
 		private function createTags():void
@@ -121,6 +121,7 @@ package net.xuele.view.resources.resBox
 		}
 		private function tagClickHandler(e:MouseEvent):void
 		{
+			trace("sfsfd")
 			if(ResData._currentResBox==0&&this._systemTag.currentFrame==1&&UIMovieClip(e.currentTarget).name=="systemTag" || ResData._currentResBox==1&&this._userTag.currentFrame==1&&UIMovieClip(e.currentTarget).name=="userTag"){
 				return;
 			}

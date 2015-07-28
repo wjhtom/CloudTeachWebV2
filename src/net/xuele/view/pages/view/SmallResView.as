@@ -2,6 +2,8 @@ package net.xuele.view.pages.view
 {
 	import flash.display.MovieClip;
 	import flash.events.MouseEvent;
+	import flash.filters.BitmapFilterQuality;
+	import flash.filters.DropShadowFilter;
 	import flash.geom.Rectangle;
 	
 	import net.xuele.commond.CommondView;
@@ -13,6 +15,7 @@ package net.xuele.view.pages.view
 	import org.flexlite.domUI.components.Rect;
 	import org.flexlite.domUI.components.UIMovieClip;
 	import org.flexlite.domUI.events.UIEvent;
+	import org.flexlite.domUI.utils.callLater;
 	
 	/**
 	 * 黑板左侧缩小的资源 
@@ -45,6 +48,7 @@ package net.xuele.view.pages.view
 		 * 鼠标选中的资源 
 		 */
 		private var _selectRes:IResShow=null;
+		private var _bg:Rect;
 		public function SmallResView()
 		{
 			super();
@@ -66,11 +70,18 @@ package net.xuele.view.pages.view
 		}
 		private function createUI():void
 		{
-			var bg:Rect=new Rect;
-			bg.fillAlpha=1;
-			bg.fillColor=0xff0000;
-			bg.percentWidth=bg.percentHeight=100;
-			this.addElement(bg);
+			_bg=new Rect;
+			_bg.fillAlpha=0.2;
+			_bg.fillColor=0x80B9B5;
+			_bg.percentWidth=_bg.percentHeight=100;
+			this.addElement(_bg);
+			var filter:DropShadowFilter=new DropShadowFilter;
+			filter.blurX=filter.blurY=5;
+			filter.color=0xa3a3a3;
+			filter.distance=5;
+			filter.quality=BitmapFilterQuality.LOW;
+			filter.alpha=0.5;
+			_bg.filters=[filter];
 			
 			_resGroup=new Group;
 			_resGroup.percentWidth=_resGroup.percentHeight=100;
@@ -79,9 +90,16 @@ package net.xuele.view.pages.view
 			this._openBtn=new UIMovieClip;
 			this._openBtn.skinName=PublicOperate.getUI("OpenSmallBox","movieclip") as MovieClip;
 			this._openBtn.gotoAndStop(0);
-			this.addElement(this._openBtn);
 			this._openBtn.right=0;
 			this._openBtn.verticalCenter=0;
+			this.addElement(this._openBtn);
+			this._openBtn.visible=false
+			callLater(setUI);
+			
+		}
+		private function setUI():void
+		{
+			this._openBtn.visible=true;
 		}
 		private function addListener():void
 		{
@@ -100,12 +118,16 @@ package net.xuele.view.pages.view
 			this._isOpen=true;
 			this._openBtn.gotoAndStop(1);
 			this.left=45;
+			_resGroup.visible=1;
+			_bg.fillAlpha=0.2;
 		}
 		public function closeBox():void
 		{
 			this._isOpen=false;
 			this._openBtn.gotoAndStop(0);
-			this.left=-this.width+55;
+			this.left=-this.width+60;
+			_resGroup.visible=0;
+			_bg.fillAlpha=0;
 		}
 		private const _smallResWidth:Number=45;
 		private const _smallResHeight:Number=45;
@@ -116,6 +138,7 @@ package net.xuele.view.pages.view
 		public function addRes(res:IResShow):void
 		{
 			_resGroup.addElement(res);
+			res.isOpen=false;
 			var scX:Number=_smallResWidth/res.width;
 			var scY:Number=_smallResHeight/res.height;
 			Group(res).scaleX=scX;
@@ -277,10 +300,22 @@ package net.xuele.view.pages.view
 			var len:int=this._resAry.length;
 			for(var i:int=0;i<len;i++){
 				if(res.resID==IResShow(this._resAry[i].resShow).resID){
+					for(var j:int=len-1;j>i;j--){
+						this._resAry[j].x=this._resAry[j-1].x;
+						this._resAry[j].y=this._resAry[j-1].y;
+						IResShow(this._resAry[j].resShow).x=this._resAry[j].x;
+						IResShow(this._resAry[j].resShow).y=this._resAry[j].y;
+					}
+					
+					
 					this._resAry.splice(i,1);
 					break;
 				}
 			}
+		}
+		public function get resAry():Array
+		{
+			return this._resAry;
 		}
 	}
 }

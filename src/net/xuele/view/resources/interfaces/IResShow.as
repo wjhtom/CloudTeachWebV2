@@ -89,6 +89,6 @@ package net.xuele.view.resources.interfaces
 		 * 
 		 */
 		function get resScaleY():Number;
-			
+		function get resVo():ResourceVo;
 	}
 }

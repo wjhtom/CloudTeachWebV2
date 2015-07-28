@@ -19,6 +19,7 @@ package net.xuele.view.resources.resShow
 	import org.flexlite.domUI.components.UIMovieClip;
 	import org.flexlite.domUI.events.UIEvent;
 	import org.flexlite.domUI.layouts.HorizontalLayout;
+	import org.flexlite.domUI.layouts.VerticalAlign;
 	
 	public class InputMenu extends Group
 	{
@@ -89,6 +90,7 @@ package net.xuele.view.resources.resShow
 			setupGroup=new Group;
 			var layout:HorizontalLayout=new HorizontalLayout;
 			layout.gap=10;
+			layout.verticalAlign=VerticalAlign.MIDDLE;
 			setupGroup.layout=layout;
 			
 			var sizeData:ArrayCollection=new ArrayCollection;
@@ -135,7 +137,7 @@ package net.xuele.view.resources.resShow
 			this._cancelBtn=new McButton;
 			this._cancelBtn.skinName=PublicOperate.getUI("TextCancel","movieclip");
 			setupGroup.addElement(this._cancelBtn);
-			setupGroup.
+			this._cancelBtn.verticalCenter=0;
 			
 			this.addElement(setupGroup);
 			setupGroup.horizontalCenter=setupGroup.verticalCenter=0;

@@ -47,7 +47,7 @@ package net.xuele.view.pages.view
 		private function init():void
 		{
 			this.width=45;
-			this.height=stage.stageHeight;
+			this.height=stage.stageHeight-30;
 			_factory=new PageFactory;
 			createUI();
 			createDelBtn();
@@ -55,8 +55,8 @@ package net.xuele.view.pages.view
 		private function createUI():void
 		{
 			var bg:Rect=new Rect;
-			bg.fillAlpha=1;
-			bg.fillColor=0x00ff00;
+			bg.fillAlpha=0.2;
+			bg.fillColor=0x80B9B5;
 			bg.percentWidth=bg.percentHeight=100;
 			this.addElement(bg);
 			
@@ -92,7 +92,7 @@ package net.xuele.view.pages.view
 		private function timerHandler():void
 		{
 			this._selectedPage.selectedPage();
-			_contentGroup.bottom=0;
+			_contentGroup.bottom=20;
 			_contentGroup.horizontalCenter=0;
 		}
 		private function selectPageHandler(e:MouseEvent):void

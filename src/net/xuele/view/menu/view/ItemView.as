@@ -181,6 +181,12 @@ package net.xuele.view.menu.view
 					break;
 			}
 			PublicOperate.setMouseType(0);
+			
+		}
+		public function get contentMovie():UIMovieClip
+		{
+			trace(_UIMovie.parent,_menuType)
+			return this._UIMovie;
 		}
 		public function click():void
 		{

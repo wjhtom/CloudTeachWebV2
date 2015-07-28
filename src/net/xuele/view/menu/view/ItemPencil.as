@@ -12,6 +12,7 @@ package net.xuele.view.menu.view
 	import net.xuele.view.draw.utils.DrawUtils;
 	import net.xuele.view.menu.controller.PencilController;
 	import net.xuele.view.menu.factory.MenuFactory;
+	import net.xuele.view.menu.utils.MenuData;
 	
 	import org.flexlite.domUI.components.Group;
 	import org.flexlite.domUI.components.UIAsset;
@@ -42,6 +43,11 @@ package net.xuele.view.menu.view
 			if(MainData._mouseType!=1){
 				super.itemClick();
 			}
+			if(!this._thicknessShow&&MainData._mouseType==1){
+				PublicOperate.setMouseType(0);
+				DrawUtils.stopDrawPencil();
+				return;
+			}
 			if(_thicknessShow){
 				removeThickness();
 				PublicOperate.setMouseType(0);
@@ -50,7 +56,8 @@ package net.xuele.view.menu.view
 				createThickness();
 				addListener();
 				PublicOperate.setMouseType(1);
-//				DrawData._currentCanvas=CommondView.drawView;
+				this._UIMovie.gotoAndStop(1);
+				MenuData._currentMenu=this._UIMovie;
 				DrawUtils.drawPencil();
 			}
 		}
@@ -83,7 +90,7 @@ package net.xuele.view.menu.view
 			_thicknessGroup.top=15;
 			CommondView.menuView.addElement(_g);
 			_g.top=-135;
-			_g.left=this.x;
+			_g.left=this.x+this.parent.x;
 			
 			this._thicknessShow=true;
 			DrawData._pencilThicknessShow=true;
@@ -123,7 +130,7 @@ package net.xuele.view.menu.view
 		private function removeThickness():void
 		{
 			removeListener();
-			CommondView.menuView.addElement(_g);
+			CommondView.menuView.removeElement(_g);
 			this._thicknessGroup.removeAllElements();
 			this._thicknessShow=false;
 			
@@ -155,6 +162,7 @@ package net.xuele.view.menu.view
 				this._currentThicknessID=Thickness(e.currentTarget)._id;
 				DrawData._pencilThickness=Thickness(e.currentTarget)._id;
 				PublicOperate.setMouseType(1);
+				this._UIMovie.gotoAndStop(1);
 				DrawUtils.drawPencil();
 				this.removeThickness();
 //			}

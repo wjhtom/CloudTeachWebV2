@@ -101,6 +101,7 @@ package net.xuele.view
 			this._menuGroup.layout=layout;
 			var menuPop:Group=new Group;
 			this._menuGroup.addElement(menuPop);
+			menuPop.width=stage.stageWidth;
 			var menu:MenuView=new MenuView();
 			this._menuGroup.addElement(menu);
 //			menu.horizontalCenter=0;
@@ -134,6 +135,7 @@ package net.xuele.view
 			var leftPageNum:PageNumView=new PageNumView;
 			_pageNumGroup.addElement(leftPageNum);
 			leftPageNum.left=0;
+			leftPageNum.bottom=30;
 			if(MainData._teachType!=1){
 				var rightPageNum:PageNumView=new PageNumView;
 				_pageNumGroup.addElement(rightPageNum);

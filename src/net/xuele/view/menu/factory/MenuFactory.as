@@ -7,6 +7,7 @@ package net.xuele.view.menu.factory
 		public function MenuFactory()
 		{
 		}
+		
 		/**
 		 * 菜单类型 
 		 * 0：选择颜色，1：高亮，2：输入文字，3：铅笔，4：画直线

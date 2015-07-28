@@ -116,5 +116,9 @@ package net.xuele.view.resources.resShow
 		{
 			return this._resScaleY;
 		}
+		public function get resVo():ResourceVo
+		{
+			return this._resVo;
+		}
 	}
 }

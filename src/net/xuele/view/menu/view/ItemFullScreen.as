@@ -1,10 +1,10 @@
 package net.xuele.view.menu.view
 {
-	import flash.display.StageAlign;
 	import flash.display.StageDisplayState;
 	import flash.display.StageScaleMode;
 	
-	import net.xuele.utils.PublicOperate;
+	import net.xuele.view.menu.utils.MenuData;
+	
 
 	/**
 	 * 全屏 
@@ -29,6 +29,8 @@ package net.xuele.view.menu.view
 				this._UIMovie.gotoAndStop(1);
 			}
 //			stage.align=StageAlign.TOP;
+			MenuData._fullScreenUI=this._UIMovie;
+			
 		}
 	}
 }

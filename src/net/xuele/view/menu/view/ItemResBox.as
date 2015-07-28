@@ -26,6 +26,7 @@ package net.xuele.view.menu.view
 			var resBox:ResBoxView=new ResBoxView;
 			CommondView.menuView.addElement(resBox);
 			MenuData._isResBoxShow=true;
+			resBox.horizontalCenter=0;
 		}
 	}
 }

@@ -5,6 +5,7 @@ package net.xuele.view.menu.view
 	
 	import net.xuele.utils.MainData;
 	import net.xuele.utils.PublicOperate;
+	import net.xuele.view.menu.utils.MenuData;
 	import net.xuele.view.pages.utils.InputUtil;
 
 	/**
@@ -24,9 +25,11 @@ package net.xuele.view.menu.view
 				super.itemClick();
 			}
 			PublicOperate.setMouseType(4);
+			this._UIMovie.gotoAndStop(1);
+			MenuData._currentMenu=this._UIMovie;
 			if(stage.displayState==StageDisplayState.FULL_SCREEN){
 				stage.displayState=StageDisplayState.NORMAL;
-				this._UIMovie.gotoAndStop(0);
+				MenuData._fullScreenUI.gotoAndStop(0);
 			}
 		}
 	}

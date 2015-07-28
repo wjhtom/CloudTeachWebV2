@@ -39,7 +39,7 @@ package net.xuele.view.pages.view
 		{
 			_bg=new Rect;
 			_bg.fillAlpha=0;
-			_bg.fillColor=0x000000;
+			_bg.fillColor=0x8EC2BE;
 			_bg.width=30;
 			_bg.height=23;
 			this.addElement(_bg);
@@ -56,7 +56,7 @@ package net.xuele.view.pages.view
 		}
 		public function selectedPage():void
 		{
-			this._bg.fillAlpha=0.5;
+			this._bg.fillAlpha=0.6;
 		}
 		
 		public function unSelectedPage():void

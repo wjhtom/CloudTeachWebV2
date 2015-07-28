@@ -49,7 +49,22 @@ package net.xuele.view.resources.resShow
 		}
 		private function setTextStorke():void
 		{
-			_inputText.width=_inputText.textWidth+30;
+			switch(_inputText.size){
+				case 36:
+				case 48:
+					_inputText.width=_inputText.textWidth+30;
+					break;
+				case 72:
+					_inputText.width=_inputText.textWidth+45;
+					break;
+				case 96:
+					_inputText.width=_inputText.textWidth+55;
+					break;
+				case 120:
+					_inputText.width=_inputText.textWidth+65;
+					break;
+			}
+			
 			_inputText.height=_inputText.textHeight+10;
 			_bg.width=_inputText.width;
 			_bg.height=_inputText.height;

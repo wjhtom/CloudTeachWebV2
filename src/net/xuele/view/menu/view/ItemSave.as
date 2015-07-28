@@ -1,5 +1,8 @@
 package net.xuele.view.menu.view
 {
+	import net.xuele.commond.CommondView;
+	import net.xuele.utils.PublicOperate;
+
 	/**
 	 * 保存 
 	 * @author jianhua
@@ -13,7 +16,7 @@ package net.xuele.view.menu.view
 		}
 		override protected function itemClick():void
 		{
-			
+			PublicOperate.savePageData();
 		}
 	}
 }

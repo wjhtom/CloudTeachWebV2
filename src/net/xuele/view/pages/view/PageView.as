@@ -36,6 +36,7 @@ package net.xuele.view.pages.view
 		private var _delMC:DelMovie;
 		
 		private var _smallResView:SmallResView;
+		private var _resAry:Array;
 		
 		public function PageView()
 		{
@@ -85,6 +86,7 @@ package net.xuele.view.pages.view
 			
 			_smallResView=new SmallResView;
 			this.addElement(_smallResView);
+			_resAry=[];
 			addListener();
 		}
 		private function addListener():void
@@ -97,6 +99,8 @@ package net.xuele.view.pages.view
 				return;
 			}
 			this._resGroup.addElement(res);
+			this._resAry.push(res);
+			res.isOpen=true;
 			res.resID=res.name;
 			res.addEventListener(ResEvent.LOADRESCOM,loadResComHandler);
 			
@@ -164,6 +168,9 @@ package net.xuele.view.pages.view
 		private function textDoubleClick(e:MouseEvent):void
 		{
 			trace("double");
+			if(PagesData._currentInput!=null){
+				InputUtil.stopInput();
+			}
 			var res:IResShow=IResShow(e.currentTarget);
 			InputShow(res)._contentText.selectable=true;
 			PagesData._currentInput=res;
@@ -285,6 +292,10 @@ package net.xuele.view.pages.view
 		public function get defaultTools():TransformTool
 		{
 			return this.defaultTool;
+		}
+		public function get resAry():Array
+		{
+			return this._resAry;
 		}
 		
 	}

@@ -36,7 +36,7 @@ package net.xuele.view.menu.factory
 			var item:IItem;
 			switch(param){
 				case 0:
-					item=new ItemColor();
+//					item=new ItemColor();
 					break;
 				case 1:
 					item=new ItemHighLight(param);

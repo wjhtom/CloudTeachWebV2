@@ -10,10 +10,17 @@ package net.xuele.vo
 		private var _width:Number;
 		private var _height:Number;
 		private var _path:String;
+		private var _ex:String;
+		private var _fileCode:String;
+		/**
+		 * 文件类型：1其他,2教案，3学案，4课件，5习题，6课程素材 
+		 */
+		private var _fileType:String;
 		private var _size:Number;
 		private var _color:Object;
 		private var _italic:Boolean;
 		private var _bold:Boolean;
+		private var _underline:Boolean;
 		public function PropertyVo()
 		{
 		}
@@ -52,6 +59,7 @@ package net.xuele.vo
 				return null;
 			}
 		}
+		
 		public function set path(v:String):void
 		{
 			if(this._type){
@@ -67,6 +75,60 @@ package net.xuele.vo
 				return _path;
 			}else{
 				new Error("文本类型没有path属性");
+				return null;
+			}
+		}
+		public function set fileType(v:String):void
+		{
+			if(this._type){
+				_fileType=v;
+			}else{
+				new Error("文本类型没有fileType属性");
+				
+			}
+		}
+		public function get fileType():String
+		{
+			if(this._type){
+				return _fileType;
+			}else{
+				new Error("文本类型没有path属性");
+				return null;
+			}
+		}
+		public function set ex(v:String):void
+		{
+			if(this._type){
+				_ex=v;
+			}else{
+				new Error("文本类型没有ex属性");
+				
+			}
+		}
+		public function get ex():String
+		{
+			if(this._type){
+				return _ex;
+			}else{
+				new Error("文本类型没有ex属性");
+				return null;
+			}
+		}
+		public function set fileCode(v:String):void
+		{
+			if(this._type){
+				_fileCode=v;
+			}else{
+				new Error("文本类型没有fileCode属性");
+				
+			}
+		}
+		public function get fileCode():String
+		{
+			if(this._type){
+				return _fileCode;
+			}else{
+				new Error("文本类型没有fileCode属性");
 				return null;
 			}
 		}
@@ -137,6 +199,23 @@ package net.xuele.vo
 				return null;
 			}else{
 				return this._bold;
+			}
+		}
+		public function set underline(v:Boolean):void
+		{
+			if(this._type){
+				new Error("资源类型没有bold属性");
+			}else{
+				this._underline=v;
+			}
+		}
+		public function get underline():Boolean
+		{
+			if(this._type){
+				new Error("资源类型没有bold属性");
+				return null;
+			}else{
+				return this._underline;
 			}
 		}
 	}

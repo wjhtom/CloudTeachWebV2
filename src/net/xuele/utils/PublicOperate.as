@@ -9,12 +9,14 @@ package net.xuele.utils
 	import net.xuele.view.menu.utils.MenuData;
 	import net.xuele.view.pages.interfaces.IBigPage;
 	import net.xuele.view.pages.utils.PagesData;
+	import net.xuele.view.pages.view.SmallResView;
 	import net.xuele.view.resources.interfaces.IResShow;
 	import net.xuele.view.resources.resShow.DocShow;
 	import net.xuele.view.resources.resShow.ImageShow;
 	import net.xuele.view.resources.resShow.InputShow;
 	import net.xuele.view.resources.resShow.SoundShow;
 	import net.xuele.view.resources.resShow.VideoShow;
+	import net.xuele.vo.PropertyVo;
 	import net.xuele.vo.ResourceVo;
 	
 	import org.flexlite.domUI.components.Alert;
@@ -98,12 +100,12 @@ package net.xuele.utils
 			for(i=0;i<len;i++){
 				obj.userResources.push(MainData.myResourcesAry[i]);
 			}
-			obj.systemResources=[];
-			len=MainData.systemResourcesAry.length;
-			
-			for(i=0;i<len;i++){
-				obj.userResources.push(MainData.systemResourcesAry[i]);
-			}
+//			obj.systemResources=[];
+//			len=MainData.systemResourcesAry.length;
+//			
+//			for(i=0;i<len;i++){
+//				obj.userResources.push(MainData.systemResourcesAry[i]);
+//			}
 			return JSON.stringify(obj);
 		}
 		private static function getPageData(page:IBigPage):Array
@@ -141,6 +143,19 @@ package net.xuele.utils
 				}else{
 					obj.isOpen=0;
 				}
+				var tempAry:Array=page.smallResView.resAry;
+				var len1:int=tempAry.length;
+				var isSmall:Boolean=false;
+				for(var j:int=0;j<len1;j++){
+					if(res.resID==IResShow(tempAry[j].resShow).resID){
+						obj.place=j;
+						isSmall=true;
+						break;
+					}
+				}
+				if(!isSmall){
+					obj.place=-1;
+				}
 				obj.property=new Object;
 				if(obj.type==6){
 					obj.text=InputShow(res)._contentText.text;
@@ -150,15 +165,82 @@ package net.xuele.utils
 					obj.property.bold=InputShow(res)._contentText.bold;
 					obj.proterty.underline=InputShow(res)._contentText.underline;
 				}else{
-//					obj.code=res.resVo._fileCode;
-//					obj.text=res.resVo._name;
+					obj.property.code=res.resVo._fileCode;
+					obj.text=res.resVo._name;
+					obj.property.fileType=res.resVo._fileType;
+					obj.property.ex=res.resVo._ex;
 					var rect:Rectangle=Group(res).getRect(Group(page))
 					obj.property.width=rect.width;
 					obj.property.height=rect.height;
+					obj.property.path=res.resVo._path;
 				}
 				ary.push(obj);
 			}
 			return ary;
+		}
+		/**
+		 * 获取文件预览地址 
+		 * @param ex
+		 * @param filekey
+		 * @return 
+		 * 
+		 */
+		public static function getResURL(ex:String,filekey:String):String
+		{
+			var url:String="";
+			switch(ex){
+				case "png":
+				case "jpeg":
+				case "bmp":
+				case "jpg":
+					url="http://dl.xuele.net/images/1000x1000_"+filekey+".jpg";
+					break;
+				case "txt":
+				case "doc":
+				case "docx":
+				case "xls":
+				case "xlsx":
+				case "ppt":
+				case "pptx":
+				case "pdf":
+					url="http://dl.xuele.net/files/swf_"+filekey+".swf";
+					break;
+				case "mp3":
+				case "wav":
+				case "wma":
+					url="http://dl.xuele.net/files/mp3_"+filekey+".mp3";
+					break;
+				case "flv":
+				case "avi":
+				case "mpeg":
+				case "mpg":
+				case "mp4":
+				case "rmvb":
+				case "wmv":
+				case "mkv":
+				case "3gp":
+				case "mov":
+				case "navi":
+				case "rm":
+					url="http://dl.xuele.net/files/flv_"+filekey+".flv";
+					break;
+				case "swf":
+					url="http://dl.xuele.net/files/swf_"+filekey+".swf";
+					break;
+				default:
+					break;
+			}
+			return url;
+		}
+		/**
+		 * 验证文件是否存在 
+		 * @param filekey
+		 * @return 
+		 * 
+		 */
+		public static function ExistFile(filekey:String):Boolean
+		{
+			return false;
 		}
 	}
 }

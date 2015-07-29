@@ -297,6 +297,10 @@ package net.xuele.view.pages.view
 		{
 			return this._resAry;
 		}
+		public function get smallResView():SmallResView
+		{
+			return this._smallResView;
+		}
 		
 	}
 }

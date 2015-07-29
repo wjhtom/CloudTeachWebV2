@@ -1,12 +1,10 @@
 package net.xuele.utils
 {
+	
 	import net.xuele.view.blackboard.utils.BlackboarData;
 	import net.xuele.vo.ContentVo;
-	import net.xuele.vo.HomeworkVo;
 	import net.xuele.vo.PropertyVo;
 	import net.xuele.vo.ResourceVo;
-	import net.xuele.vo.StudentWorkVo;
-	import net.xuele.vo.TalkworkVo;
 	import net.xuele.vo.TeacherInfoVo;
 
 	public class ReadJSON
@@ -24,7 +22,7 @@ package net.xuele.utils
 			var obj:Object=JSON.parse(str);
 			trace(JSON.stringify(obj))
 			if(obj.state==-1){
-				
+				return;
 			}
 			var len:int=obj.resources.length;
 			if(len==0){
@@ -35,36 +33,15 @@ package net.xuele.utils
 					continue;
 				}
 				var resVo:ResourceVo=new ResourceVo;
-				resVo._id=obj.resources[i].id;
-				resVo._mid=obj.resources[i].mid;
-				resVo._type=obj.resources[i].type;
-				resVo._name=obj.resources[i].nm;
-				resVo._fileCode=obj.resources[i].code;
-				resVo._path=obj.resources[i].url;
-				resVo._ex=obj.resources[i].ex;
+				resVo._id=obj.resources[i].diskId;
+//				resVo._mid=obj.resources[i].mid;
+//				resVo._type=obj.resources[i].type;
+				resVo._name=obj.resources[i].name;
+				resVo._fileCode=obj.resources[i].fileUri;
+				resVo._ex=obj.resources[i].extension;
+				resVo._path=PublicOperate.getResURL(resVo._ex,resVo._fileCode);
+				resVo._fileType=obj.resources[i].fileType;
 				ResourcesData._allResAry.push(resVo);
-				switch(resVo._mid){
-					case 1:
-						ResourcesData._otherAry.push(resVo);
-						break;
-					case 2:
-						ResourcesData._pptAry.push(resVo);
-						break;
-					case 3:
-						ResourcesData._wordAry.push(resVo);
-						break;
-					case 4:
-						ResourcesData._imgAry.push(resVo);
-						break;
-					case 5:
-						ResourcesData._movieAry.push(resVo);
-						break;
-					case 6:
-						ResourcesData._sndVidAry.push(resVo);
-						break;
-					default:
-						break;
-				}
 			}
 		}
 		/**
@@ -83,7 +60,7 @@ package net.xuele.utils
 				var len1:int=obj.pages[i].length;
 				for(var j:int=0;j<len1;j++){
 					var contentVo:ContentVo=new ContentVo;
-					contentVo._type=obj.pages[i][j].type;
+//					contentVo._type=obj.pages[i][j].type;
 					contentVo._name=obj.pages[i][j].text;
 					contentVo._x=obj.pages[i][j].x;
 					contentVo._y=obj.pages[i][j].y;
@@ -96,12 +73,16 @@ package net.xuele.utils
 						contentVo._property.color=obj.pages[i][j].property.color;
 						contentVo._property.bold=obj.pages[i][j].property.bold;
 						contentVo._property.italic=obj.pages[i][j].property.italic;
+						contentVo._property.underline=obj.pages[i][j].property.underline;
 					}else{
 						contentVo._property=new PropertyVo;
 						contentVo._property._type=true;
 						contentVo._property.height=obj.pages[i][j].property.height;
 						contentVo._property.width=obj.pages[i][j].property.width;
-						contentVo._path=obj.pages[i][j].property.path;
+						contentVo._property.fileType=obj.pages[i][j].property.fileType;
+						contentVo._property.ex=obj.pages[i][j].property.ex;
+						contentVo._property.fileCode=obj.pages[i][j].property.code;
+						contentVo._property.path=obj.pages[i][j].property.path;
 					}
 					MainData.pagesDataAry[i].push(contentVo);
 				}
@@ -112,9 +93,11 @@ package net.xuele.utils
 			for(i=0;i<len;i++){
 				var myResVo:ResourceVo=new ResourceVo;
 				myResVo._id=obj.resources[i].id;
+				myResVo._fileCode=obj.resources[i].code;
 				myResVo._type=obj.resources[i].type;
 				myResVo._name=obj.resources[i].nm;
-				myResVo._path=obj.resources[i].url;
+				myResVo._ex=obj.resources[i].ex;
+				myResVo._path=PublicOperate.getResURL(myResVo._ex,myResVo._fileCode);
 				MainData.myResourcesAry.push(myResVo);
 			}
 		}
@@ -129,60 +112,33 @@ package net.xuele.utils
 			var len:int=obj.list.length;
 			for(var i:int=0;i<len;i++){
 				var teacherVo:TeacherInfoVo=new TeacherInfoVo;
-				teacherVo._name=obj.list[i].name;
-				teacherVo._g=obj.list[i].g;
-				teacherVo._c=obj.list[i].c;
+				teacherVo._name=obj.list[i].className;
+				teacherVo._classID=obj.list[i].classId;
+				teacherVo._g=obj.list[i].year;
+				teacherVo._c=obj.list[i].codeSharing;
 				MainData.teachInfoAry.push(teacherVo);
 			}
 		}
 		/**
-		 * 电子作业 
+		 * 获取系统资源 
+		 * @param str
 		 * 
 		 */
-		public static function readHomework(str:String):void
+		public static function readSystemRes(str:String):void
 		{
 			var obj:Object=JSON.parse(str);
-			MainData.homeworkAry=[];
-			var len:int=obj.qlist.length;
+			MainData.systemResourcesAry=[];
+			var len:int=obj.resources.length;
 			for(var i:int=0;i<len;i++){
-				var homeVo:HomeworkVo=new HomeworkVo;
-				homeVo._id=obj.qlist[i].id;
-				homeVo._type=obj.qlist[i].type;
-				homeVo._content=obj.qlist[i].content;
-				homeVo._tlistAry=[];
-				var len1:int=obj.qlist[i].tlist.length;
-				for(var j:int=0;j>len1;j++){
-					var studentVo:StudentWorkVo=new StudentWorkVo;
-					studentVo._userID=obj.qlist[i].tlist[j].userid;
-					studentVo._name=obj.qlist[i].tlist[j].name;
-					studentVo._fileAry=[];
-					var len2:int=obj.qlist[i].tlist[j].file.length;
-					for(var k:int=0;k<len2;k++){
-						var fileVo:ResourceVo=new ResourceVo;
-						fileVo._path=obj.qlist[i].tlist[j].file[k].url;
-						fileVo._type=obj.qlist[i].tlist[j].file[k].type;
-						fileVo._ex=obj.qlist[i].tlist[j].file[k].ex;
-						studentVo._fileAry.push(fileVo);
-					}
-					homeVo._tlistAry.push(studentVo);
-				}
-				MainData.homeworkAry.push(homeVo);
+				var res:ResourceVo=new ResourceVo;
+				res._fileCode=obj.resources[i].code;
+				res._name=obj.resources[i].nm;
+				res._ex=obj.resources[i].ex;
+				res._id=obj.resources[i].id;
+				res._path=PublicOperate.getResURL(res._ex,res._fileCode);
 			}
 		}
-		/**
-		 * 讨论作业 
-		 * 
-		 */
-		public static function readTalkwork(str:String):void
-		{
-			var obj:Object=JSON.parse(str);
-			var len:int=obj.dis.length;
-			for(var i:int=0;i<len;i++){
-				var talkVo:TalkworkVo=new TalkworkVo;
-				talkVo._id=obj.dis[i].id;
-				talkVo._content=obj.dis[i].content;
-				MainData.talkworkAry.push(talkVo);
-			}
-		}
+		
+		
 	}
 }

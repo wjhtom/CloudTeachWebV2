@@ -313,6 +313,9 @@ package net.xuele.view.pages.view
 				}
 			}
 		}
+		/**
+		 * 资源列表（保存资源与坐标） [{resShow:IResShow,x:int,y:int},{resShow:IResShow,x:int,y:int}]
+		 */
 		public function get resAry():Array
 		{
 			return this._resAry;

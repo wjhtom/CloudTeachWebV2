@@ -2,6 +2,7 @@ package net.xuele.view.pages.interfaces
 {
 	import com.senocular.display.TransformTool;
 	
+	import net.xuele.view.pages.view.SmallResView;
 	import net.xuele.view.resources.interfaces.IResShow;
 	import net.xuele.view.resources.resShow.ImageShow;
 	
@@ -42,6 +43,12 @@ package net.xuele.view.pages.interfaces
 		 */
 		function getResFormSmallView(res:IResShow):void;
 		function get resAry():Array;
+		/**
+		 * 小图容器
+		 * @return 
+		 * 
+		 */
+		function get smallResView():SmallResView;
 		function removeListener():void;
 	}
 }

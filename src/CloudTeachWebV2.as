@@ -22,7 +22,6 @@ package
 			}else{
 				MainData._isOnline=true;
 			}
-			
 			var flexLiteMangager:FlexLiteManager=new FlexLiteManager;
 			this.addChild(flexLiteMangager);
 		}

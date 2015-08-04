@@ -54,9 +54,10 @@ package net.xuele.view.resources.resShow
 			
 			_menuGroup=new Group;
 			var menuLayout:HorizontalLayout=new HorizontalLayout;
-			menuLayout.gap=0;
+			menuLayout.gap=15;
 			_menuGroup.layout=menuLayout;
 			this.addElement(_menuGroup);
+			_menuGroup.verticalCenter=_menuGroup.horizontalCenter=0;
 			
 			resetBtn=new McButton;
 			resetBtn.skinName=PublicOperate.getUI("ResReset","movieclip");

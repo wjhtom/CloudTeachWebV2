@@ -8,6 +8,7 @@ package net.xuele.view.pages.view
 	
 	import net.xuele.commond.CommondView;
 	import net.xuele.utils.HitTest;
+	import net.xuele.utils.MainData;
 	import net.xuele.utils.PublicOperate;
 	import net.xuele.view.resources.interfaces.IResShow;
 	
@@ -62,7 +63,7 @@ package net.xuele.view.pages.view
 		private function init():void
 		{
 			this.width=100;
-			this.height=stage.stageHeight;
+			this.height=MainData._stageHeight//stage.stageHeight;
 			this._isOpen=false;
 			createUI();
 			closeBox();
@@ -147,6 +148,9 @@ package net.xuele.view.pages.view
 			var isHave:Boolean=false;
 			var len:int=this._resAry.length;
 			for(var i:int=0;i<len;i++){
+				if(!this._resAry[i]){
+					continue;
+				}
 				if(res.resID==IResShow(this._resAry[i].resShow).resID){
 					res.x=this._resAry[i].x;
 					res.y=this._resAry[i].y;

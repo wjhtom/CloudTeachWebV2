@@ -1,6 +1,7 @@
 package net.xuele.view.resources.resShow
 {
 	import flash.events.TimerEvent;
+	import flash.sensors.Accelerometer;
 	import flash.utils.Timer;
 	
 	import net.xuele.view.resources.interfaces.IResShow;
@@ -43,6 +44,15 @@ package net.xuele.view.resources.resShow
 		{
 			if(contentVo!=null){
 				this._contentVo=contentVo;
+				this._resVo=new ResourceVo;
+				if(contentVo._property._type){
+					this._resVo._ex=contentVo._property.ex;
+					this._resVo._fileCode=contentVo._property.fileCode;
+					this._resVo._fileType=contentVo._property.fileType;
+					this._resVo._name=contentVo._name;
+					this._resVo._path=contentVo._property.path;
+				}
+				
 			}
 			this._isCreate=true;
 			getThisStage();
@@ -119,6 +129,10 @@ package net.xuele.view.resources.resShow
 		public function get resVo():ResourceVo
 		{
 			return this._resVo;
+		}
+		public function get conVo():ContentVo
+		{
+			return this._contentVo;
 		}
 	}
 }

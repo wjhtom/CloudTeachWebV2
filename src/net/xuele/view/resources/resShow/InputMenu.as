@@ -197,6 +197,44 @@ package net.xuele.view.resources.resShow
 		{
 			
 		}
+		public function set setSize(v:int):void
+		{
+			this._size=v;
+			this._textSize.prompt=String(this._size);
+		}
+		public function set setColor(v:uint):void
+		{
+			this._color=v;
+			_colorPick.selectedColor=this._color;
+		}
+		public function set setBold(v:Boolean):void
+		{
+			this._isBold=v;
+			if(this._isBold){
+				this._boldBtn.gotoAndStop(1);
+			}else{
+				this._boldBtn.gotoAndStop(0);
+			}
+			
+		}
+		public function set setItalic(v:Boolean):void
+		{
+			this._isItalic=v;
+			if(this._isItalic){
+				this._italicBtn.gotoAndStop(1);
+			}else{
+				this._italicBtn.gotoAndStop(0);
+			}
+		}
+		public function set setUnderline(v:Boolean):void
+		{
+			this._isUnderLine=v;
+			if(this._isUnderLine){
+				this._underlineBtn.gotoAndStop(1);
+			}else{
+				this._underlineBtn.gotoAndStop(0);
+			}
+		}
 		public function removeListener():void
 		{
 			this._boldBtn.removeEventListener(MouseEvent.CLICK,boldClickHandler);

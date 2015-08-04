@@ -40,6 +40,8 @@ package net.xuele
 		{
 			Debugger.initialize(stage);
 			Injector.mapClass(Theme,MainTheme);
+			MainData._stageWidth=stage.stageWidth;
+			MainData._stageHeight=stage.stageHeight;
 			createUI();
 			loadInterfaceXML();
 		}
@@ -56,7 +58,7 @@ package net.xuele
 		{
 			ReadXML.readInterfaceXML(data);
 			InterfaceData._uiURL="data/ui.swf";
-			InterfaceData._allResourcesURL="data/GetFileByUnitCodeByWebC.txt";
+			InterfaceData._allResourcesURL="http://cloudteach.app.xuele.net/coursewares/extfl/disklist?userId=162906292706&schoolId=xueleceshioscar1&unitId=020003001004034001001&fileType=4&extType=0";//"data/GetFileByUnitCodeByWebC.txt";
 			InterfaceData._teacherEditURL="data/CoursewareGetByID.txt";
 			InterfaceData._teacherClassURL="data/GetTeacherClass.txt";
 			loadJSONData();
@@ -81,6 +83,16 @@ package net.xuele
 		}
 		private function onJSONData(data:Array):void
 		{
+			trace(data[0]==null)
+			if(data[0]==null){
+				data[0]=JSON.stringify({"state":0});
+			}
+			if(data[1]==null){
+				data[0]=JSON.stringify({"state":0});
+			}
+			if(data[2]==null){
+				data[0]=JSON.stringify({"state":0});
+			}
 			ReadJSON.readAllResources(data[0]);
 			ReadJSON.readShoukeInfo(data[1]);
 			ReadJSON.readTeacherClass(data[2]);

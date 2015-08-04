@@ -47,7 +47,7 @@ package net.xuele.view.pages.view
 		private function init():void
 		{
 			this.width=45;
-			this.height=stage.stageHeight-30;
+			this.height=MainData._stageHeight-30;
 			_factory=new PageFactory;
 			createUI();
 			createDelBtn();
@@ -87,7 +87,7 @@ package net.xuele.view.pages.view
 			}
 			this.addElement(_contentGroup);
 			
-			callLater(timerHandler);
+			callLater(timerHandler,null,2);
 		}
 		private function timerHandler():void
 		{

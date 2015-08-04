@@ -21,9 +21,11 @@ package net.xuele.utils
 			
 			var obj:Object=JSON.parse(str);
 			trace(JSON.stringify(obj))
-			if(obj.state==-1){
+			if(obj.state==0){
+				ResourcesData._allResAry=[];
 				return;
 			}
+			ResourcesData._allResAry=[];
 			var len:int=obj.resources.length;
 			if(len==0){
 				return;
@@ -51,6 +53,11 @@ package net.xuele.utils
 		public static function readShoukeInfo(str:String):void
 		{
 			var obj:Object=JSON.parse(str);
+			if(obj.state==0){
+				MainData.pagesDataAry=[];
+				MainData.myResourcesAry=[];
+				return;
+			}
 			BlackboarData.bg=obj.bg;
 			BlackboarData.style=obj.style;
 			MainData.pagesDataAry=[];
@@ -66,7 +73,8 @@ package net.xuele.utils
 					contentVo._y=obj.pages[i][j].y;
 					contentVo._isOpen=obj.pages[i][j].isOpen;
 					contentVo._index=obj.pages[i][j].index;
-					if(obj.pages[i].type=="6"){
+					contentVo._place=obj.pages[i][j].place;
+					if(obj.pages[i][j].type==6){
 						contentVo._property=new PropertyVo;
 						contentVo._property._type=false;
 						contentVo._property.size=obj.pages[i][j].property.size;
@@ -82,7 +90,7 @@ package net.xuele.utils
 						contentVo._property.fileType=obj.pages[i][j].property.fileType;
 						contentVo._property.ex=obj.pages[i][j].property.ex;
 						contentVo._property.fileCode=obj.pages[i][j].property.code;
-						contentVo._property.path=obj.pages[i][j].property.path;
+						contentVo._property.path=PublicOperate.getResURL(obj.pages[i][j].property.ex,obj.pages[i][j].property.code);
 					}
 					MainData.pagesDataAry[i].push(contentVo);
 				}
@@ -92,11 +100,12 @@ package net.xuele.utils
 			len=obj.resources.length;
 			for(i=0;i<len;i++){
 				var myResVo:ResourceVo=new ResourceVo;
-				myResVo._id=obj.resources[i].id;
-				myResVo._fileCode=obj.resources[i].code;
-				myResVo._type=obj.resources[i].type;
-				myResVo._name=obj.resources[i].nm;
+//				myResVo._id=obj.resources[i].id;
+				myResVo._fileCode=obj.resources[i].fileCode;
+//				myResVo._type=obj.resources[i].type;
+				myResVo._name=obj.resources[i].name;
 				myResVo._ex=obj.resources[i].ex;
+				myResVo._fileType=obj.resources[i].fileType;
 				myResVo._path=PublicOperate.getResURL(myResVo._ex,myResVo._fileCode);
 				MainData.myResourcesAry.push(myResVo);
 			}
@@ -108,6 +117,10 @@ package net.xuele.utils
 		public static function readTeacherClass(str:String):void
 		{
 			var obj:Object=JSON.parse(str);
+			if(obj.state==0){
+				MainData.teachInfoAry=[];
+				return;
+			}
 			MainData.teachInfoAry=[];
 			var len:int=obj.list.length;
 			for(var i:int=0;i<len;i++){
@@ -127,6 +140,10 @@ package net.xuele.utils
 		public static function readSystemRes(str:String):void
 		{
 			var obj:Object=JSON.parse(str);
+			if(obj.state==0){
+				MainData.systemResourcesAry=[];
+				return;
+			}
 			MainData.systemResourcesAry=[];
 			var len:int=obj.resources.length;
 			for(var i:int=0;i<len;i++){

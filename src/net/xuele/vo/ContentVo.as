@@ -19,6 +19,10 @@ package net.xuele.vo
 		 * 是否打开状态 
 		 */
 		public var _isOpen:int;
+		/**
+		 * 资源缩小位置 
+		 */
+		public var _place:int;
 		public var _property:PropertyVo;
 		public function ContentVo()
 		{

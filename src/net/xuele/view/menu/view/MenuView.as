@@ -105,12 +105,14 @@ package net.xuele.view.menu.view
 			}
 			
 			var fullScreen:IItem=MenuFactory.createItem(13);
-			itemGroup.addElement(fullScreen);
+			this.addElement(fullScreen);
+			fullScreen.right=5;
+			fullScreen.bottom=2;
 			
 			this.addElement(itemGroup);
 			itemGroup.horizontalCenter=0;
 			
-			callLater(setMouseInfo);
+			callLater(setMouseInfo,null,2);
  		}
 		private function setMouseInfo():void
 		{

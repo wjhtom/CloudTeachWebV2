@@ -103,7 +103,8 @@ package net.xuele.view.resources.resShow
 		override protected function init():void
 		{
 			this.mouseChildren=true;
-			this._resVo._path="http://panfile.xuele.net/s/37453341363039304236453537434642453844303135424133414644333337382e6d7033";
+			trace(this._resVo._path)
+//			this._resVo._path="http://panfile.xuele.net/s/37453341363039304236453537434642453844303135424133414644333337382e6d7033";
 			
 			this._soundChannel=new SoundChannel;
 			this._pos=0;

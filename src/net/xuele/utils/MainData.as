@@ -35,6 +35,14 @@ package net.xuele.utils
 		 */
 		public static var _shoukeName:String;
 		/**
+		 * 场景总宽 
+		 */
+		public static var _stageWidth:Number;
+		/**
+		 * 场景总高 
+		 */
+		public static var _stageHeight:Number;
+		/**
 		 * 授课黑板信息，这是一个二维数组[页码[内容]，页码[内容]] 
 		 */
 		public static var pagesDataAry:Array=[];

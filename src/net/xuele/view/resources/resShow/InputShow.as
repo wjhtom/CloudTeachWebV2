@@ -18,8 +18,16 @@ package net.xuele.view.resources.resShow
 		}
 		override protected function init():void
 		{
+			
 			createUI();
+			
 		}
+		
+			
+		/**
+		 * 创建新建内容 
+		 * 
+		 */
 		private function createUI():void
 		{
 			_bg=new Rect;
@@ -37,11 +45,28 @@ package net.xuele.view.resources.resShow
 			this.addElement(_inputText);
 			_inputText.bottom=10;
 			_inputText.right=10;
-			_inputText.setFocus();
+			if(this._isCreate){
+				setInputInfo();
+			}else{
+				_inputText.setFocus();
+				setTextStorke();
+			}
 			this._dragRect=_inputText;
-			setTextStorke();
 			this.dispatchEvent(new ResEvent(ResEvent.LOADRESCOM));
 			_inputText.addEventListener(Event.CHANGE,textChangeHandler);
+			
+			
+		}
+		private function setInputInfo():void
+		{
+			_inputText.text=this._contentVo._name;
+			_inputText.bold=this._contentVo._property.bold;
+			_inputText.underline=this._contentVo._property.underline;
+			_inputText.italic=this._contentVo._property.italic;
+			_inputText.size=this._contentVo._property.size;
+			_inputText.textColor=this._contentVo._property.color;
+//			this.x=this._contentVo._x;
+//			this.y=this._contentVo._y;
 		}
 		private function textChangeHandler(e:Event):void
 		{
@@ -51,17 +76,18 @@ package net.xuele.view.resources.resShow
 		{
 			switch(_inputText.size){
 				case 36:
+					_inputText.width=_inputText.textWidth+40;
 				case 48:
-					_inputText.width=_inputText.textWidth+30;
+					_inputText.width=_inputText.textWidth+50;
 					break;
 				case 72:
-					_inputText.width=_inputText.textWidth+45;
+					_inputText.width=_inputText.textWidth+75;
 					break;
 				case 96:
-					_inputText.width=_inputText.textWidth+55;
+					_inputText.width=_inputText.textWidth+100;
 					break;
 				case 120:
-					_inputText.width=_inputText.textWidth+65;
+					_inputText.width=_inputText.textWidth+120;
 					break;
 			}
 			
@@ -76,6 +102,7 @@ package net.xuele.view.resources.resShow
 		 */
 		public function get _contentText():EditableText
 		{
+			_inputText.underline
 			return _inputText;
 		}
 		/**

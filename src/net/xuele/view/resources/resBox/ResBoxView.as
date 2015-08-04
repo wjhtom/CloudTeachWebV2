@@ -6,6 +6,8 @@ package net.xuele.view.resources.resBox
 	import net.xuele.commond.CommondView;
 	import net.xuele.utils.MainData;
 	import net.xuele.utils.PublicOperate;
+	import net.xuele.view.resources.control.ResControl;
+	import net.xuele.view.resources.events.ResEvent;
 	import net.xuele.view.resources.factory.ResFactory;
 	import net.xuele.view.resources.interfaces.IResBox;
 	import net.xuele.view.resources.resImport.ResImportView;
@@ -61,6 +63,7 @@ package net.xuele.view.resources.resBox
 			createTags();
 			createUI();
 			addListener();
+			ResControl.control.addEventListener(ResEvent.UPDATAUSERRESOURCES,updataResources);
 		}
 		private function createGroup():void
 		{
@@ -181,6 +184,14 @@ package net.xuele.view.resources.resBox
 				this._resView.addEventListener(MouseEvent.MOUSE_DOWN,resDownHandler);
 				
 			}
+		}
+		private function updataResources(e:ResEvent):void
+		{
+			if(ResData._currentResBox==0){
+				return;
+			}
+			clearGroup();
+			createUI();
 		}
 		private function addResHandler(e:MouseEvent):void
 		{

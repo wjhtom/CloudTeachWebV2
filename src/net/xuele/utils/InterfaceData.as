@@ -5,7 +5,7 @@ package net.xuele.utils
 		/**
 		 * 接口列表 
 		 */
-		public static var _interfaceListURL:String="d:/aaa.txt";
+		public static var _interfaceListURL:String="data/config.xml";
 		/**
 		 * 所有资源接口
 		 * 参数：kcid 

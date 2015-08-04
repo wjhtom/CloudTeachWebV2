@@ -21,12 +21,12 @@ package net.xuele.utils
 		}
 		public static function IOError(e:IOErrorEvent=null,n:int=0):void
 		{
-			trace(e.errorID)
+			trace(e.errorID,"IOError");
 			var p:IPop=CommondView.popView.getChildByName("loading") as LoadingPop;
 			if(p!=null){
 				p.removeUI();
 			}
-			setAlert("加载错误");
+			setAlert("数据加载错误，错误编码："+e.errorID);
 		}
 		private static function setAlert(str:String):void
 		{

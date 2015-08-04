@@ -20,9 +20,9 @@ package net.xuele.view.pages.interfaces
 		/**
 		 * 添加资源 
 		 * @param res
-		 * 
+		 * @param create:是否从保存数据保存，（true:从保存数据创建。false:鼠标拖出来创建）
 		 */
-		function addRes(res:IResShow):void;
+		function addRes(res:IResShow,create:Boolean):void;
 		/**
 		 * 获取当前页画布 
 		 * @return 

@@ -7,8 +7,10 @@ package net.xuele.view.resources.resShow
 	import flash.geom.Rectangle;
 	
 	import net.xuele.commond.CommondView;
+	import net.xuele.utils.MainData;
 	import net.xuele.utils.PopUtils;
 	import net.xuele.view.resources.events.ResEvent;
+	import net.xuele.vo.ContentVo;
 	
 	import org.flexlite.domUI.components.Rect;
 	import org.flexlite.domUI.components.UIAsset;
@@ -38,13 +40,28 @@ package net.xuele.view.resources.resShow
 			if(this._isCreate){
 				DomLoader.loadBitmapData(this._contentVo._property.path,createComHandler,PopUtils.loadingPro,PopUtils.IOError);
 			}else{
-				this._resVo._path="http://panfile.xuele.net/s/30393444364238414535443342313646354533383038423545433345463434362e706e67";
+//				this._resVo._path="http://panfile.xuele.net/s/30393444364238414535443342313646354533383038423545433345463434362e706e67";
 				DomLoader.loadBitmapData(this._resVo._path,comHandler,PopUtils.loadingPro,PopUtils.IOError);
 			}
 		}
 		private function createComHandler(data:BitmapData):void
 		{
-			
+			var ui:UIAsset=new UIAsset;
+			ui.skinName=new Bitmap(data);
+			this._resGroup.addElement(ui);
+			ui.validateNow();
+			this.drawGroup.width=ui.width;
+			this.drawGroup.height=ui.height;
+			if(this._contentVo._isOpen==1){
+				var sclX:Number=this._contentVo._property.width/ui.width;
+				var sclY:Number=this._contentVo._property.height/ui.height;
+				ui.scaleX=sclX
+				ui.scaleY=sclY;
+				this.drawGroup.scaleX=sclX;
+				this.drawGroup.scaleY=sclY;
+			}
+			this._dragRect=_resGroup;
+			this.dispatchEvent(new ResEvent(ResEvent.LOADRESCOM));
 		}
 		private function comHandler(data:BitmapData):void
 		{

@@ -17,6 +17,7 @@ package net.xuele.view.resources.resBox
 	import org.flexlite.domUI.components.UIAsset;
 	import org.flexlite.domUI.layouts.VerticalAlign;
 	import org.flexlite.domUI.layouts.VerticalLayout;
+	import org.flexlite.domUI.utils.callLater;
 	
 	/**
 	 * 单个资源 
@@ -86,7 +87,7 @@ package net.xuele.view.resources.resBox
 		private function createName():void
 		{
 			var nameLabel:Label=new Label;
-			nameLabel.text="测试名称称称称称称称称称称称称";
+			nameLabel.text=this._resVo._name;
 			nameLabel.size=12;
 			nameLabel.fontFamily="宋体";
 			nameLabel.textColor=0x000000;
@@ -100,9 +101,9 @@ package net.xuele.view.resources.resBox
 		
 		private function addListener():void
 		{
-			this.addEventListener(MouseEvent.ROLL_OVER,overHandler);
-			this.addEventListener(MouseEvent.ROLL_OUT,outHandler);
-			this.addEventListener(MouseEvent.RELEASE_OUTSIDE,outHandler);
+//			this.addEventListener(MouseEvent.ROLL_OVER,overHandler);
+//			this.addEventListener(MouseEvent.ROLL_OUT,outHandler);
+//			this.addEventListener(MouseEvent.RELEASE_OUTSIDE,outHandler);
 		}
 		private function overHandler(e:MouseEvent):void
 		{
@@ -127,9 +128,14 @@ package net.xuele.view.resources.resBox
 		public function selected():void
 		{
 			this._selectUI=new UIAsset;
-			this._selectUI.skinName=PublicOperate.getUI("") as Sprite;
-			this._resGroup.addElement(this._selectUI);
+			this._selectUI.skinName=PublicOperate.getUI("SelectedTag") as Sprite;
 			this._isSelected=true;
+			callLater(createSelectUI,null,2);
+		}
+		private function createSelectUI():void
+		{
+			this._resGroup.addElement(this._selectUI);
+			this._selectUI.right=0;
 		}
 		/**
 		 * 取消当前选择 
@@ -137,7 +143,9 @@ package net.xuele.view.resources.resBox
 		 */
 		public function unSelect():void
 		{
-			this._resGroup.removeElement(this._selectUI);
+			if(this._selectUI){
+				this._resGroup.removeElement(this._selectUI);
+			}
 			this._selectUI=null;
 			this._isSelected=false;
 		}

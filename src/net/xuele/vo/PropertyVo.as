@@ -17,7 +17,7 @@ package net.xuele.vo
 		 */
 		private var _fileType:String;
 		private var _size:Number;
-		private var _color:Object;
+		private var _color:uint;
 		private var _italic:Boolean;
 		private var _bold:Boolean;
 		private var _underline:Boolean;
@@ -149,7 +149,7 @@ package net.xuele.vo
 				return _size;
 			}
 		}
-		public function set color(v:Object):void
+		public function set color(v:uint):void
 		{
 			if(this._type){
 				new Error("资源类型没有color属性");
@@ -158,7 +158,7 @@ package net.xuele.vo
 				this._color=v;
 			}
 		}
-		public function get color():Object
+		public function get color():uint
 		{
 			if(this._type){
 				new Error("资源类型没有color属性");

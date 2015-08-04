@@ -45,7 +45,7 @@ package net.xuele.view.resources.resShow
 		}
 		override protected function init():void
 		{
-			this._resVo._path="http://panfile.xuele.net/s/33313735353542333238353234453832414232374346433244333645453842432e6d7034";
+//			this._resVo._path="http://panfile.xuele.net/s/33313735353542333238353234453832414232374346433244333645453842432e6d7034";
 			createVideoUI();
 			addListener();
 			createVideo();
@@ -332,8 +332,8 @@ package net.xuele.view.resources.resShow
 				
 			}else{
 				var bg:Rect=new Rect;
-				bg.width=stage.stageWidth;
-				bg.height=stage.stageHeight;
+				bg.width=MainData._stageWidth;//stage.stageWidth;
+				bg.height=MainData._stageHeight;//stage.stageHeight;
 				bg.fillAlpha=1;
 				bg.fillColor=0x000000;
 				CommondView.popView.addElementAt(bg,0);
@@ -342,9 +342,9 @@ package net.xuele.view.resources.resShow
 				this._vidX=this.x;
 				this._vidY=this.y;
 				if(this._vidUI.width>this._vidUI.height){
-					this._vidUI.scaleX=this._vidUI.scaleY=(stage.stageHeight-40)/this._vidUI.height;
+					this._vidUI.scaleX=this._vidUI.scaleY=(MainData._stageHeight-40)/this._vidUI.height;
 				}else{
-					this._vidUI.scaleX=this._vidUI.scaleY=stage.stageWidth/this._vidUI.width;
+					this._vidUI.scaleX=this._vidUI.scaleY=MainData._stageWidth/this._vidUI.width;
 				}
 				
 				this.horizontalCenter=0;

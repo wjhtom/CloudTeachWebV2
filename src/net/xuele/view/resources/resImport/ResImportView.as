@@ -7,6 +7,8 @@ package net.xuele.view.resources.resImport
 	import net.xuele.utils.MainData;
 	import net.xuele.utils.PublicOperate;
 	import net.xuele.utils.ResourcesData;
+	import net.xuele.view.resources.control.ResControl;
+	import net.xuele.view.resources.events.ResEvent;
 	import net.xuele.view.resources.factory.ResFactory;
 	import net.xuele.view.resources.interfaces.IResBox;
 	import net.xuele.view.resources.resBox.ResView;
@@ -75,6 +77,7 @@ package net.xuele.view.resources.resImport
 		private var _currentTag:UIMovieClip;
 		private var _factory:ResFactory;
 		private var _tempResAry:Array;
+		private var _importedResAry:Array;
 		public function ResImportView()
 		{
 			super();
@@ -87,14 +90,30 @@ package net.xuele.view.resources.resImport
 		}
 		private function init():void
 		{
-			
+			this.width=MainData._stageWidth;//stage.stageWidth;
+			this.height=MainData._stageHeight;//stage.stageHeight;
 			_factory=new ResFactory;
 			_tempResAry=[];
+			_importedResAry=[];
+			var len:int=MainData.myResourcesAry.length;
+			for(var i:int=0;i<len;i++){
+				_importedResAry[i]=MainData.myResourcesAry[i];
+			}
 			createUI();
 			addListener();
 		}
 		private function createUI():void
 		{
+			var rect:Rect=new Rect;
+			rect.fillAlpha=0.5;
+			rect.fillColor=0x000000;
+			rect.percentWidth=rect.percentHeight=100;
+			this.addElement(rect);
+			
+			var resGroup:Group=new Group;
+			this.addElement(resGroup);
+			resGroup.horizontalCenter=resGroup.verticalCenter=0;
+			
 			var bg:UIAsset=new UIAsset;
 			bg.skinName=PublicOperate.getUI("ImportBg");
 //			var bg:Rect=new Rect;
@@ -103,14 +122,15 @@ package net.xuele.view.resources.resImport
 //			bg.fillAlpha=1;
 //			bg.fillColor=0x0000ff;
 			
-			this.addElement(bg);
+			resGroup.addElement(bg);
+			
 			
 			
 			this._typeTitleGroup=new Group;
 			var typeLayout:HorizontalLayout=new HorizontalLayout;
 			typeLayout.gap=5;
 			this._typeTitleGroup.layout=typeLayout;
-			this.addElement(this._typeTitleGroup);
+			resGroup.addElement(this._typeTitleGroup);
 			this._typeTitleGroup.left=10;
 			this._typeTitleGroup.top=5;
 			
@@ -141,19 +161,19 @@ package net.xuele.view.resources.resImport
 			
 			this._closeBtn=new McButton;
 			this._closeBtn.skinName=PublicOperate.getUI("CloseImport","movieclip");
-			this.addElement(this._closeBtn);
+			resGroup.addElement(this._closeBtn);
 			this._closeBtn.top=10;
 			this._closeBtn.right=20;
 			
 			this._importBtn=new McButton;
 			this._importBtn.skinName=PublicOperate.getUI("ImportBtn","movieclip");
-			this.addElement(this._importBtn);
-			this._importBtn.right=50;
+			resGroup.addElement(this._importBtn);
+			this._importBtn.right=150;
 			this._importBtn.bottom=10;
 			
 			this._cancelBtn=new McButton;
 			this._cancelBtn.skinName=PublicOperate.getUI("CancelImport","movieclip");
-			this.addElement(this._cancelBtn);
+			resGroup.addElement(this._cancelBtn);
 			this._cancelBtn.right=10;
 			this._cancelBtn.bottom=10;
 			
@@ -166,7 +186,7 @@ package net.xuele.view.resources.resImport
 			sc.width=735;
 			sc.height=300;
 			sc.viewport=this._resGroup;
-			this.addElement(sc);
+			resGroup.addElement(sc);
 			sc.horizontalCenter=0;
 			sc.top=50;
 			
@@ -197,7 +217,6 @@ package net.xuele.view.resources.resImport
 			this._currentTag.gotoAndStop(0);
 			this._currentTag=uiMC;
 			this._currentTag.gotoAndStop(1);
-			return;
 			switch(uiMC){
 				case this._totalRes:
 					createRes(0);
@@ -235,17 +254,21 @@ package net.xuele.view.resources.resImport
 				}else{
 					if(String(v)==resVo._fileType){
 						res=_factory.createResBox(ResourcesData._allResAry[i]);
+					}else{
+						continue;
 					}
 				}
+				res.unSelect();
+				res.createUI();
 				var len1:int=this._tempResAry.length;
 				for(var j:int=0;j<len1;j++){
 					if(res.resVo._fileCode==IResBox(this._tempResAry[j]).resVo._fileCode){
 						res.selected();
 					}
 				}
-				var selLen:int=MainData.myResourcesAry.length;
+				var selLen:int=this._importedResAry.length;
 				for(j=0;j<selLen;j++){
-					if(res.resVo._fileCode==ResourceVo(MainData.myResourcesAry[j])._fileCode){
+					if(res.resVo._fileCode==ResourceVo(this._importedResAry[j])._fileCode){
 						if(!ResView(res).isSelect){
 							this._tempResAry.push(res);
 							res.selected();
@@ -261,9 +284,6 @@ package net.xuele.view.resources.resImport
 		{
 			var res:IResBox=IResBox(e.currentTarget);
 			if(ResView(res).isSelect){
-				this._tempResAry.push(res);
-				res.selected();
-			}else{
 				res.unSelect();
 				var len:int=this._tempResAry.length;
 				for(var i:int=0;i<len;i++){
@@ -272,6 +292,17 @@ package net.xuele.view.resources.resImport
 						break;
 					}
 				}
+				len=this._importedResAry.length;
+				for(i=0;i<len;i++){
+					if(res.resVo._fileCode==ResourceVo(this._importedResAry[i])._fileCode){
+						this._importedResAry.splice(i,1);
+						break;
+					}
+				}
+			}else{
+				res.selected();
+				this._tempResAry.push(res);
+				
 			}
 			
 		}
@@ -282,8 +313,14 @@ package net.xuele.view.resources.resImport
 			for(var i:int=0;i<len;i++){
 				MainData.myResourcesAry.push(IResBox(this._tempResAry[i]).resVo);
 			}
+			ResControl.control.dispatchEvent(new ResEvent(ResEvent.UPDATAUSERRESOURCES));
+			exitThis();
 		}
 		private function cancelHandler(e:MouseEvent):void
+		{
+			exitThis();
+		}
+		private function exitThis():void
 		{
 			removeResListener();
 			this._resGroup.removeAllElements();
@@ -306,6 +343,10 @@ package net.xuele.view.resources.resImport
 			this._kejianRes.removeEventListener(MouseEvent.CLICK,changeResList);
 			this._xitiRes.removeEventListener(MouseEvent.CLICK,changeResList);
 			this._otherRes.removeEventListener(MouseEvent.CLICK,changeResList);
+			
+			this._importBtn.removeEventListener(MouseEvent.CLICK,importHandler);
+			this._cancelBtn.removeEventListener(MouseEvent.CLICK,cancelHandler);
+			this._closeBtn.removeEventListener(MouseEvent.CLICK,cancelHandler);
 		}
 	}
 }

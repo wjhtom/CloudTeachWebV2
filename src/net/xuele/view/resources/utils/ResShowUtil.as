@@ -25,7 +25,7 @@ package net.xuele.view.resources.utils
 		public static function createResShow(resVo:ResourceVo):void
 		{
 			var res:IResShow=_factory.createResShow(resVo);
-			CommondView.contentView.addRes(res);
+			CommondView.contentView.addRes(res,false);
 		}
 		public static function removeResShow(domain:Group,res:IResShow):void
 		{

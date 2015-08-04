@@ -6,6 +6,7 @@ package net.xuele.view.draw.utils
 	import net.xuele.commond.CommondView;
 	import net.xuele.commond.MenuEvent;
 	import net.xuele.utils.MainData;
+	import net.xuele.utils.PublicOperate;
 	import net.xuele.view.menu.controller.EraseController;
 	import net.xuele.view.menu.controller.PencilController;
 	import net.xuele.view.pages.utils.PagesData;

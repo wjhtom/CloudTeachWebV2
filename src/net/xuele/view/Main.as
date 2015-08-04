@@ -1,7 +1,5 @@
 package net.xuele.view
 {
-	import flash.events.Event;
-	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
 	
@@ -15,11 +13,14 @@ package net.xuele.view
 	import net.xuele.view.pages.interfaces.IBigPage;
 	import net.xuele.view.pages.interfaces.IPageFactory;
 	import net.xuele.view.pages.utils.PagesData;
-	import net.xuele.view.pages.utils.PagesUtil;
 	import net.xuele.view.pages.view.PageNumView;
+	import net.xuele.view.resources.events.ResEvent;
+	import net.xuele.view.resources.factory.ResFactory;
+	import net.xuele.view.resources.interfaces.IResShow;
+	import net.xuele.view.resources.utils.ResData;
+	import net.xuele.vo.ContentVo;
 	
 	import org.flexlite.domUI.components.Group;
-	import org.flexlite.domUI.components.Rect;
 	import org.flexlite.domUI.events.UIEvent;
 	import org.flexlite.domUI.layouts.VerticalLayout;
 	import org.flexlite.domUI.utils.callLater;
@@ -86,14 +87,27 @@ package net.xuele.view
 				
 			createBG();
 			createMenu();
-			createPage();
+			if(MainData.myResourcesAry.length>0&&MainData.pagesDataAry.length>0){
+				createPageInfo();
+			}else{
+				createPage();
+			}
 			createPageNum();
+			
+		}
+		private function setPageInfo():void
+		{
+			
 		}
 		private function createBG():void
 		{
 			var bg:BlackboardView=new BlackboardView;
 			this._bgGroup.addElement(bg);
 		}
+		/**
+		 * 创建主功能区菜单 
+		 * 
+		 */
 		private function createMenu():void
 		{
 			var layout:VerticalLayout=new VerticalLayout;
@@ -107,7 +121,13 @@ package net.xuele.view
 //			menu.horizontalCenter=0;
 //			menu.bottom=0;
 			CommondView.menuView=menuPop;
+			this._menuGroup.mouseEnabled=false;
+			menu.mouseEnabled=false;
 		}
+		/**
+		 * 创建页面 
+		 * 
+		 */
 		private function createPage():void
 		{
 			var factory:IPageFactory=new PageFactory;
@@ -130,6 +150,10 @@ package net.xuele.view
 			Timer(e.target).removeEventListener(TimerEvent.TIMER,getDrawView);
 			DrawData._currentCanvas=CommondView.contentView.drawGroup;
 		}
+		/**
+		 * 创建页码 
+		 * 
+		 */
 		private function createPageNum():void
 		{
 			var leftPageNum:PageNumView=new PageNumView;
@@ -140,6 +164,45 @@ package net.xuele.view
 				var rightPageNum:PageNumView=new PageNumView;
 				_pageNumGroup.addElement(rightPageNum);
 				rightPageNum.right=0;
+			}
+		}
+		/**
+		 * 页面初使化 
+		 * 
+		 */
+		private function createPageInfo():void
+		{
+			PagesData._currnetPageNum=MainData.pagesDataAry.length;
+			var factory:IPageFactory=new PageFactory;
+			CommondFactory._pageFactory=factory;
+			for(var i:int=0;i<PagesData._currnetPageNum;i++){
+				var page:IBigPage=factory.createPage();
+				page.createUI();
+				PagesData._pagesAry.push(page);
+			}
+			CommondView.contentView=IBigPage(PagesData._pagesAry[0]);
+			PagesData._currentPage=IBigPage(PagesData._pagesAry[0]);
+			PagesData._currentPageID=0;
+			
+			CommondView.resShowView.addElement(IBigPage(PagesData._pagesAry[0]));
+			Group(IBigPage(PagesData._pagesAry[0])).mouseEnabled=false;
+			callLater(setPageInfoRes,null,2);
+			
+		}
+		private function setPageInfoRes():void
+		{
+			DrawData._currentCanvas=CommondView.contentView.drawGroup;
+			ResData._currentTools=IBigPage(PagesData._pagesAry[0]).defaultTools;
+			var resFactory:ResFactory=new ResFactory;
+			var len:int=MainData.pagesDataAry.length
+			for(var i:int=0;i<len;i++){
+				var len1:int=MainData.pagesDataAry[i].length;
+				for(var j:int=0;j<len1;j++){
+					trace(ContentVo(MainData.pagesDataAry[i][j])._name)
+					var res:IResShow=resFactory.createResInfo(ContentVo(MainData.pagesDataAry[i][j]));
+					IBigPage(PagesData._pagesAry[i]).addRes(res,true);
+					
+				}
 			}
 		}
 		

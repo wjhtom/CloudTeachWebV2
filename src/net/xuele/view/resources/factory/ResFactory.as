@@ -13,6 +13,7 @@ package net.xuele.view.resources.factory
 	import net.xuele.view.resources.resShow.InputShow;
 	import net.xuele.view.resources.resShow.SoundShow;
 	import net.xuele.view.resources.resShow.VideoShow;
+	import net.xuele.vo.ContentVo;
 	import net.xuele.vo.ResourceVo;
 	
 	import org.flexlite.domUI.components.Group;
@@ -41,7 +42,7 @@ package net.xuele.view.resources.factory
 				res.createUI();
 				return res;
 			}
-			resVo._ex="jpg";
+//			resVo._ex="jpg";
 			switch(resVo._ex){
 				case "png":
 				case "jpeg":
@@ -85,6 +86,62 @@ package net.xuele.view.resources.factory
 			}
 			if(res!=null){
 				res.createUI(resVo);
+			}
+			return res;
+		}
+		public function createResInfo(conVo:ContentVo):IResShow
+		{
+			var res:IResShow;
+			if(!conVo._property._type){
+				res=new InputShow;
+				res.createResInfo(conVo);
+				return res;
+			}
+			trace("setContentVo",conVo._property.ex)
+			//			resVo._ex="jpg";
+			switch(conVo._property.ex){
+				case "png":
+				case "jpeg":
+				case "bmp":
+				case "jpg":
+					res=new ImageShow;
+					break;
+				case "txt":
+				case "doc":
+				case "docx":
+				case "xls":
+				case "xlsx":
+				case "ppt":
+				case "pptx":
+				case "pdf":
+					res=new DocShow;
+					break;
+				case "mp3":
+				case "wav":
+				case "wma":
+					res=new SoundShow;
+					break;
+				case "flv":
+				case "avi":
+				case "mpeg":
+				case "mpg":
+				case "mp4":
+				case "rmvb":
+				case "wmv":
+				case "mkv":
+				case "3gp":
+				case "mov":
+				case "navi":
+				case "rm":
+					res=new VideoShow;
+					break;
+				case "swf":
+					break;
+				default:
+					break;
+			}
+			if(res!=null){
+				res.createResInfo(conVo);
 			}
 			return res;
 		}

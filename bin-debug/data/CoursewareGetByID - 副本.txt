@@ -1,0 +1,148 @@
+﻿{
+    "pages": [
+        [
+            {
+                "text": "sdfsdfsdfsd",
+                "type": 6,
+                "y": 96.5,
+                "x": 573,
+                "index": 2,
+                "isOpen": 1,
+                "property": {
+                    "underline": false,
+                    "bold": false,
+                    "italic": false,
+                    "size": 36,
+                    "color": 16777215
+                }
+            },
+            {
+                "text": "sfdsfsdf",
+                "type": 6,
+                "y": 374.5,
+                "x": 320.5,
+                "index": 3,
+                "isOpen": 1,
+                "property": {
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "size": 36,
+                    "color": 153
+                }
+            },
+            {
+                "text": "qweqeqweqwe",
+                "type": 6,
+                "y": 34,
+                "x": 31.5,
+                "index": 4,
+                "isOpen": 0,
+                "property": {
+                    "bold": false,
+                    "italic": false,
+                    "underline": true,
+                    "size": 36,
+                    "color": 16777215
+                }
+            },
+            {
+                "text": "sdssfsfd",
+                "type": 6,
+                "y": 86,
+                "x": 31.5,
+                "index": 5,
+                "isOpen": 0,
+                "property": {
+                    "bold": false,
+                    "italic": false,
+                    "underline": false,
+                    "size": 36,
+                    "color": 16777215
+                }
+            },
+            {
+                "text": "习惯行不行",
+                "type": 3,
+                "y": 132,
+                "x": 224,
+                "index": 6,
+                "isOpen": 1,
+                "property": {
+                    "code": "d76ef120157fe208d61baf92a7293e29",
+                    "height": 54.4,
+                    "width": 306.4
+                }
+            },
+            {
+                "text": "《a o e》课件",
+                "type": 1,
+                "y": 34,
+                "x": 140,
+                "index": 7,
+                "isOpen": 1,
+                "property": {
+                    "code": "c5f2dc683f8b23067a2ca04eeef9b4da",
+                    "height": 540,
+                    "width": 720
+                }
+            }
+        ],
+        [],
+        [
+            {
+                "text": "006",
+                "type": 2,
+                "y": 31.5,
+                "x": 317.3,
+                "index": 4,
+                "isOpen": 1,
+                "property": {
+                    "code": "a0bfba88254d6f94cc747a6c3e9e07ba",
+                    "height": 545,
+                    "width": 365.35
+                }
+            }
+        ]
+    ],
+    "bg": 1,
+    "resources": [
+        {
+            "type": 3,
+            "code": "d76ef120157fe208d61baf92a7293e29",
+            "id": "369",
+            "nm": "习惯行不行",
+            "ex": "mp3"
+        },
+        {
+            "type": 4,
+            "code": "27832d64aabd46687189ca3cbee7e5cd",
+            "id": "11042",
+            "nm": "1413530201584",
+            "ex": "mp4"
+        },
+        {
+            "type": 1,
+            "code": "c5f2dc683f8b23067a2ca04eeef9b4da",
+            "id": "6109",
+            "nm": "《a o e》课件",
+            "ex": "doc"
+        },
+        {
+            "type": 2,
+            "code": "a0bfba88254d6f94cc747a6c3e9e07ba",
+            "id": "7972",
+            "nm": "006",
+            "ex": "jpg"
+        },
+        {
+            "type": 5,
+            "code": "accf5e4de2c97ac8fef18f432b14a609",
+            "id": "6116",
+            "nm": "单韵母e",
+            "ex": "swf"
+        }
+    ],
+    "name": "",
+    "style": 1
+}

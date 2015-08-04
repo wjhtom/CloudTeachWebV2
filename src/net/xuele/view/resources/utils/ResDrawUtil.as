@@ -5,6 +5,7 @@ package net.xuele.view.resources.utils
 	
 	import net.xuele.commond.CommondView;
 	import net.xuele.utils.MainData;
+	import net.xuele.utils.PublicOperate;
 	import net.xuele.view.draw.utils.DrawData;
 	
 	import org.flexlite.domUI.components.Group;
@@ -73,11 +74,11 @@ package net.xuele.view.resources.utils
 			if(ResData._currentTools!=null){
 				ResData._currentTools.moveEnabled=true;
 			}
-			MainData._mouseType=0;
 			_canvas.removeEventListener(MouseEvent.MOUSE_DOWN,pencilDownHandler);
 			_canvas.removeEventListener(MouseEvent.MOUSE_UP,pencilUpHandler);
 			_canvas.removeEventListener(MouseEvent.MOUSE_MOVE,pencilMoveHandler);
 			_canvas.removeEventListener(MouseEvent.RELEASE_OUTSIDE,pencilUpHandler);
+			PublicOperate.setMouseType(0);
 		}
 	}
 }

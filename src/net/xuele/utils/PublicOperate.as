@@ -12,6 +12,7 @@ package net.xuele.utils
 	import net.xuele.view.pages.view.SmallResView;
 	import net.xuele.view.resources.interfaces.IResShow;
 	import net.xuele.view.resources.resShow.DocShow;
+	import net.xuele.view.resources.resShow.FlashShow;
 	import net.xuele.view.resources.resShow.ImageShow;
 	import net.xuele.view.resources.resShow.InputShow;
 	import net.xuele.view.resources.resShow.SoundShow;
@@ -94,11 +95,16 @@ package net.xuele.utils
 			for(var i:int=0;i<len;i++){
 				obj.pages.push(getPageData(PagesData._pagesAry[i]));
 			}
-			trace(JSON.stringify(obj));
-			obj.userResources=[];
+			
+			obj.resources=[];
 			len=MainData.myResourcesAry.length;
 			for(i=0;i<len;i++){
-				obj.userResources.push(MainData.myResourcesAry[i]);
+				var resObj:Object=new Object;
+				resObj.ex=MainData.myResourcesAry[i]._ex;
+				resObj.fileType=MainData.myResourcesAry[i]._fileType;
+				resObj.name=MainData.myResourcesAry[i]._name;
+				resObj.fileCode=MainData.myResourcesAry[i]._fileCode;
+				obj.resources.push(resObj);
 			}
 //			obj.systemResources=[];
 //			len=MainData.systemResourcesAry.length;
@@ -106,6 +112,7 @@ package net.xuele.utils
 //			for(i=0;i<len;i++){
 //				obj.userResources.push(MainData.systemResourcesAry[i]);
 //			}
+			trace(JSON.stringify(obj));
 			return JSON.stringify(obj);
 		}
 		private static function getPageData(page:IBigPage):Array
@@ -115,24 +122,18 @@ package net.xuele.utils
 			for(var i:int=0;i<len;i++){
 				var obj:Object=new Object;
 				var res:IResShow=page.resAry[i];
-				switch(res){
-					case DocShow:
-						obj.type=1;
-						break;
-					case ImageShow:
-						obj.type=2;
-						break;
-					case SoundShow:
-						obj.type=3;
-						break;
-					case VideoShow:
-						obj.type=4;
-						break;
-					case InputShow:
-						obj.type=6;
-						break;
-					default:
-						break;
+				if(res is DocShow){
+					obj.type=1;
+				}else if(res is ImageShow){
+					obj.type=2;
+				}else if(res is SoundShow){
+					obj.type=3;
+				}else if(res is VideoShow){
+					obj.type=4;
+				}else if(res is FlashShow){
+					obj.type=5;
+				}else if(res is InputShow){
+					obj.type=6;
 				}
 				
 				obj.x=res.x;
@@ -158,12 +159,13 @@ package net.xuele.utils
 				}
 				obj.property=new Object;
 				if(obj.type==6){
+					trace("运行第N次")
 					obj.text=InputShow(res)._contentText.text;
 					obj.property.size=InputShow(res)._contentText.size;
 					obj.property.color=InputShow(res)._contentText.textColor;
 					obj.property.italic=InputShow(res)._contentText.italic;
 					obj.property.bold=InputShow(res)._contentText.bold;
-					obj.proterty.underline=InputShow(res)._contentText.underline;
+					obj.property.underline=InputShow(res)._contentText.underline;
 				}else{
 					obj.property.code=res.resVo._fileCode;
 					obj.text=res.resVo._name;
@@ -172,7 +174,7 @@ package net.xuele.utils
 					var rect:Rectangle=Group(res).getRect(Group(page))
 					obj.property.width=rect.width;
 					obj.property.height=rect.height;
-					obj.property.path=res.resVo._path;
+//					obj.property.path=res.resVo._path;
 				}
 				ary.push(obj);
 			}

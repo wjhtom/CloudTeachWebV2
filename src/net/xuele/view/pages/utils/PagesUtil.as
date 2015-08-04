@@ -10,7 +10,6 @@ package net.xuele.view.pages.utils
 	import net.xuele.view.pages.factorys.PageFactory;
 	import net.xuele.view.pages.interfaces.IBigPage;
 	import net.xuele.view.pages.interfaces.IPageFactory;
-	import net.xuele.view.pages.view.PageView;
 	import net.xuele.view.resources.utils.ResData;
 	import net.xuele.view.resources.utils.ResTransform;
 	

@@ -4,12 +4,12 @@ package net.xuele.vo
 	{
 		public var _fileCode:String;
 		public var _id:String;
-		public var _mid:String;
+//		public var _mid:String;
 		/**
 		 * 类型
 		 * 1:ppt,2:img,3:sound,4:flv,5:swf 
 		 */
-		public var _type:String;
+//		public var _type:String;
 		/**
 		 * 与网站页面上对应的资源分类 （课件，教案，学案，习题，课程素材，其他）
 		 */

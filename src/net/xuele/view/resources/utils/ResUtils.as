@@ -27,7 +27,7 @@ package net.xuele.view.resources.utils
 				case "bmp":
 				case "jpg":
 					if(isBig){
-						icon=PublicOperate.getUI("IconBigImg") as Sprite;
+						icon=PublicOperate.getUI("IconBigImage") as Sprite;
 					}else{
 						icon=PublicOperate.getUI("IconSmallImg") as Sprite;
 					}
@@ -42,7 +42,7 @@ package net.xuele.view.resources.utils
 				case "doc":
 				case "docx":
 					if(isBig){
-						icon=PublicOperate.getUI("IconBigDoc") as Sprite;
+						icon=PublicOperate.getUI("IconBigWord") as Sprite;
 					}else{
 						icon=PublicOperate.getUI("IconSmallDoc") as Sprite;
 					}
@@ -50,15 +50,15 @@ package net.xuele.view.resources.utils
 				case "xls":
 				case "xlsx":
 					if(isBig){
-						icon=PublicOperate.getUI("IconBigXls") as Sprite;
+						icon=PublicOperate.getUI("IconBigExcel") as Sprite;
 					}else{
-						icon=PublicOperate.getUI("IconSmallXls") as Sprite;
+						icon=PublicOperate.getUI("IconSmallExcel") as Sprite;
 					}
 					break;
 				case "ppt":
 				case "pptx":
 					if(isBig){
-						icon=PublicOperate.getUI("IconSmallPPT") as Sprite;
+						icon=PublicOperate.getUI("IconBigPPT") as Sprite;
 					}else{
 						icon=PublicOperate.getUI("IconSmallPPT") as Sprite;
 					}

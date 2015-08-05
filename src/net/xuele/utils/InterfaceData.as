@@ -51,7 +51,10 @@ package net.xuele.utils
 		 * 参数：kcid 
 		 */
 		public static var _teacherClassURL:String="";
-		
+		/**
+		 * 获取系统资源 
+		 */
+		public static var _systemResURL:String="";
 		/**
 		 * 外部UI文件 
 		 */

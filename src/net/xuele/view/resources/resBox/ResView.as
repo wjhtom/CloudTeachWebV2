@@ -1,11 +1,17 @@
 package net.xuele.view.resources.resBox
 {
+	import flash.display.Loader;
+	import flash.display.LoaderInfo;
 	import flash.display.Sprite;
+	import flash.events.Event;
+	import flash.events.IOErrorEvent;
 	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
+	import flash.net.URLRequest;
 	import flash.text.TextFormatAlign;
 	import flash.utils.Timer;
 	
+	import net.xuele.utils.PopUtils;
 	import net.xuele.utils.PublicOperate;
 	import net.xuele.view.resources.interfaces.IResBox;
 	import net.xuele.view.resources.utils.ResUtils;
@@ -31,6 +37,8 @@ package net.xuele.view.resources.resBox
 		private var _resInfoGroup:Group;
 		private var _isSelected:Boolean;
 		private var _selectUI:UIAsset;
+		private var _resUI:UIAsset;
+		private var _uiLoader:Loader;
 		public function ResView(resVo:ResourceVo)
 		{
 			super();
@@ -56,34 +64,45 @@ package net.xuele.view.resources.resBox
 			this._resInfoGroup=new Group;
 			this._resInfoGroup.layout=layout;
 			createRes();
-			createName();
-			addListener();
+			
 		}
-//		private var _bgUI:UIMovieClip;
 		private function createRes():void
 		{
-//			var bg:MovieClip=PublicOperate.getUI("","movieclip") as MovieClip;
-//			_bgUI=new UIMovieClip;
-//			_bgUI.skinName=bg;
-//			_bgUI.gotoAndStop(0);
-			var bg:Rect=new Rect;
-			bg.width=100;
-			bg.height=140;
-			bg.fillAlpha=1;
-			bg.fillColor=0xffffff;
+			
+			
+			var bg:UIAsset=new UIAsset;
+			bg.skinName=PublicOperate.getUI("IconBg");
 			this.addElement(bg);
 			
 			this._resGroup=new Group;
 			this._resGroup.width=100;
 			this._resGroup.height=100;
-			var resUI:UIAsset=ResUtils.getResIcon("",true);
-			this._resGroup.addElement(resUI);
-			this._resGroup.horizontalCenter=0;
-			this._resGroup.verticalCenter=0;
-			this._resInfoGroup.addElement(this._resGroup);
+			if(_resVo._from==1){
+				_resUI=ResUtils.getResIcon(_resVo._ex,true);
+				getSmallImg();
+			}else{
+				_uiLoader=new Loader;
+				_uiLoader.contentLoaderInfo.addEventListener(Event.COMPLETE,getSmallImg);
+				_uiLoader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR,PopUtils.IOError);
+				_uiLoader.load(new URLRequest("http://ico.ooopic.com/iconset01/GnomeDesktop-icons/gif/110048.gif"));
+			}
+			
 			
 		}
-		
+		private function getSmallImg(e:Event=null):void
+		{
+			if(_resVo._from==2){
+				_resUI=new UIAsset;
+				_resUI.skinName=_uiLoader.content;
+			}
+			this._resGroup.addElement(_resUI);
+			_resUI.horizontalCenter=0;
+			_resUI.verticalCenter=0;
+			this._resInfoGroup.addElement(this._resGroup);
+			
+			createName();
+			addListener();
+		}
 		private function createName():void
 		{
 			var nameLabel:Label=new Label;
@@ -130,7 +149,7 @@ package net.xuele.view.resources.resBox
 			this._selectUI=new UIAsset;
 			this._selectUI.skinName=PublicOperate.getUI("SelectedTag") as Sprite;
 			this._isSelected=true;
-			callLater(createSelectUI,null,2);
+			callLater(createSelectUI,null,3);
 		}
 		private function createSelectUI():void
 		{

@@ -124,7 +124,6 @@ package net.xuele.view.resources.resBox
 		}
 		private function tagClickHandler(e:MouseEvent):void
 		{
-			trace("sfsfd")
 			if(ResData._currentResBox==0&&this._systemTag.currentFrame==1&&UIMovieClip(e.currentTarget).name=="systemTag" || ResData._currentResBox==1&&this._userTag.currentFrame==1&&UIMovieClip(e.currentTarget).name=="userTag"){
 				return;
 			}
@@ -149,9 +148,9 @@ package net.xuele.view.resources.resBox
 					}
 					break;
 				case 1:
-					if(MainData.myResourcesAry.length>0){
+//					if(MainData.myResourcesAry.length>0){
 						userRes();
-					}
+//					}
 					break;
 				default:
 					break;

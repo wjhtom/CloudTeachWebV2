@@ -11,5 +11,6 @@
     <Homework url="http://pan.xuele.net/jsons/GetSSQuanByUserIDClasss" desc="电子作业">g|c</Homework>
     <Talkwork url="http://pan.xuele.net/jsons/GetGLDListByUserClass" desc="讨论作业">kcid|g|c</Talkwork>
     <TeacherClass url="http://pan.xuele.net/jsons/GetTeacherClass" desc="教师所带教室">kcid</TeacherClass>
+    <SystemResource url="http://pan.xuele.net/jsons/GetTeacherClass" desc="教师所带教室">kcid</SystemResource>
   </Interfaces>
 </SKConfig>

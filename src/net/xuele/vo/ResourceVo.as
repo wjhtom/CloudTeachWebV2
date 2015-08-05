@@ -26,6 +26,14 @@ package net.xuele.vo
 		 * 资源名称 
 		 */
 		public var _name:String;
+		/**
+		 * 资源来源（1：云盘资源，2：系统资源） 
+		 */
+		public var _from:int;
+		/**
+		 * 缩略图地址 
+		 */
+		public var _smallImgURL:String;
 		public function ResourceVo()
 		{
 		}

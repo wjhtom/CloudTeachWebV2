@@ -58,18 +58,19 @@ package net.xuele
 		{
 			ReadXML.readInterfaceXML(data);
 			InterfaceData._uiURL="data/ui.swf";
-			InterfaceData._allResourcesURL="http://cloudteach.app.xuele.net/coursewares/extfl/disklist?userId=162906292706&schoolId=xueleceshioscar1&unitId=020003001004034001001&fileType=4&extType=0";//"data/GetFileByUnitCodeByWebC.txt";
+			InterfaceData._allResourcesURL="http://cloudteach.app.xuele.net/coursewares/extfl/disklist?userId=265143510212&schoolId=SchoolIDQATestsm55&unitId=020001001004009001001&fileType=4&extType=0";//"data/GetFileByUnitCodeByWebC.txt";
 			InterfaceData._teacherEditURL="data/CoursewareGetByID.txt";
 			InterfaceData._teacherClassURL="data/GetTeacherClass.txt";
+			InterfaceData._systemResURL="data/systemRes.txt"
 			loadJSONData();
 		}
 		private function loadJSONData():void
 		{
 			MainData._teachType=1;
 			if(MainData._teachType==3){
-				var urlAry:Array=[InterfaceData._allResourcesURL,InterfaceData._teacherShareURL,InterfaceData._teacherClassURL];
+				var urlAry:Array=[InterfaceData._allResourcesURL,InterfaceData._teacherShareURL,InterfaceData._teacherClassURL,InterfaceData._systemResURL];
 			}else{
-				urlAry=[InterfaceData._allResourcesURL,InterfaceData._teacherEditURL,InterfaceData._teacherClassURL];
+				urlAry=[InterfaceData._allResourcesURL,InterfaceData._teacherEditURL,InterfaceData._teacherClassURL,InterfaceData._systemResURL];
 			}
 			if(MainData._isOnline){
 				
@@ -88,14 +89,18 @@ package net.xuele
 				data[0]=JSON.stringify({"state":0});
 			}
 			if(data[1]==null){
-				data[0]=JSON.stringify({"state":0});
+				data[1]=JSON.stringify({"state":0});
 			}
 			if(data[2]==null){
-				data[0]=JSON.stringify({"state":0});
+				data[2]=JSON.stringify({"state":0});
+			}
+			if(data[3]==null){
+				data[3]=JSON.stringify({"state":0});
 			}
 			ReadJSON.readAllResources(data[0]);
 			ReadJSON.readShoukeInfo(data[1]);
 			ReadJSON.readTeacherClass(data[2]);
+			ReadJSON.readSystemRes(data[3]);
 			loadUI();
 		}
 		private function loadUI():void

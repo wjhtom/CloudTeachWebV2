@@ -30,7 +30,7 @@ package net.xuele.view.resources.resBox
 		private var _ico:UIAsset;
 		public function createUI():void
 		{
-			_ico=ResUtils.getResIcon("");
+			_ico=ResUtils.getResIcon(resVo._ex);
 			_ico.addEventListener(MouseEvent.MOUSE_UP,mouseUpHandler);
 			_ico.addEventListener(MouseEvent.RELEASE_OUTSIDE,mouseUpHandler);
 			var icoTimer:Timer=new Timer(20,1);
@@ -52,7 +52,7 @@ package net.xuele.view.resources.resBox
 			_ico.addEventListener(MouseEvent.RELEASE_OUTSIDE,mouseUpHandler);
 			_ico.stopDrag();
 			this.removeElement(_ico);
-			if(e.stageY<290){
+			if(e.stageY<180){
 //				var res:IResShow=this._resFactory.createResShow(this._resVo);
 				ResShowUtil.createResShow(_resVo);
 			}

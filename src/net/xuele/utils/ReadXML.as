@@ -17,6 +17,7 @@ package net.xuele.utils
 			InterfaceData._talkworkURL=xml.Interfaces[0].Talkwork[0].@url;
 			InterfaceData._teacherClassURL=xml.Interfaces[0].TeacherClass[0].@url;
 			InterfaceData._dzkbInfoURL=xml.Interfaces[0].DZKBInfo[0].@url;
+			InterfaceData._systemResURL=xml.Interfaces[0].SystemResource[0].@url;
 		}
 	}
 }

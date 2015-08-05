@@ -31,6 +31,7 @@ package net.xuele.view.resources.resShow
 			this.addElement(this._resGroup);
 			this._drawGroup=new Group;
 			this.addElement(this._drawGroup);
+			this._drawGroup.mouseChildren=false;
 //			this._drawGroup.width=200;
 //			this._drawGroup.height=300;
 			

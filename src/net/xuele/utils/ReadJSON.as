@@ -43,6 +43,7 @@ package net.xuele.utils
 				resVo._ex=obj.resources[i].extension;
 				resVo._path=PublicOperate.getResURL(resVo._ex,resVo._fileCode);
 				resVo._fileType=obj.resources[i].fileType;
+				resVo._from=1;
 				ResourcesData._allResAry.push(resVo);
 			}
 		}
@@ -92,6 +93,7 @@ package net.xuele.utils
 						contentVo._property.fileCode=obj.pages[i][j].property.code;
 						contentVo._property.path=PublicOperate.getResURL(obj.pages[i][j].property.ex,obj.pages[i][j].property.code);
 					}
+					
 					MainData.pagesDataAry[i].push(contentVo);
 				}
 				
@@ -107,6 +109,7 @@ package net.xuele.utils
 				myResVo._ex=obj.resources[i].ex;
 				myResVo._fileType=obj.resources[i].fileType;
 				myResVo._path=PublicOperate.getResURL(myResVo._ex,myResVo._fileCode);
+				myResVo._from=1;
 				MainData.myResourcesAry.push(myResVo);
 			}
 		}
@@ -145,14 +148,16 @@ package net.xuele.utils
 				return;
 			}
 			MainData.systemResourcesAry=[];
-			var len:int=obj.resources.length;
+			var len:int=obj.r.length;
 			for(var i:int=0;i<len;i++){
 				var res:ResourceVo=new ResourceVo;
-				res._fileCode=obj.resources[i].code;
-				res._name=obj.resources[i].nm;
-				res._ex=obj.resources[i].ex;
-				res._id=obj.resources[i].id;
-				res._path=PublicOperate.getResURL(res._ex,res._fileCode);
+				res._name=obj.r[i].name;
+				res._path=obj.r[i].bigimg;
+				res._smallImgURL=obj.r[i].smallimg;
+				var at:int=res._path.lastIndexOf(".");
+				res._ex=res._path.substring(at+1,res._path.length);
+				res._from=2;
+				MainData.systemResourcesAry.push(res);
 			}
 		}
 		

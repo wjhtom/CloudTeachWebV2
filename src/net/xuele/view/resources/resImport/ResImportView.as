@@ -168,7 +168,7 @@ package net.xuele.view.resources.resImport
 			this._importBtn=new McButton;
 			this._importBtn.skinName=PublicOperate.getUI("ImportBtn","movieclip");
 			resGroup.addElement(this._importBtn);
-			this._importBtn.right=150;
+			this._importBtn.right=110;
 			this._importBtn.bottom=10;
 			
 			this._cancelBtn=new McButton;
@@ -179,11 +179,12 @@ package net.xuele.view.resources.resImport
 			
 			this._resGroup=new Group;
 			var resLayout:TileLayout=new TileLayout;
-			resLayout.horizontalGap=5;
-			resLayout.verticalGap=5;
+			resLayout.horizontalGap=25;
+			resLayout.verticalGap=10;
+			resLayout.requestedColumnCount=6;
 			this._resGroup.layout=resLayout;
 			var sc:Scroller=new Scroller;
-			sc.width=735;
+			sc.width=750;
 			sc.height=300;
 			sc.viewport=this._resGroup;
 			resGroup.addElement(sc);
@@ -292,6 +293,13 @@ package net.xuele.view.resources.resImport
 						break;
 					}
 				}
+				len=MainData.myResourcesAry.length;
+				for(i=0;i<len;i++){
+					if(res.resVo._fileCode==MainData.myResourcesAry[i]._fileCode){
+						MainData.myResourcesAry.splice(i,1);
+						break;
+					}
+				}
 				len=this._importedResAry.length;
 				for(i=0;i<len;i++){
 					if(res.resVo._fileCode==ResourceVo(this._importedResAry[i])._fileCode){
@@ -308,10 +316,21 @@ package net.xuele.view.resources.resImport
 		}
 		private function importHandler(e:MouseEvent):void
 		{
-			MainData.myResourcesAry=[];
+//			MainData.myResourcesAry=[];
+			
 			var len:int=this._tempResAry.length;
 			for(var i:int=0;i<len;i++){
-				MainData.myResourcesAry.push(IResBox(this._tempResAry[i]).resVo);
+				var len1:int=MainData.myResourcesAry.length;
+				var flag:Boolean=false;
+				for(var j:int=0;j<len1;j++){
+					if(IResBox(this._tempResAry[i]).resVo._fileCode==MainData.myResourcesAry[j]._fileCode){
+						flag=true;
+						break;
+					}
+				}
+				if(!flag){
+					MainData.myResourcesAry.push(IResBox(this._tempResAry[i]).resVo);
+				}
 			}
 			ResControl.control.dispatchEvent(new ResEvent(ResEvent.UPDATAUSERRESOURCES));
 			exitThis();

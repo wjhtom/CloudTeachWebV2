@@ -11,7 +11,7 @@ package net.xuele.vo
 		 */
 //		public var _type:String;
 		/**
-		 * 与网站页面上对应的资源分类 （课件，教案，学案，习题，课程素材，其他）
+		 * 与网站页面上对应的资源分类 （1其他,2,教案3学案4课件5习题6课程素材）
 		 */
 		public var _fileType:String;
 		/**
@@ -27,13 +27,17 @@ package net.xuele.vo
 		 */
 		public var _name:String;
 		/**
-		 * 资源来源（1：云盘资源，2：系统资源） 
+		 * 资源来源（1：云盘资源，2：系统资源,3:作业） 
 		 */
 		public var _from:int;
 		/**
 		 * 缩略图地址 
 		 */
 		public var _smallImgURL:String;
+		/**
+		 * 资源的主人，用于学生作业 
+		 */
+		public var _resOwner:String;
 		public function ResourceVo()
 		{
 		}

@@ -24,9 +24,12 @@ package net.xuele.view.menu.view
 			}
 			super.itemClick();
 			var resBox:ResBoxView=new ResBoxView;
-			CommondView.menuView.addElement(resBox);
+			CommondView.popView.addElement(resBox);
+//			CommondView.menuView.addElement(resBox);
+			resBox.name="resBox";
 			MenuData._isResBoxShow=true;
 			resBox.horizontalCenter=0;
+			resBox.verticalCenter=50;
 		}
 	}
 }

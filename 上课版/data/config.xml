@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<SKConfig>
+  
+  <Interfaces>
+    <AllResource url="http://pan.xuele.net/jsons/GetFileByUnitCodeByWebC" desc="所有资源">kcid</AllResource>
+    <TeacherEdit url="http://pan.xuele.net/jsons/CoursewareGetByID" desc="编辑,授课时候调用获取课件信息">id|kcid</TeacherEdit>
+    <SaveURL url="http://cloudteach.app.xuele.net/coursewares/extfl/save" desc="用户保存课件编辑">content|id|kcid</SaveURL>
+    <TeacherShare url="http://pan.xuele.net/jsons/CoursewareGetByShare" desc="预览分享课件">id|kcid</TeacherShare>
+    <AutoSave url="http://pan.xuele.net/jsons/CoursewareSetTemp" desc="自动保存">content|id|kcid</AutoSave>
+    <DZKBInfo url="http://pan.xuele.net/jsons/GetDzkbByKCID" desc="获取电子教材信息">kcid</DZKBInfo>
+    <Homework url="http://pan.xuele.net/jsons/GetSSQuanByUserIDClasss" desc="电子作业">g|c</Homework>
+    <Talkwork url="http://pan.xuele.net/jsons/GetGLDListByUserClass" desc="讨论作业">kcid|g|c</Talkwork>
+    <TeacherClass url="http://pan.xuele.net/jsons/GetTeacherClass" desc="教师所带教室">kcid</TeacherClass>
+    <SystemResource url="http://pan.xuele.net/jsons/GetTeacherClass" desc="教师所带教室">kcid</SystemResource>
+  </Interfaces>
+</SKConfig>

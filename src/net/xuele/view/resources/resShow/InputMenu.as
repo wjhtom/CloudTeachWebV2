@@ -7,6 +7,7 @@ package net.xuele.view.resources.resShow
 	import fl.events.ColorPickerEvent;
 	
 	import net.xuele.utils.PublicOperate;
+	import net.xuele.view.pages.utils.InputUtil;
 	import net.xuele.view.pages.utils.PagesData;
 	
 	import org.flexlite.domUI.collections.ArrayCollection;
@@ -195,7 +196,7 @@ package net.xuele.view.resources.resShow
 		}
 		private function cancelHandler(e:MouseEvent):void
 		{
-			
+			InputUtil.stopInput();
 		}
 		public function set setSize(v:int):void
 		{

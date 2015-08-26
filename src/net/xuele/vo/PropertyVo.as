@@ -13,6 +13,11 @@ package net.xuele.vo
 		private var _ex:String;
 		private var _fileCode:String;
 		/**
+		 * 资源来源，1：云盘资源，2：系统资源 
+		 */
+		private var _from:int;
+		private var _smallimg:String;
+		/**
 		 * 文件类型：1其他,2教案，3学案，4课件，5习题，6课程素材 
 		 */
 		private var _fileType:String;
@@ -216,6 +221,40 @@ package net.xuele.vo
 				return null;
 			}else{
 				return this._underline;
+			}
+		}
+		public function set from(v:int):void
+		{
+			if(this._type){
+				this._from=v;
+			}else{
+				new Error("文本类型没有from属性");
+			}
+		}
+		public function get from():int
+		{
+			if(this._type){
+				return this._from;
+			}else{
+				new Error("文本类型没有from属性");
+				return null;
+			}
+		}
+		public function set smallImg(v:String):void
+		{
+			if(this._type){
+				this._smallimg=v;
+			}else{
+				new Error("文本类型没有from属性");
+			}
+		}
+		public function get smallImg():String
+		{
+			if(this._type){
+				return this._smallimg;
+			}else{
+				new Error("文本类型没有from属性");
+				return null;
 			}
 		}
 	}

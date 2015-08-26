@@ -4,6 +4,7 @@ package net.xuele.view.resources.resShow
 	
 	
 	import net.xuele.view.resources.interfaces.IResShow;
+	import net.xuele.view.resources.utils.ResData;
 	
 	import org.flexlite.domUI.components.Group;
 	
@@ -15,6 +16,7 @@ package net.xuele.view.resources.resShow
 	public class EditResBase extends ResBase implements IResShow
 	{
 		private var _drawGroup:Group;
+		private var _rotation:Number;
 		
 		public function EditResBase()
 		{
@@ -49,6 +51,14 @@ package net.xuele.view.resources.resShow
 		override public function get drawGroup():Group
 		{
 			return this._drawGroup;
+		}
+		public function set resRotation(v:Number):void
+		{
+			this._rotation=v;
+		}
+		public function get resRotation():Number
+		{
+			return this._rotation;
 		}
 	}
 }

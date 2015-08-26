@@ -83,11 +83,19 @@ package net.xuele.view.resources.resBox
 			}else{
 				_uiLoader=new Loader;
 				_uiLoader.contentLoaderInfo.addEventListener(Event.COMPLETE,getSmallImg);
-				_uiLoader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR,PopUtils.IOError);
-				_uiLoader.load(new URLRequest("http://ico.ooopic.com/iconset01/GnomeDesktop-icons/gif/110048.gif"));
+				_uiLoader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR,ioError);
+//				_uiLoader.load(new URLRequest("http://ico.ooopic.com/iconset01/GnomeDesktop-icons/gif/110048.gif"));
+				_uiLoader.load(new URLRequest(_resVo._smallImgURL));
 			}
 			
 			
+		}
+		private function ioError(e:IOErrorEvent):void
+		{
+			_uiLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE,getSmallImg);
+			_uiLoader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR,ioError);
+			trace(LoaderInfo(e.currentTarget).loader==_uiLoader,LoaderInfo(e.currentTarget).loader)
+			PopUtils.IOError(e);
 		}
 		private function getSmallImg(e:Event=null):void
 		{

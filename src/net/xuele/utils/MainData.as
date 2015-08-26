@@ -3,28 +3,36 @@ package net.xuele.utils
 
 	public class MainData
 	{
+		public static var _version:String="2.0.1";
 		/**
 		 * 教师类型
-		 * 1：编辑，2：授课，3：分享预览 
+		 * 1：编辑，2：授课，3：分享预览 ，4：新增课件
 		 */
-		public static var _teachType:int;
+		public static var _teachType:int=4;
 		/**
 		 * 课件id 
 		 */
-		public static var _id:int;
+		public static var _coursewaresId:String;
 		/**
 		 * 课程id 
 		 */
-		public static var _kcid:String;
+		public static var _unitId:String;
 		/**
 		 * 课程名称 
 		 */
-		public static var _kcname:String;
+		public static var _unitName:String;
 		/**
 		 * 用户id 
 		 */
-		public static var _userID:String;
-		
+		public static var _userId:String;
+		/**
+		 * 学校id 
+		 */
+		public static var _schoolId:String;
+		/**
+		 * 课件名称 
+		 */
+		public static var _coursewaresName:String;
 		/**
 		 * 是否在线
 		 * true：在线，flase：离线 

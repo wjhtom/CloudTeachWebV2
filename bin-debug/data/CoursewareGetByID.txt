@@ -1,153 +1,169 @@
 ﻿{
+    "bgStyle": 1,
+    "coursewaresName": "",
+    "bgID": 1,
     "pages": [
         [
             {
-                "text": "在地",
-                "x": 27.5,
-                "isOpen": 0,
-                "y": 10,
-                "place": 0,
-                "index": -1,
-                "type": 6,
+                "text": "swf",
+                "x": "31.5",
+                "y": "86",
+                "property": {
+                    "fileType": "2",
+                    "from": 1,
+                    "code": "9eece6d9e8064c6a6c946cbe220a345b",
+                    "width": "42",
+                    "ex": "png",
+                    "height": "42",
+                    "studentName": null
+                },
+                "isOpen": "0",
+                "type": "2",
+                "place": "1",
+                "index": "2"
+            },
+            {
+                "text": "20141017165117-10",
+                "x": "346.85",
+                "y": "31.5",
+                "property": {
+                    "fileType": "6",
+                    "from": 1,
+                    "code": "b5218a5c41bc9ddb16eead7678eebf8d",
+                    "width": "306.3",
+                    "ex": "jpg",
+                    "height": "545",
+                    "studentName": null
+                },
+                "isOpen": "1",
+                "type": "2",
+                "place": "-1",
+                "index": "3"
+            }
+        ],
+        [
+            {
+                "text": "古诗名句中点字成金的事例",
+                "x": "31.5",
+                "y": "34",
+                "property": {
+                    "fileType": "1",
+                    "from": 1,
+                    "code": "67990eebb6c851e568d1a19da1eb8cc1",
+                    "width": "42",
+                    "ex": "doc",
+                    "height": "42",
+                    "studentName": null
+                },
+                "isOpen": "0",
+                "type": "1",
+                "place": "1",
+                "index": "3"
+            }
+        ],
+        [
+            {
+                "text": "测试一下",
+                "x": "335",
+                "y": "126",
                 "property": {
                     "size": 36,
-                    "color": 65280,
+                    "color": 16777215,
                     "bold": true,
                     "underline": false,
                     "italic": false
-                }
+                },
+                "isOpen": "1",
+                "type": "6",
+                "place": "-1",
+                "index": "3"
             },
             {
-                "text": "006",
-                "x": 27.5,
-                "isOpen": 0,
-                "y": 175,
-                "place": 3,
-                "index": -1,
-                "type": 2,
+                "text": "20141017165117-10",
+                "x": "31.5",
+                "y": "34",
                 "property": {
-                    "fileType": null,
-                    "width": 45,
-                    "code": "a0bfba88254d6f94cc747a6c3e9e07ba",
+                    "fileType": "6",
+                    "from": 1,
+                    "code": "b5218a5c41bc9ddb16eead7678eebf8d",
+                    "width": "42",
                     "ex": "jpg",
-                    "height": 45
-                }
+                    "height": "42",
+                    "studentName": null
+                },
+                "isOpen": "0",
+                "type": "2",
+                "place": "2",
+                "index": "4"
             },
             {
-                "text": "《a o e》课件",
-                "x": 27.5,
-                "isOpen": 0,
-                "y": 65,
-                "place": 1,
-                "index": -1,
-                "type": 1,
+                "text": "20141017165117-10",
+                "x": "31.5",
+                "y": "34",
                 "property": {
-                    "fileType": null,
-                    "width": 45.3,
-                    "code": "c5f2dc683f8b23067a2ca04eeef9b4da",
-                    "ex": "doc",
-                    "height": 45
-                }
-            },
-            {
-                "text": "1413530201584",
-                "x": 27.5,
-                "isOpen": 0,
-                "y": 120,
-                "place": 2,
-                "index": -1,
-                "type": 4,
-                "property": {
-                    "fileType": null,
-                    "width": 45,
-                    "code": "27832d64aabd46687189ca3cbee7e5cd",
-                    "ex": "mp4",
-                    "height": 50
-                }
-            }
-        ],
-        [],
-        [
-            {
-                "text": "《a o e》课件",
-                "x": 27.5,
-                "isOpen": 0,
-                "y": 10,
-                "place": 0,
-                "index": -1,
-                "type": 1,
-                "property": {
-                    "fileType": null,
-                    "width": 45.3,
-                    "code": "c5f2dc683f8b23067a2ca04eeef9b4da",
-                    "ex": "doc",
-                    "height": 45
-                }
-            },
-            {
-                "text": "006",
-                "x": 27.5,
-                "isOpen": 0,
-                "y": 65,
-                "place": 1,
-                "index": -1,
-                "type": 2,
-                "property": {
-                    "fileType": null,
-                    "width": 45,
-                    "code": "a0bfba88254d6f94cc747a6c3e9e07ba",
+                    "fileType": "6",
+                    "from": 1,
+                    "code": "b5218a5c41bc9ddb16eead7678eebf8d",
+                    "width": "42",
                     "ex": "jpg",
-                    "height": 45
-                }
+                    "height": "42",
+                    "studentName": null
+                },
+                "isOpen": "0",
+                "type": "2",
+                "place": "3",
+                "index": "5"
             },
             {
-                "text": "习惯行不行",
-                "x": 27.55,
-                "isOpen": 0,
-                "y": 119,
-                "place": 2,
-                "index": -1,
-                "type": 3,
+                "text": "20141128175321-10",
+                "x": "531.5",
+                "y": "36.5",
                 "property": {
-                    "fileType": null,
-                    "width": 45,
-                    "code": "d76ef120157fe208d61baf92a7293e29",
-                    "ex": "mp3",
-                    "height": 45
-                }
+                    "fileType": "6",
+                    "from": 1,
+                    "code": "97256d13b4b183f55875fc4a376c40e0",
+                    "width": "408.75",
+                    "ex": "jpg",
+                    "height": "545",
+                    "studentName": null
+                },
+                "isOpen": "1",
+                "type": "2",
+                "place": "-1",
+                "index": "6"
             }
         ]
     ],
     "resources": [
         {
-            "name": "习惯行不行",
-            "fileType": null,
-            "ex": "mp3",
-            "fileCode": "d76ef120157fe208d61baf92a7293e29"
-        },
-        {
-            "name": "1413530201584",
-            "fileType": null,
-            "ex": "mp4",
-            "fileCode": "27832d64aabd46687189ca3cbee7e5cd"
-        },
-        {
-            "name": "《a o e》课件",
-            "fileType": null,
+            "fileType": "5",
+            "name": "小学数学教师课标与教材测试题（样题）",
             "ex": "doc",
-            "fileCode": "c5f2dc683f8b23067a2ca04eeef9b4da"
+            "fileCode": "c58cf2b2e9f9520150b10f7b487ca4af"
         },
         {
-            "name": "006",
-            "fileType": null,
+            "fileType": "1",
+            "name": "古诗名句中点字成金的事例",
+            "ex": "doc",
+            "fileCode": "67990eebb6c851e568d1a19da1eb8cc1"
+        },
+        {
+            "fileType": "6",
+            "name": "20141128112926-3",
             "ex": "jpg",
-            "fileCode": "a0bfba88254d6f94cc747a6c3e9e07ba"
+            "fileCode": "97256d13b4b183f55875fc4a376c40e0"
         },
         {
-            "name": "单韵母e",
-            "fileType": null,
-            "ex": "swf",
-            "fileCode": "accf5e4de2c97ac8fef18f432b14a609"
+            "fileType": "6",
+            "name": "20141017100942-3",
+            "ex": "jpg",
+            "fileCode": "b5218a5c41bc9ddb16eead7678eebf8d"
+        },
+        {
+            "fileType": "2",
+            "name": "swf",
+            "ex": "png",
+            "fileCode": "9eece6d9e8064c6a6c946cbe220a345b"
         }
     ]
 }

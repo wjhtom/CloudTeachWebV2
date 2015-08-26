@@ -1015,7 +1015,20 @@ package com.senocular.display {
 			_toolMatrix.concat(globalInvertedMatrix);
 			completeInteraction(true);
 		}
-		
+		public function customRotation(v:Number):void
+		{
+			var globalInvertedMatrix:Matrix = globalMatrix.clone();
+			globalInvertedMatrix.invert();
+			_toolMatrix.concat(globalMatrix);
+			// apply rotation to toolMatrix
+			_toolMatrix.rotate(Math.PI/180*v);
+			_toolMatrix.concat(globalInvertedMatrix);
+			completeInteraction(true);
+			dispatchEvent(new Event(CONTROL_TRANSFORM_TOOL));
+			
+			apply();
+			
+		}
 		/**
 		 * Control Interaction.  Scales the tool along the X axis
 		 */

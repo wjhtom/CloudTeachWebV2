@@ -33,7 +33,7 @@ package net.xuele.view.resources.resShow
 		 * 创建资源 
 		 * 
 		 */
-		override protected function createRes():void
+		override public function loadRes():void
 		{
 			PopUtils.createLoading();
 			

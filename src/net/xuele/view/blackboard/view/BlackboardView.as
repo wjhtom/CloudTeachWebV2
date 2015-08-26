@@ -4,16 +4,20 @@ package net.xuele.view.blackboard.view
 	
 	import net.xuele.commond.CommondView;
 	import net.xuele.utils.MainData;
+	import net.xuele.utils.MyCrypto;
 	import net.xuele.utils.PublicOperate;
 	import net.xuele.view.pages.utils.InputUtil;
 	import net.xuele.view.pages.utils.PagesData;
 	import net.xuele.view.resources.events.ResEvent;
 	import net.xuele.view.resources.interfaces.IResShow;
+	import net.xuele.view.resources.resShow.EditResBase;
 	import net.xuele.view.resources.resShow.InputShow;
+	import net.xuele.view.resources.utils.MatrixTransformer;
 	import net.xuele.view.resources.utils.ResData;
 	import net.xuele.view.resources.utils.ResTransform;
 	
 	import org.flexlite.domUI.components.Group;
+	import org.flexlite.domUI.components.Label;
 	import org.flexlite.domUI.components.Rect;
 	import org.flexlite.domUI.components.UIAsset;
 	import org.flexlite.domUI.core.DomGlobals;
@@ -51,6 +55,7 @@ package net.xuele.view.blackboard.view
 		private function clickHandler(e:MouseEvent):void
 		{
 			if(ResData._currentEditRes!=null){
+				EditResBase(ResData._currentEditRes).resRotation=Math.ceil(MatrixTransformer.getRotation(ResData._currentTools.globalMatrix));
 				ResTransform.removeTransRes();
 			}
 			if(MainData._mouseType==4){
@@ -60,6 +65,7 @@ package net.xuele.view.blackboard.view
 				}else{
 					
 					InputUtil.stopInput();
+//					PublicOperate.setMouseType(0);
 				}
 				
 			}

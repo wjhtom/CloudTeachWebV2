@@ -21,6 +21,7 @@ package net.xuele.view.resources.utils
 		public static function getResIcon(ex:String,isBig:Boolean=true):UIAsset
 		{
 			var icon:Sprite;
+			ex=ex.toLowerCase();
 			switch(ex){
 				case "png":
 				case "jpeg":

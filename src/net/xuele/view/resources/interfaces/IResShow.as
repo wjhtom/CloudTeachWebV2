@@ -25,6 +25,11 @@ package net.xuele.view.resources.interfaces
 		 */
 		function createResInfo(contentVo:ContentVo=null):void;
 		/**
+		 * 加载资源 
+		 * 
+		 */
+		function loadRes():void;
+		/**
 		 * 移除事件 
 		 * 
 		 */

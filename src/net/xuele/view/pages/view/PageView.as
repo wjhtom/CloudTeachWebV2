@@ -5,7 +5,9 @@ package net.xuele.view.pages.view
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
+	import flash.external.ExternalInterface;
 	import flash.geom.Rectangle;
+	import flash.media.SoundMixer;
 	import flash.utils.Timer;
 	import flash.utils.getTimer;
 	
@@ -20,8 +22,12 @@ package net.xuele.view.pages.view
 	import net.xuele.view.resources.interfaces.IResBox;
 	import net.xuele.view.resources.interfaces.IResShow;
 	import net.xuele.view.resources.resShow.DocShow;
+	import net.xuele.view.resources.resShow.EditResBase;
+	import net.xuele.view.resources.resShow.FlashShow;
 	import net.xuele.view.resources.resShow.ImageShow;
 	import net.xuele.view.resources.resShow.InputShow;
+	import net.xuele.view.resources.resShow.SoundShow;
+	import net.xuele.view.resources.resShow.VideoShow;
 	import net.xuele.view.resources.utils.ResData;
 	import net.xuele.view.resources.utils.ResShowUtil;
 	import net.xuele.view.resources.utils.ResTransform;
@@ -34,7 +40,7 @@ package net.xuele.view.pages.view
 	{
 		private var _drawGroup:Group;
 		private var _resGroup:Group;
-		private const _maxResNum:int=12;
+		private const _maxResNum:int=10;
 		private var _delMC:DelMovie;
 		
 		private var _smallResView:SmallResView;
@@ -73,6 +79,9 @@ package net.xuele.view.pages.view
 			ResData._currentTools.minScaleEnabled=true;
 			ResData._currentTools.minScaleX=0.1;
 			ResData._currentTools.minScaleY=0.1;
+			ResData._currentTools.constrainRotation=true;
+			ResData._currentTools.constrainRotationAngle=90;
+			ResData._currentTools.rotationEnabled=false;
 			
 			this._resGroup=new Group;
 			this.addElement(this._resGroup);
@@ -92,11 +101,9 @@ package net.xuele.view.pages.view
 			
 			_smallResView=new SmallResView;
 			this.addElement(_smallResView);
+			_smallResView.mouseEnabled=false;
+			
 			_resAry=[];
-			addListener();
-		}
-		private function addListener():void
-		{
 		}
 		/**
 		 *  
@@ -106,10 +113,18 @@ package net.xuele.view.pages.view
 		 */
 		public function addRes(res:IResShow,create:Boolean):void
 		{
-			if(this._resGroup.numElements>=this._maxResNum){
+			if(this._resAry.length>=this._maxResNum){
+				InputUtil.removeInputMenu();
+				SoundMixer.stopAll();
 				PublicOperate.setAlert("资源已满","当前页面资源数已满，请添加新页面");
 				return;
 			}
+			
+			
+			if(res is ImageShow || res is DocShow){
+				res.loadRes();
+			}
+			
 			this._isCreate=create;
 			this._resGroup.addElement(res);
 			this._resAry.push(res);
@@ -121,12 +136,21 @@ package net.xuele.view.pages.view
 		private function loadResComHandler(e:ResEvent):void
 		{
 			var res:IResShow=IResShow(e.currentTarget);
+			if(res is FlashShow){
+				this._smallResView.addRes(res);
+				return;
+			}
 			if(_isCreate){
 				setCreateInfo(res);
 			}else{
-				setResInfo(res);
+				callLater(setResInfo,[res],1);
 			}
 		}
+		/**
+		 * 创建保存数据 
+		 * @param res
+		 * 
+		 */
 		private function setCreateInfo(res:IResShow):void
 		{
 			res.x=res.conVo._x;
@@ -177,7 +201,7 @@ package net.xuele.view.pages.view
 			Group(res).scaleX=res.resScaleX;
 			Group(res).scaleY=res.resScaleY;
 			setResInfo(res);
-			this._smallResView.closeBox();
+//			this._smallResView.closeBox();
 			if(res is InputShow){
 				res.dispatchEvent(new ResEvent(ResEvent.ADDINPUTLISTENER));
 			}
@@ -204,6 +228,16 @@ package net.xuele.view.pages.view
 				var rect:Rectangle=Group(res).getBounds(this.stage);
 				res.x=(MainData._stageWidth-rect.width)/2;
 				res.y=(MainData._stageHeight-rect.height)/2;
+				if(res is ImageShow || res is DocShow){
+					if(EditResBase(res).resRotation==90){
+						res.x+=res.height;
+					}else if(EditResBase(res).resRotation==180){
+						res.x+=res.width;
+						res.y+=res.height;
+					}else if(EditResBase(res).resRotation==-90){
+						res.y+=res.width;
+					}
+				}
 			}else{
 				res.x=this.mouseX;
 				res.y=this.mouseY;
@@ -265,11 +299,14 @@ package net.xuele.view.pages.view
 			if(tempRes is ImageShow || tempRes is DocShow){
 				downTime=getTimer();
 			}
+			InputUtil.stopInput();
 //			if(ResData._currentEditRes==null){
+			if(MainData._teachType==1||MainData._teachType==4){
 				_delMC=new DelMovie;
 				this.addElement(_delMC);
 				_delMC.right=50;
 				_delMC.bottom=40;
+			}
 //			}
 			_mouseIsDown=true;
 			Group(tempRes).startDrag();
@@ -294,8 +331,8 @@ package net.xuele.view.pages.view
 			}
 			if(_delMC!=null){
 				if(_delMC.hitTestPoint(this.mouseX,this.mouseY,true)){
-					var at:int=PagesData._currentPage.resAry.indexOf(tempRes);
-					PagesData._currentPage.resAry.splice(at,1);
+//					var at:int=PagesData._currentPage.resAry.indexOf(tempRes);
+//					PagesData._currentPage.resAry.splice(at,1);
 					ResShowUtil.removeResShow(this._resGroup,tempRes);
 					this._smallResView.delRes(tempRes);
 				}
@@ -312,14 +349,21 @@ package net.xuele.view.pages.view
 				tempRes.dragGroup.removeEventListener(MouseEvent.MOUSE_MOVE,moveHandler);
 				tempRes.resScaleX=tempRes.scaleX;
 				tempRes.resScaleY=tempRes.scaleY;
+				if(tempRes is SoundShow){
+					SoundShow(tempRes).sndStop();
+				}else if(tempRes is VideoShow){
+					VideoShow(tempRes).pauseVideo();
+				}
 				ResTransform.removeTransRes();
 				this._smallResView.addRes(tempRes);
 			}else{
+				var rect:Rectangle=Group(tempRes).getRect(this.stage);
 				if(tempRes.x>MainData._stageWidth){
 					tempRes.x=MainData._stageWidth-30;
 				}
-				if(tempRes.y<0){
-					tempRes.y=-tempRes.width+30;
+					trace(tempRes.y-rect.height)
+				if(tempRes.y+rect.height<0){
+					tempRes.y=-rect.height+30;
 				}
 				if(tempRes.y>MainData._stageHeight-50){
 					tempRes.y=MainData._stageHeight-80;
@@ -333,11 +377,13 @@ package net.xuele.view.pages.view
 			if(!_mouseIsDown){
 				return;
 			}
+			/*
 			if(this.mouseX<150){
 				this._smallResView.openBox();
 			}else{
 				this._smallResView.closeBox();
 			}
+			*/
 		}
 		private  function addListenerHandler(e:ResEvent):void
 		{

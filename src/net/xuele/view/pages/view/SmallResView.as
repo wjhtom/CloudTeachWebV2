@@ -1,18 +1,31 @@
 package net.xuele.view.pages.view
 {
 	import flash.display.MovieClip;
+	import flash.display.StageDisplayState;
 	import flash.events.MouseEvent;
+	import flash.events.TimerEvent;
 	import flash.filters.BitmapFilterQuality;
 	import flash.filters.DropShadowFilter;
 	import flash.geom.Rectangle;
+	import flash.media.SoundMixer;
+	import flash.utils.Timer;
 	
 	import net.xuele.commond.CommondView;
 	import net.xuele.utils.HitTest;
 	import net.xuele.utils.MainData;
 	import net.xuele.utils.PublicOperate;
+	import net.xuele.view.menu.utils.MenuData;
+	import net.xuele.view.pages.utils.PagesData;
 	import net.xuele.view.resources.interfaces.IResShow;
+	import net.xuele.view.resources.resShow.DocShow;
+	import net.xuele.view.resources.resShow.EditResBase;
+	import net.xuele.view.resources.resShow.FlashShow;
+	import net.xuele.view.resources.resShow.ImageShow;
+	import net.xuele.view.resources.resShow.VideoShow;
+	import net.xuele.view.resources.utils.ResTransform;
 	
 	import org.flexlite.domUI.components.Group;
+	import org.flexlite.domUI.components.McButton;
 	import org.flexlite.domUI.components.Rect;
 	import org.flexlite.domUI.components.UIMovieClip;
 	import org.flexlite.domUI.events.UIEvent;
@@ -50,6 +63,10 @@ package net.xuele.view.pages.view
 		 */
 		private var _selectRes:IResShow=null;
 		private var _bg:Rect;
+		/**
+		 * 删除按钮 
+		 */
+		private var _delBtn:McButton;
 		public function SmallResView()
 		{
 			super();
@@ -66,7 +83,8 @@ package net.xuele.view.pages.view
 			this.height=MainData._stageHeight//stage.stageHeight;
 			this._isOpen=false;
 			createUI();
-			closeBox();
+//			closeBox();
+			openBox();
 			addListener();
 		}
 		private function createUI():void
@@ -87,6 +105,7 @@ package net.xuele.view.pages.view
 			_resGroup=new Group;
 			_resGroup.percentWidth=_resGroup.percentHeight=100;
 			this.addElement(_resGroup);
+			_resGroup.name="resGroup";
 			
 			this._openBtn=new UIMovieClip;
 			this._openBtn.skinName=PublicOperate.getUI("OpenSmallBox","movieclip") as MovieClip;
@@ -130,7 +149,7 @@ package net.xuele.view.pages.view
 			_resGroup.visible=0;
 			_bg.fillAlpha=0;
 		}
-		private const _smallResWidth:Number=45;
+		private const _smallResWidth:Number=60;
 		private const _smallResHeight:Number=45;
 		private var _endX:Number;
 		private var _endY:Number;
@@ -138,10 +157,16 @@ package net.xuele.view.pages.view
 		private var _startY:Number;
 		public function addRes(res:IResShow):void
 		{
+			
 			_resGroup.addElement(res);
 			res.isOpen=false;
+			
 			var scX:Number=_smallResWidth/res.width;
-			var scY:Number=_smallResHeight/res.height;
+			if(res is VideoShow){
+				var scY:Number=40/res.height;
+			}else{
+				scY=_smallResHeight/res.height;
+			}
 			Group(res).scaleX=scX;
 			Group(res).scaleY=scY;
 			
@@ -158,11 +183,38 @@ package net.xuele.view.pages.view
 					break;
 				}
 			}
+			
 			if(!isHave){
 				var rect:Rectangle=Group(res).getRect(this.stage);
 				res.x=(this.width-rect.width)/2;
 				res.y=10+(rect.height+10)*len;
 				this._resAry.push({resShow:res,x:res.x,y:res.y})
+			}
+			if(res is ImageShow || res is DocShow){
+				if(EditResBase(res).resRotation==90){
+					scX=_smallResHeight/res.width;
+					if(res is VideoShow){
+						scY=60/res.height;
+					}else{
+						scY=_smallResWidth/res.height;
+					}
+					Group(res).scaleX=scX;
+					Group(res).scaleY=scY;
+					res.x+=_smallResWidth;
+				}else if(EditResBase(res).resRotation==180){
+					res.x+=_smallResWidth;
+					res.y+=_smallResHeight;
+				}else if(EditResBase(res).resRotation==-90){
+					scX=_smallResHeight/res.width;
+					if(res is VideoShow){
+						scY=60/res.height;
+					}else{
+						scY=_smallResWidth/res.height;
+					}
+					Group(res).scaleX=scX;
+					Group(res).scaleY=scY;
+					res.y+=_smallResWidth;
+				}
 			}
 			_startX=res.x;
 			_startY=res.y;
@@ -170,11 +222,16 @@ package net.xuele.view.pages.view
 			res.addEventListener(MouseEvent.MOUSE_UP,resUpHandler);
 			res.addEventListener(MouseEvent.RELEASE_OUTSIDE,resUpHandler);
 			res.addEventListener(MouseEvent.MOUSE_MOVE,resMoveHandler);
+			if(MainData._teachType==1||MainData._teachType==4){
+				res.addEventListener(MouseEvent.ROLL_OVER,resOverHandler);
+				res.addEventListener(MouseEvent.ROLL_OUT,resOutHandler);
+			}
 			
 		}
 		private function resDownHandler(e:MouseEvent):void
 		{
 			this._isDown=true;
+			removeDelBtn();
 			var res:IResShow=IResShow(e.currentTarget);
 			this._selectRes=res;
 			_startX=res.x;
@@ -186,9 +243,22 @@ package net.xuele.view.pages.view
 			if(this._isDown==false){
 				return;
 			}
+			var res:IResShow=IResShow(e.currentTarget);
+			if(res is FlashShow){
+				res.x=_startX;
+				res.y=_startY;
+				this._isDown=false;
+				this._selectRes=null;
+				Group(res).stopDrag();
+				FlashShow(res).callJS();
+				if(stage.displayState==StageDisplayState.FULL_SCREEN){
+					stage.displayState=StageDisplayState.NORMAL;
+					MenuData._fullScreenUI.gotoAndStop(0);
+				}
+				return;
+			}
 			this._isDown=false;
 			this._selectRes=null;
-			var res:IResShow=IResShow(e.currentTarget);
 			Group(res).stopDrag();
 			if(res.x>=100){
 				res.removeEventListener(MouseEvent.MOUSE_DOWN,resDownHandler);
@@ -197,6 +267,11 @@ package net.xuele.view.pages.view
 				if(res.hasEventListener(MouseEvent.MOUSE_MOVE)){
 					res.removeEventListener(MouseEvent.MOUSE_MOVE,resMoveHandler);
 				}
+				if(MainData._teachType==1||MainData._teachType==4){
+					res.removeEventListener(MouseEvent.ROLL_OVER,resOverHandler);
+					res.removeEventListener(MouseEvent.ROLL_OUT,resOutHandler);
+				}
+				removeDelBtn();
 				CommondView.contentView.getResFormSmallView(res);
 			}else{
 				res.x=_startX;
@@ -253,8 +328,10 @@ package net.xuele.view.pages.view
 			}
 			if(Math.abs(n-startChange)==1){
 				//只移一位
-				IResShow(this._resAry[n].resShow).x=this._resAry[startChange].x;
-				IResShow(this._resAry[n].resShow).y=this._resAry[startChange].y;
+				if(IResShow(this._resAry[n].resShow).parent.name=="resGroup"){
+					IResShow(this._resAry[n].resShow).x=this._resAry[startChange].x;
+					IResShow(this._resAry[n].resShow).y=this._resAry[startChange].y;
+				}
 				_startX=this._resAry[n].x;
 				_startY=this._resAry[n].y;
 				var tempX:Number=this._resAry[startChange].x;
@@ -278,16 +355,20 @@ package net.xuele.view.pages.view
 				for(i=n;i>startChange;i--){
 					this._resAry[i].x=this._resAry[i-1].x;
 					this._resAry[i].y=this._resAry[i-1].y;
-					IResShow(this._resAry[i].resShow).x=this._resAry[i].x;
-					IResShow(this._resAry[i].resShow).y=this._resAry[i].y;
+					if(IResShow(this._resAry[i].resShow).parent.name=="resGroup"){
+						IResShow(this._resAry[i].resShow).x=this._resAry[i].x;
+						IResShow(this._resAry[i].resShow).y=this._resAry[i].y;
+					}
 				}
 			}else{
 				trace("向下移动")
 				for(i=n;i<startChange;i++){
 					this._resAry[i].x=this._resAry[i+1].x;
 					this._resAry[i].y=this._resAry[i+1].y;
-					IResShow(this._resAry[i].resShow).x=this._resAry[i].x;
-					IResShow(this._resAry[i].resShow).y=this._resAry[i].y;
+					if(IResShow(this._resAry[i].resShow).parent.name=="resGroup"){
+						IResShow(this._resAry[i].resShow).x=this._resAry[i].x;
+						IResShow(this._resAry[i].resShow).y=this._resAry[i].y;
+					}
 				}
 			}
 			
@@ -298,6 +379,82 @@ package net.xuele.view.pages.view
 			for(i=0;i<this._resAry.length;i++){
 				trace(this._resAry[i].y)
 			}
+		}
+		
+		private var delTimer:Timer;
+		private function resOverHandler(e:MouseEvent):void
+		{
+			this._selectRes=IResShow(e.currentTarget);
+			if(!this._delBtn){
+				this._delBtn=new McButton;
+				this._delBtn.skinName=PublicOperate.getUI("SmallResDel","movieclip");
+				this._resGroup.addElementAt(_delBtn,this._resGroup.numElements);
+			}else{
+				if(this._resGroup.getChildIndex(_delBtn)<this._resGroup.getChildIndex(Group(_selectRes))){
+					this._resGroup.swapElements(_delBtn,_selectRes);
+				}
+			}
+			if(delTimer&&delTimer.hasEventListener(TimerEvent.TIMER)){
+				delTimer.removeEventListener(TimerEvent.TIMER,removeDelBtn);
+				delTimer.stop();
+				delTimer=null;
+			}
+			var rect:Rectangle=Group(this._selectRes).getRect(this._resGroup);
+			_delBtn.x=rect.x+rect.width-15;
+			_delBtn.y=rect.y;
+			_delBtn.addEventListener(MouseEvent.CLICK,delResClick);
+		}
+		
+		private function resOutHandler(e:MouseEvent):void
+		{
+			delTimer=new Timer(1000,0);
+			delTimer.addEventListener(TimerEvent.TIMER,removeDelBtnHandler);
+			delTimer.start();
+		}
+		
+		private function removeDelBtnHandler(e:TimerEvent):void
+		{
+//			Timer(e.target).removeEventListener(TimerEvent.TIMER,removeDelBtnHandler);
+			removeDelBtn();
+			
+		}
+		private function removeDelBtn():void
+		{
+			if(delTimer&&delTimer.hasEventListener(TimerEvent.TIMER)){
+				delTimer.removeEventListener(TimerEvent.TIMER,removeDelBtnHandler);
+				delTimer.stop();
+				delTimer=null;
+			}
+			if(_delBtn){
+				_delBtn.removeEventListener(MouseEvent.CLICK,delResClick);
+				this._resGroup.removeElement(_delBtn);
+				this._delBtn=null;
+				this._selectRes=null;
+			}
+		}
+		private function delResClick(e:MouseEvent):void
+		{
+//			_delBtn.removeEventListener(MouseEvent.CLICK,delResClick);
+//			if(delTimer&&delTimer.hasEventListener(TimerEvent.TIMER)){
+//				delTimer.removeEventListener(TimerEvent.TIMER,removeDelBtn);
+//				delTimer.stop();
+//				delTimer=null;
+//			}
+			this._selectRes.removeEventListener(MouseEvent.MOUSE_DOWN,resDownHandler);
+			this._selectRes.removeEventListener(MouseEvent.MOUSE_UP,resUpHandler);
+			this._selectRes.removeEventListener(MouseEvent.RELEASE_OUTSIDE,resUpHandler);
+			if(this._selectRes.hasEventListener(MouseEvent.MOUSE_MOVE)){
+				this._selectRes.removeEventListener(MouseEvent.MOUSE_MOVE,resMoveHandler);
+			}
+			if(MainData._teachType==1||MainData._teachType==4){
+				this._selectRes.removeEventListener(MouseEvent.ROLL_OVER,resOverHandler);
+				this._selectRes.removeEventListener(MouseEvent.ROLL_OUT,resOutHandler);
+			}
+			this._resGroup.removeElement(this._selectRes);
+			delRes(this._selectRes);
+			var at:int=PagesData._currentPage.resAry.indexOf(_selectRes);
+			PagesData._currentPage.resAry.splice(at,1);
+			removeDelBtn();
 		}
 		public function delRes(res:IResShow):void
 		{
@@ -316,6 +473,7 @@ package net.xuele.view.pages.view
 					break;
 				}
 			}
+			
 		}
 		/**
 		 * 资源列表（保存资源与坐标） [{resShow:IResShow,x:int,y:int},{resShow:IResShow,x:int,y:int}]

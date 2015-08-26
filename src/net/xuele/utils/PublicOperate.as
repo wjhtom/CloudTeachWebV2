@@ -4,8 +4,8 @@ package net.xuele.utils
 	import flash.display.SimpleButton;
 	import flash.display.Sprite;
 	import flash.geom.Rectangle;
-	import flash.media.SoundMixer;
 	
+	import net.xuele.view.blackboard.utils.BlackboarData;
 	import net.xuele.view.menu.utils.MenuData;
 	import net.xuele.view.pages.interfaces.IBigPage;
 	import net.xuele.view.pages.utils.PagesData;
@@ -72,14 +72,19 @@ package net.xuele.utils
 		}
 		/**
 		 * 设置鼠标样式 
-		 * @param t
-		 * 
+		 * @param t 
+		 * 0：鼠标，1：铅笔，2：画直线，3：橡皮，4：文字，5：高亮 ,6:资源内画笔，7：资源内橡皮
 		 */
 		public static function setMouseType(t:int):void
 		{
 			MainData._mouseType=t;
 			if(MenuData._currentMenu!=null){
 				MenuData._currentMenu.gotoAndStop(0);
+			}
+			if(t==4){
+				MenuData._inputMouse.contentMovie.gotoAndStop(1);
+			}else{
+				MenuData._inputMouse.contentMovie.gotoAndStop(0);
 			}
 			if(t==0){
 				MenuData._mouseMouse.contentMovie.gotoAndStop(1);
@@ -91,6 +96,9 @@ package net.xuele.utils
 		{
 			var obj:Object=new Object;
 			var len:int=PagesData._pagesAry.length;
+			obj.coursewaresName=MainData._coursewaresName;
+			obj.bgStyle=BlackboarData.style;
+			obj.bgID=BlackboarData.bg;
 			obj.pages=[];
 			for(var i:int=0;i<len;i++){
 				obj.pages.push(getPageData(PagesData._pagesAry[i]));
@@ -175,6 +183,12 @@ package net.xuele.utils
 					obj.property.width=rect.width;
 					obj.property.height=rect.height;
 //					obj.property.path=res.resVo._path;
+					obj.property.from=res.resVo._from;
+					if(res.resVo._from==2){
+						obj.property.path=res.resVo._path;
+						obj.property.smallImg=res.resVo._smallImgURL;
+					}
+					
 				}
 				ary.push(obj);
 			}
@@ -190,12 +204,13 @@ package net.xuele.utils
 		public static function getResURL(ex:String,filekey:String):String
 		{
 			var url:String="";
+			ex=ex.toLowerCase();
 			switch(ex){
 				case "png":
 				case "jpeg":
 				case "bmp":
 				case "jpg":
-					url="http://dl.xuele.net/images/1000x1000_"+filekey+".jpg";
+					url=InterfaceData._downURL+"images/1000x1000_"+filekey+".jpg";
 					break;
 				case "txt":
 				case "doc":
@@ -205,14 +220,18 @@ package net.xuele.utils
 				case "ppt":
 				case "pptx":
 				case "pdf":
-					url="http://dl.xuele.net/files/swf_"+filekey+".swf";
+					url=InterfaceData._downURL+"files/swf_"+filekey+".swf";
 					break;
 				case "mp3":
+					url=InterfaceData._downURL+"files/"+filekey+".mp3";
+					break;
 				case "wav":
 				case "wma":
-					url="http://dl.xuele.net/files/mp3_"+filekey+".mp3";
+					url=InterfaceData._downURL+"files/mp3_"+filekey+".mp3";
 					break;
 				case "flv":
+					url=InterfaceData._downURL+"files/"+filekey+".flv";
+					break;
 				case "avi":
 				case "mpeg":
 				case "mpg":
@@ -224,10 +243,10 @@ package net.xuele.utils
 				case "mov":
 				case "navi":
 				case "rm":
-					url="http://dl.xuele.net/files/flv_"+filekey+".flv";
+					url=InterfaceData._downURL+"files/flv_"+filekey+".flv";
 					break;
 				case "swf":
-					url="http://dl.xuele.net/files/swf_"+filekey+".swf";
+					url=InterfaceData._downURL+"files/"+filekey+".swf";
 					break;
 				default:
 					break;

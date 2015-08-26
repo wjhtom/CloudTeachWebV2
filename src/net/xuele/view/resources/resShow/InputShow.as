@@ -59,12 +59,18 @@ package net.xuele.view.resources.resShow
 		}
 		private function setInputInfo():void
 		{
+			_inputText.width=1000;
 			_inputText.text=this._contentVo._name;
 			_inputText.bold=this._contentVo._property.bold;
 			_inputText.underline=this._contentVo._property.underline;
 			_inputText.italic=this._contentVo._property.italic;
 			_inputText.size=this._contentVo._property.size;
 			_inputText.textColor=this._contentVo._property.color;
+			_inputText.width=_inputText.textWidth;
+			_inputText.height=_inputText.textHeight;
+			_bg.width=_inputText.width;
+			_bg.height=_inputText.height;
+			clearBg();
 //			this.x=this._contentVo._x;
 //			this.y=this._contentVo._y;
 		}

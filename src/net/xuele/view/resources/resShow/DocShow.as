@@ -15,6 +15,9 @@ package net.xuele.view.resources.resShow
 	import net.xuele.utils.PopUtils;
 	import net.xuele.utils.PublicOperate;
 	import net.xuele.view.resources.events.ResEvent;
+	import net.xuele.view.resources.utils.ResShowUtil;
+	import net.xuele.view.resources.utils.ResTransform;
+	import net.xuele.view.resources.utils.ResUtils;
 	
 	import org.flexlite.domUI.components.Group;
 	import org.flexlite.domUI.components.McButton;
@@ -38,7 +41,7 @@ package net.xuele.view.resources.resShow
 		{
 			super();
 		}
-		override protected function createRes():void
+		override public function loadRes():void
 		{
 			PopUtils.createLoading();
 //			trace(this._resVo._path);
@@ -71,13 +74,13 @@ package net.xuele.view.resources.resShow
 			this._docMovie=new UIMovieClip;
 			this._docMovie.skinName=MovieClip(_loader.content);
 			this.addElement(_docMovie);
+			createUI();
 			this.validateNow();
 			if(this._isCreate){
 				createCom();
 			}else{
 				loadCom();
 			}
-			createUI();
 			addListener();
 		}
 		private function createUI():void
@@ -90,13 +93,15 @@ package net.xuele.view.resources.resShow
 			docGroup.validateNow();
 			
 			_preBtn=new McButton;
-			_preBtn.skinName=PublicOperate.getUI("","movieclip");
+			_preBtn.skinName=PublicOperate.getUI("PPTPrePage","movieclip");
 			_nextBtn=new McButton;
-			_nextBtn.skinName=PublicOperate.getUI("","movieclip");
-			docGroup.addElement(_preBtn);
+			_nextBtn.skinName=PublicOperate.getUI("PPTNextPage","movieclip");
+			this.addElement(_preBtn);
 			_preBtn.left=0;
-			docGroup.addElement(_nextBtn);
+			_preBtn.verticalCenter=0;
+			this.addElement(_nextBtn);
 			_nextBtn.right=0;
+			_nextBtn.verticalCenter=0;
 			this._resGroup.addElement(docGroup);
 			
 			
@@ -105,7 +110,7 @@ package net.xuele.view.resources.resShow
 			this.drawGroup.width=_docMovie.width;
 			this.drawGroup.height=_docMovie.height;
 			
-			this._dragRect=this._resGroup;
+			this._dragRect=_resGroup;
 			this.dispatchEvent(new ResEvent(ResEvent.LOADRESCOM));
 		}
 		private function loadCom():void
@@ -165,6 +170,8 @@ package net.xuele.view.resources.resShow
 			this._currentFrame=0;
 			this._docMovie.gotoAndStop(_currentFrame);
 			_resGroup.scaleX=_resGroup.scaleY=scale;
+			_nextBtn.scaleX=_nextBtn.scaleY=scale;
+			_preBtn.scaleX=_preBtn.scaleY=scale;
 			this.drawGroup.scaleX=this.drawGroup.scaleY=scale;
 		}
 		private function addListener():void
@@ -178,6 +185,7 @@ package net.xuele.view.resources.resShow
 				this._currentFrame--;
 				this._docMovie.gotoAndStop(this._currentFrame);
 			}
+			ResTransform.removeTransRes();
 		}
 		private function nextHandler(e:MouseEvent):void
 		{
@@ -185,6 +193,7 @@ package net.xuele.view.resources.resShow
 				this._currentFrame++;
 				this._docMovie.gotoAndStop(this._currentFrame);
 			}
+			ResTransform.removeTransRes();
 		}
 		override public function removeListener():void
 		{

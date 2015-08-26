@@ -15,7 +15,7 @@ package net.xuele.view.draw.utils
 		/**
 		 * 橡皮粗细 
 		 */
-		public static var _eraseThickness:int=1;
+		public static var _eraseThickness:int=3;
 		/**
 		 * 画笔粗细是否显示 
 		 */

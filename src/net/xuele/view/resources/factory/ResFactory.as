@@ -9,6 +9,7 @@ package net.xuele.view.resources.factory
 	import net.xuele.view.resources.resBox.DragIcon;
 	import net.xuele.view.resources.resBox.ResView;
 	import net.xuele.view.resources.resShow.DocShow;
+	import net.xuele.view.resources.resShow.FlashShow;
 	import net.xuele.view.resources.resShow.ImageShow;
 	import net.xuele.view.resources.resShow.InputShow;
 	import net.xuele.view.resources.resShow.SoundShow;
@@ -80,6 +81,7 @@ package net.xuele.view.resources.factory
 					res=new VideoShow;
 					break;
 				case "swf":
+					res=new FlashShow;
 					break;
 				default:
 					break;

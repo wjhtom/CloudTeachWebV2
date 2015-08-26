@@ -126,7 +126,10 @@ package net.xuele.view.menu.view
 		private function initMenu():void
 		{
 			if(MenuData._isResBoxShow){
-				ResBoxView(CommondView.menuView.getElementAt(0)).removeListener();
+//				ResBoxView(CommondView.menuView.getElementAt(0)).removeListener();
+				var resBox:ResBoxView=ResBoxView(CommondView.popView.getChildByName("resBox"));
+				resBox.removeListener();
+				CommondView.popView.removeElement(resBox);
 				MenuData._isResBoxShow=false;
 			}
 			if(DrawData._eraseThicknessShow){

@@ -1,0 +1,26 @@
+﻿{
+    "state": 1,
+    "list": [
+        {
+            "workId": "f0e720229f7a4c478e9dc8d42b64963b",
+            "workType": 1,
+            "publishTime": "2015/08/22 10:50:04",
+            "itemList": [
+                {
+                    "itemId": "1111",
+                    "itemType": 1,
+                    "context": "请同学们写出一首名人的诗",
+                    "voiceContext": "",
+                    "fileList": [
+                        {
+                            "diskId": "f0e720229f7a4c478e9dc8d42b64963b",
+                            "name": "文件名",
+                            "extension": "doc",
+                            "fileUri": " f0e720229f7a4c478e9dc8d42b64963b "
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -16,7 +16,7 @@ package net.xuele.view.pages.utils
 		/**
 		 * 当前总页数 
 		 */
-		public static var _currnetPageNum:int=0;
+		public static var _currentPageNum:int=0;
 		/**
 		 * 页面内容，[IBigPage,IBigPage,IBigPage...] 
 		 */
@@ -29,6 +29,10 @@ package net.xuele.view.pages.utils
 		 * 当前输入 
 		 */
 		public static var _currentInput:IResShow;
+		/**
+		 * 当前页码
+		 */
+		public static var _selectPageNum:int;
 		public function PagesData()
 		{
 		}

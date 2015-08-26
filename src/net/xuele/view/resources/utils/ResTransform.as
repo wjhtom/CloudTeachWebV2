@@ -41,6 +41,7 @@ package net.xuele.view.resources.utils
 			resMenu=new ResMenu;
 			CommondView.resShowView.addElement(resMenu);
 			resMenu.addEventListener(Event.ENTER_FRAME,menuEnterHandler);
+			
 		}
 		private static function menuEnterHandler(e:Event):void
 		{
@@ -91,6 +92,13 @@ package net.xuele.view.resources.utils
 			ResData._currentTools.toolMatrix = toolMatrix;
 			
 			ResData._currentTools.apply();
+		}
+		public static function setResRotation(v:Number):void
+		{
+			if(ResData._currentEditRes==null){
+				return;
+			}
+			ResData._currentTools.customRotation(v);
 		}
 	}
 }

@@ -10,6 +10,9 @@ package net.xuele.view.pages.utils
 	import net.xuele.view.pages.factorys.PageFactory;
 	import net.xuele.view.pages.interfaces.IBigPage;
 	import net.xuele.view.pages.interfaces.IPageFactory;
+	import net.xuele.view.resources.interfaces.IResShow;
+	import net.xuele.view.resources.resShow.SoundShow;
+	import net.xuele.view.resources.resShow.VideoShow;
 	import net.xuele.view.resources.utils.ResData;
 	import net.xuele.view.resources.utils.ResTransform;
 	
@@ -30,6 +33,16 @@ package net.xuele.view.pages.utils
 		{
 			if(ResData._currentEditRes!=null){
 				ResTransform.removeTransRes();
+			}
+			var resNum:int=PagesData._currentPage.resAry.length;
+			for(var i:int=0;i<resNum;i++){
+				var res:IResShow=IResShow(PagesData._currentPage.resAry[i]);
+				if(res is SoundShow){
+					SoundShow(res).sndStop();
+				}
+				if(res is VideoShow){
+					VideoShow(res).pauseVideo();
+				}
 			}
 			CommondView.resShowView.removeElement(PagesData._currentPage);
 			PagesData._currentPage=PagesData._pagesAry[v];
@@ -56,8 +69,8 @@ package net.xuele.view.pages.utils
 			Group(page).mouseEnabled=false;
 			page.createUI();
 			PagesData._pagesAry.push(page);
-			PagesData._currnetPageNum++;
-			changeBigPage(PagesData._currnetPageNum-1);
+			PagesData._currentPageNum++;
+			changeBigPage(PagesData._currentPageNum-1);
 		}
 		public static function delPage(v:int):void
 		{
@@ -70,7 +83,7 @@ package net.xuele.view.pages.utils
 				changeBigPage(v);
 			}
 			
-			PagesData._currnetPageNum--;
+			PagesData._currentPageNum--;
 		}
 		/**
 		 * 交换页面 

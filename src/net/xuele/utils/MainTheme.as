@@ -1,10 +1,13 @@
 package net.xuele.utils
 {
+	import org.flexlite.domUI.components.TextArea;
 	import org.flexlite.domUI.core.Theme;
 	import org.flexlite.domUI.skins.vector.AlertSkin;
+	import org.flexlite.domUI.skins.vector.ButtonSkin;
 	import org.flexlite.domUI.skins.vector.DropDownListSkin;
 	import org.flexlite.domUI.skins.vector.HScrollBarSkin;
 	import org.flexlite.domUI.skins.vector.ScrollerSkin;
+	import org.flexlite.domUI.skins.vector.TextAreaSkin;
 	import org.flexlite.domUI.skins.vector.VScrollBarSkin;
 	
 	public class MainTheme extends Theme
@@ -21,6 +24,8 @@ package net.xuele.utils
 			mapSkin("org.flexlite.domUI.components::HScrollBar",HScrollBarSkin);
 			mapSkin("org.flexlite.domUI.components::VScrollBar",VScrollBarSkin);
 			mapSkin("org.flexlite.domUI.components::DropDownList",DropDownListSkin);
+			mapSkin("org.flexlite.domUI.components::Button",ButtonSkin)
+			mapSkin("org.flexlite.domUI.components::TextArea",TextAreaSkin)
 		}
 	}
 }

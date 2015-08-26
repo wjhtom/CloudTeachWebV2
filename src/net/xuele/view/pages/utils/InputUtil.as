@@ -4,6 +4,7 @@ package net.xuele.view.pages.utils
 	
 	import net.xuele.commond.CommondView;
 	import net.xuele.utils.MainData;
+	import net.xuele.utils.PublicOperate;
 	import net.xuele.view.pages.interfaces.IBigPage;
 	import net.xuele.view.resources.events.ResEvent;
 	import net.xuele.view.resources.factory.ResFactory;
@@ -36,11 +37,15 @@ package net.xuele.view.pages.utils
 			if(PagesData._currentInput!=null){
 				stopInput();
 			}
+			if(IBigPage(CommondView.contentView).resAry.length>=10){
+				PublicOperate.setAlert("资源已满","当前页面资源数已满，请添加新页面");
+				return;
+			}
 			var factory:ResFactory=new ResFactory;
 			var inputRes:IResShow=factory.createResShow();
 			CommondView.contentView.addRes(inputRes,false);
 			PagesData._currentInput=inputRes;
-			if(IBigPage(CommondView.contentView).resGroup.numElements<12){
+			if(IBigPage(CommondView.contentView).resAry.length<=10){
 				createInputMenu();
 			}
 			
@@ -54,7 +59,6 @@ package net.xuele.view.pages.utils
 		public static function stopInput():void
 		{
 			if(PagesData._currentInput!=null){
-				
 				InputShow(PagesData._currentInput)._contentText.selectable=false;
 				InputShow(PagesData._currentInput).dispatchEvent(new ResEvent(ResEvent.ADDINPUTLISTENER));
 				InputShow(PagesData._currentInput).clearBg();
@@ -78,8 +82,8 @@ package net.xuele.view.pages.utils
 			CommondView.resShowView.addElement(_inputMenu);
 			
 			_inputMenu.visible=false;
-			_inputMenu.addEventListener(Event.ENTER_FRAME,inputMenuEnter);
-			callLater(showInputMenu,null,2);
+			
+			callLater(showInputMenu,null,5);
 		}
 		private static function showInputMenu():void
 		{
@@ -90,6 +94,7 @@ package net.xuele.view.pages.utils
 				_inputMenu.setItalic=InputShow(PagesData._currentInput)._contentText.italic;
 				_inputMenu.setUnderline=InputShow(PagesData._currentInput)._contentText.underline;
 				_inputMenu.setSize=InputShow(PagesData._currentInput)._contentText.size;
+				_inputMenu.addEventListener(Event.ENTER_FRAME,inputMenuEnter);
 			}
 		}
 		private static function inputMenuEnter(e:Event):void

@@ -4,8 +4,11 @@ package net.xuele.view.resources.resImport
 	import flash.events.MouseEvent;
 	
 	import net.xuele.commond.CommondView;
+	import net.xuele.utils.InterfaceData;
 	import net.xuele.utils.MainData;
+	import net.xuele.utils.PopUtils;
 	import net.xuele.utils.PublicOperate;
+	import net.xuele.utils.ReadJSON;
 	import net.xuele.utils.ResourcesData;
 	import net.xuele.view.resources.control.ResControl;
 	import net.xuele.view.resources.events.ResEvent;
@@ -24,6 +27,7 @@ package net.xuele.view.resources.resImport
 	import org.flexlite.domUI.events.UIEvent;
 	import org.flexlite.domUI.layouts.HorizontalLayout;
 	import org.flexlite.domUI.layouts.TileLayout;
+	import org.flexlite.domUtils.DomLoader;
 	
 	public class ResImportView extends Group
 	{
@@ -72,7 +76,7 @@ package net.xuele.view.resources.resImport
 		 */
 		private var _otherRes:UIMovieClip;
 		/**
-		 * 当前标签（0：全部，1：教案，2：学案，3：课件，4：习题，5：其他） 
+		 * 当前标签（0：全部，2：教案，3：学案，4：课件，5：习题，1：其他） 
 		 */
 		private var _currentTag:UIMovieClip;
 		private var _factory:ResFactory;
@@ -86,6 +90,20 @@ package net.xuele.view.resources.resImport
 		private function createCom(e:UIEvent):void
 		{
 			this.removeEventListener(UIEvent.CREATION_COMPLETE,createCom);
+//			init();
+			loadResData();
+		}
+		private function loadResData():void
+		{
+			PopUtils.createLoading();
+			DomLoader.loadText(InterfaceData._allResourcesURL,loadCom,PopUtils.loadingPro,PopUtils.IOError);
+		}
+		private function loadCom(data:String):void
+		{
+			if(data==null || data==""){
+				data=JSON.stringify({"state":0});
+			}
+			ReadJSON.readAllResources(data);
 			init();
 		}
 		private function init():void
@@ -223,19 +241,19 @@ package net.xuele.view.resources.resImport
 					createRes(0);
 					break;
 				case this._jiaoanRes:
-					createRes(1);
-					break;
-				case this._xueanRes:
 					createRes(2);
 					break;
-				case this._kejianRes:
+				case this._xueanRes:
 					createRes(3);
 					break;
-				case this._xitiRes:
+				case this._kejianRes:
 					createRes(4);
 					break;
-				case this._otherRes:
+				case this._xitiRes:
 					createRes(5);
+					break;
+				case this._otherRes:
+					createRes(1);
 					break;
 			}
 		}

@@ -44,8 +44,10 @@ package net.xuele.view.menu.view
 				super.itemClick();
 			}
 			if(!this._thicknessShow&&MainData._mouseType==1){
-				PublicOperate.setMouseType(0);
-				DrawUtils.stopDrawPencil();
+//				PublicOperate.setMouseType(0);
+//				DrawUtils.stopDrawPencil();
+				createThickness();
+				addListener();
 				return;
 			}
 			if(_thicknessShow){

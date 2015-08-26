@@ -1,0 +1,40 @@
+﻿{
+    "state": 1,
+    "resources": [
+        {
+            "diskId": 3516,
+            "fileUri": "c5f2dc683f8b23067a2ca04eeef9b4da",
+            "name": "文学常识",
+            "fileType": 0,
+            "extension": "doc"
+        },
+        {
+            "diskId": 7973,
+            "fileUri": "a0bfba88254d6f94cc747a6c3e9e07ba",
+            "name": "IMG20141110125127",
+            "fileType": 1,
+            "extension": "jpg"
+        },
+        {
+            "diskId": 369,
+            "fileUri": "d76ef120157fe208d61baf92a7293e29",
+            "name": "习惯行不行",
+            "fileType": 2,
+            "extension": "mp3"
+        },
+        {
+            "diskId": 11042,
+            "fileUri": "27832d64aabd46687189ca3cbee7e5cd",
+            "name": "1413530201584",
+            "fileType": 3,
+            "extension": "mp4"
+        },
+        {
+            "diskId": 6116,
+            "fileUri": "accf5e4de2c97ac8fef18f432b14a609",
+            "name": "单韵母e",
+            "fileType": 4,
+            "extension": "swf"
+        }
+    ]
+}

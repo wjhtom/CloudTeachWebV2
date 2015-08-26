@@ -22,7 +22,7 @@ package net.xuele.view.menu.utils
 //		public static var _pencilMouse:IItem;
 //		public static var _drawMouse:IItem;
 //		public static var _eraseMouse:IItem;
-//		public static var _inputMouse:IItem;
+		public static var _inputMouse:IItem;
 //		public static var _highlightMouse:IItem;
 		public function MenuData()
 		{

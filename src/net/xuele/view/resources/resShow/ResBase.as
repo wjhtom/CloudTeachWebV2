@@ -23,6 +23,8 @@ package net.xuele.view.resources.resShow
 		protected var _resScaleX:Number;
 		protected var _resScaleY:Number;
 		
+		
+		
 		/**
 		 * 初使化还是新建（true：初使化，false：新建）
 		 */
@@ -50,7 +52,11 @@ package net.xuele.view.resources.resShow
 					this._resVo._fileCode=contentVo._property.fileCode;
 					this._resVo._fileType=contentVo._property.fileType;
 					this._resVo._name=contentVo._name;
+					this._resVo._from=contentVo._property.from;
 					this._resVo._path=contentVo._property.path;
+					if(this._resVo._from==2){
+						this._resVo._smallImgURL=contentVo._property.smallImg;
+					}
 				}
 				
 			}
@@ -76,6 +82,10 @@ package net.xuele.view.resources.resShow
 		 * 
 		 */
 		protected function init():void
+		{
+			
+		}
+		public function loadRes():void
 		{
 			
 		}
@@ -134,5 +144,6 @@ package net.xuele.view.resources.resShow
 		{
 			return this._contentVo;
 		}
+		
 	}
 }

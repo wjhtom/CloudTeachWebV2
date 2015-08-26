@@ -39,16 +39,18 @@ package net.xuele.view.resources.utils
 			}
 			isDown=true;
 			drawGroup=new Group;
+			drawGroup.name="drawGroup";
 			drawGroup.x=_canvas.mouseX;
 			drawGroup.y=_canvas.mouseY;
 			var thickness:int;
 			if(MainData._mouseType==6){
 				drawGroup.blendMode=BlendMode.NORMAL;
+				drawGroup.graphics.lineStyle(10,0xff0000,0.5);
 			}else if(MainData._mouseType==7){
 				drawGroup.blendMode=BlendMode.ERASE;
+				drawGroup.graphics.lineStyle(30,DrawData._currentColor,1);
 			}
 			_canvas.addElement(drawGroup);
-			drawGroup.graphics.lineStyle(10,DrawData._currentColor);
 		}
 		private static function pencilUpHandler(e:MouseEvent):void
 		{
@@ -62,7 +64,10 @@ package net.xuele.view.resources.utils
 			if(drawGroup==null){
 				return;
 			}
-			drawGroup.graphics.lineTo(_canvas.mouseX-drawGroup.x-drawGroup.parent.x,_canvas.mouseY-drawGroup.y-drawGroup.parent.y);
+			if(_canvas.mouseY<_canvas.height&&_canvas.mouseY>0&&_canvas.mouseX>0&&_canvas.mouseX<_canvas.width)
+			{
+				drawGroup.graphics.lineTo(_canvas.mouseX-drawGroup.x-drawGroup.parent.x,_canvas.mouseY-drawGroup.y-drawGroup.parent.y);
+			}
 		}
 		/**
 		 * 停止画铅笔或橡皮功能

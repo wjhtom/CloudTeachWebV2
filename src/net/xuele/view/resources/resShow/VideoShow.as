@@ -169,6 +169,21 @@ package net.xuele.view.resources.resShow
 		{
 			_vidWidth=data.width;
 			_vidHeight=data.height;
+			if(_vidWidth>=_BGWidth&&_vidHeight>=_BGHeight){
+				if(_BGWidth/_vidWidth>_BGHeight/_vidHeight){
+					var scale:Number=_BGHeight/_vidHeight;
+				}else{
+					scale=_BGWidth/_vidWidth;
+				}
+			}else if(_vidWidth>=_BGWidth&&_vidHeight<_BGHeight){
+				scale=_BGWidth/_vidWidth;
+			}else if(_vidWidth<_BGWidth&&_vidHeight>=_BGHeight){
+				scale=_BGHeight/_vidHeight;
+			}else{
+				scale=1;
+			}
+			_vidWidth=scale*_BGWidth;
+			_vidHeight=scale*_BGHeight;
 			setVideoWH(_vidWidth,_vidHeight);
 			_totalTime=data.duration;
 		}
@@ -292,6 +307,10 @@ package net.xuele.view.resources.resShow
 			_stream.togglePause();
 			
 		}
+		public function pauseVideo():void
+		{
+			_stream.pause()
+		}
 		private function fullHandler(e:MouseEvent):void
 		{
 			if(MainData._mouseType!=0){
@@ -354,7 +373,12 @@ package net.xuele.view.resources.resShow
 				this._fullBtn.visible=false;
 				
 			}
-			this._btnBg.width=this._vidUI.getBounds(this._vidUI.parent).width;
+			if(this._vidUI.getBounds(this._vidUI.parent).width>=this._BGWidth){
+				this._btnBg.width=this._vidUI.getBounds(this._vidUI.parent).width;
+			}else{
+				this._btnBg.width=_BGWidth;
+			}
+			
 		}
 		override public function removeListener():void
 		{

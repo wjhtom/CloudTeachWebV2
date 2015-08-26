@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<SKConfig>
+  
+  <Interfaces>
+    <AllResource url="http://www.xueleyun.com/cloudteach/coursewares/extfl/disklist" desc="所有资源"></AllResource>
+    <TeacherEdit url="http://www.xueleyun.com/cloudteach/coursewares/extfl/getcoursewares" desc="编辑,授课时候调用获取课件信息"></TeacherEdit>
+    <SaveURL url="http://www.xueleyun.com/cloudteach/coursewares/extfl/save" desc="用户保存课件编辑"></SaveURL>
+    <TeacherShare url="http://www.xueleyun.com/cloudteach/coursewares/extfl/getcoursewares" desc="预览分享课件"></TeacherShare>
+    <TeacherClass url="http://www.xueleyun.com/cloudteach/coursewares/extfl/getclasslist" desc="教师所带教室"></TeacherClass>
+    <SystemResource url="http://ebookfile.xueleyun.com/fzkbList.ashx" desc="系统资源"></SystemResource>
+    <HomeworkList url="http://www.xueleyun.com/cloudteach/coursewares/extfl/worklist" desc="获取作业列表"></HomeworkList>
+    <HomeworkClassList url="http://www.xueleyun.com/cloudteach/coursewares/extfl/getworkclasslist" desc="获取作业关联班级列表"></HomeworkClassList>
+    <HomeworkStudentList url="http://www.xueleyun.com/cloudteach/coursewares/extfl/getworkstudentlist" desc="获取某个作业对应的具体班级的学生列表"></HomeworkStudentList>
+    <HomeworkStudentContent url="http://www.xueleyun.com/cloudteach/coursewares/extfl/getworkfinishdetail" desc="4获取某个学生的作业回答详情"></HomeworkStudentContent>
+
+  </Interfaces>
+</SKConfig>

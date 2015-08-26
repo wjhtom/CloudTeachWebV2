@@ -6,9 +6,11 @@ package net.xuele.view
 	import net.xuele.commond.CommondFactory;
 	import net.xuele.commond.CommondView;
 	import net.xuele.utils.MainData;
+	import net.xuele.utils.PublicOperate;
 	import net.xuele.view.blackboard.view.BlackboardView;
 	import net.xuele.view.draw.utils.DrawData;
 	import net.xuele.view.menu.view.MenuView;
+	import net.xuele.view.pages.events.PageEvent;
 	import net.xuele.view.pages.factorys.PageFactory;
 	import net.xuele.view.pages.interfaces.IBigPage;
 	import net.xuele.view.pages.interfaces.IPageFactory;
@@ -45,7 +47,6 @@ package net.xuele.view
 		}
 		public function createUI():void
 		{
-			MainData._teachType=1;
 			
 			_bgGroup=new Group;
 			this.addElement(_bgGroup);
@@ -62,7 +63,6 @@ package net.xuele.view
 			_contentGroup.top=0;
 			_contentGroup.mouseEnabled=false;
 			CommondView.resShowView=this._contentGroup;
-			
 			
 //			_drawGroup=new Group;
 //			_drawGroup.width=stage.stageWidth;
@@ -84,14 +84,16 @@ package net.xuele.view
 			_pageNumGroup=new Group;
 			this.addElement(_pageNumGroup);
 			_pageNumGroup.mouseEnabled=false;
-				
+			
 			createBG();
 			createMenu();
-			if(MainData.myResourcesAry.length>0&&MainData.pagesDataAry.length>0){
+			
+			if(MainData._teachType!=4&&(MainData.myResourcesAry.length>0||MainData.pagesDataAry.length>0)){
 				createPageInfo();
 			}else{
 				createPage();
 			}
+//			createPage();
 			createPageNum();
 			
 		}
@@ -138,7 +140,7 @@ package net.xuele.view
 			page.createUI();
 			CommondView.contentView=page;
 			PagesData._currentPage=page;
-			PagesData._currnetPageNum++;
+			PagesData._currentPageNum++;
 			PagesData._currentPageID=0;
 			PagesData._pagesAry.push(page);
 			var timer:Timer=new Timer(20,1);
@@ -150,20 +152,34 @@ package net.xuele.view
 			Timer(e.target).removeEventListener(TimerEvent.TIMER,getDrawView);
 			DrawData._currentCanvas=CommondView.contentView.drawGroup;
 		}
+		
+		private var _leftPageNum:PageNumView;
+		private var _rightPageNum:PageNumView;
 		/**
 		 * 创建页码 
 		 * 
 		 */
 		private function createPageNum():void
 		{
-			var leftPageNum:PageNumView=new PageNumView;
-			_pageNumGroup.addElement(leftPageNum);
-			leftPageNum.left=0;
-			leftPageNum.bottom=30;
-			if(MainData._teachType!=1){
-				var rightPageNum:PageNumView=new PageNumView;
-				_pageNumGroup.addElement(rightPageNum);
-				rightPageNum.right=0;
+			_leftPageNum=new PageNumView;
+			_pageNumGroup.addElement(_leftPageNum);
+			_leftPageNum.left=0;
+			_leftPageNum.bottom=30;
+			_leftPageNum.addEventListener(PageEvent.SELECTSMALLPAGE,selectSmallPage);
+			if(MainData._teachType!=1&&MainData._teachType!=4){
+				_rightPageNum=new PageNumView;
+				_pageNumGroup.addElement(_rightPageNum);
+				_rightPageNum.x=955;
+				_rightPageNum.bottom=30;
+				_rightPageNum.addEventListener(PageEvent.SELECTSMALLPAGE,selectSmallPage);
+			}
+			
+		}
+		private function selectSmallPage(e:PageEvent):void
+		{
+			_leftPageNum.selectSmallPage();
+			if(MainData._teachType!=1&&MainData._teachType!=4){
+				_rightPageNum.selectSmallPage();
 			}
 		}
 		/**
@@ -172,10 +188,10 @@ package net.xuele.view
 		 */
 		private function createPageInfo():void
 		{
-			PagesData._currnetPageNum=MainData.pagesDataAry.length;
+			PagesData._currentPageNum=MainData.pagesDataAry.length;
 			var factory:IPageFactory=new PageFactory;
 			CommondFactory._pageFactory=factory;
-			for(var i:int=0;i<PagesData._currnetPageNum;i++){
+			for(var i:int=0;i<PagesData._currentPageNum;i++){
 				var page:IBigPage=factory.createPage();
 				page.createUI();
 				PagesData._pagesAry.push(page);
@@ -184,7 +200,11 @@ package net.xuele.view
 			PagesData._currentPage=IBigPage(PagesData._pagesAry[0]);
 			PagesData._currentPageID=0;
 			
-			CommondView.resShowView.addElement(IBigPage(PagesData._pagesAry[0]));
+//			if(MainData._teachType==1){
+				CommondView.resShowView.addElement(IBigPage(PagesData._pagesAry[0]));
+//			}else if(MainData._teachType==4){
+//				createPage();
+//			}
 			Group(IBigPage(PagesData._pagesAry[0])).mouseEnabled=false;
 			callLater(setPageInfoRes,null,2);
 			

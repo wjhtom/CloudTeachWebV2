@@ -1,0 +1,9 @@
+﻿{
+    "state": 1,
+    "list": [{
+        "className": "4年级5班",
+	"classId":"123456",
+        "year": 2011,
+        "codeSharing": 5
+    }]
+}

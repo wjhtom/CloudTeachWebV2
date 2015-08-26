@@ -44,62 +44,63 @@ package net.xuele.view.menu.view
 			itemGroup=new Group;
 			itemGroup.layout=itemLayout;
 			
-			if(MainData._teachType==2){
-				var setTime:IItem=MenuFactory.createItem(7);
-				itemGroup.addElement(setTime);
-				
-				var callName:IItem=MenuFactory.createItem(6);
-				itemGroup.addElement(callName);
-			}
+//			if(MainData._teachType==2){
+//				var setTime:IItem=MenuFactory.createItem(7);
+//				itemGroup.addElement(setTime);
+//				
+//				var callName:IItem=MenuFactory.createItem(6);
+//				itemGroup.addElement(callName);
+//			}
 			
 			
 			
-			var eraser:IItem=MenuFactory.createItem(4);
+			var eraser:IItem=MenuFactory.createItem(5);
 			itemGroup.addElement(eraser);
 			
-			var pencil:IItem=MenuFactory.createItem(2);
+			var pencil:IItem=MenuFactory.createItem(3);
 			itemGroup.addElement(pencil);
 			
-			var draw:IItem=MenuFactory.createItem(3);
-			itemGroup.addElement(draw);
+//			var draw:IItem=MenuFactory.createItem(4);
+//			itemGroup.addElement(draw);
 			
 			var color:Group=new ItemColor;
 			itemGroup.addElement(color);
 			
-			var input:IItem=MenuFactory.createItem(5);
+			var input:IItem=MenuFactory.createItem(2);
 			itemGroup.addElement(input);
+			MenuData._inputMouse=input;
 			
-			if(MainData._teachType==2){
-				var highlight:IItem=MenuFactory.createItem(1);
-				itemGroup.addElement(highlight);
-			}
+//			if(MainData._teachType==2){
+//				var highlight:IItem=MenuFactory.createItem(1);
+//				itemGroup.addElement(highlight);
+//			}
 			
 			var mouse:IItem=MenuFactory.createItem(14);
 			itemGroup.addElement(mouse);
 			MenuData._mouseMouse=mouse;
 			
-			if(MainData._teachType==2){
-				var tools:IItem=MenuFactory.createItem(8);
-				itemGroup.addElement(tools);
-			}
+//			if(MainData._teachType==2){
+//				var tools:IItem=MenuFactory.createItem(8);
+//				itemGroup.addElement(tools);
+//			}
 			
 			
 			itemGroup.addElement(createEmpty());
 			
-			if(MainData._teachType==1){
+//			if(MainData._teachType==1||MainData._teachType==4){
 				var resBox:IItem=MenuFactory.createItem(9);
 				itemGroup.addElement(resBox);
-			}
-			
-			if(MainData._teachType==1 || MainData._teachType==2){
-				var upScore:IItem=MenuFactory.createItem(11);
-				itemGroup.addElement(upScore);
-				
-				var homework:IItem=MenuFactory.createItem(10);
-				itemGroup.addElement(homework);
-			}
+//			}
 			
 			if(MainData._teachType==1){
+//				var upScore:IItem=MenuFactory.createItem(11);
+//				itemGroup.addElement(upScore);
+//				
+//				var homework:IItem=MenuFactory.createItem(10);
+//				itemGroup.addElement(homework);
+			}
+			
+			if(MainData._teachType==1||MainData._teachType==4){
 				var save:IItem=MenuFactory.createItem(12);
 				itemGroup.addElement(save);
 			}

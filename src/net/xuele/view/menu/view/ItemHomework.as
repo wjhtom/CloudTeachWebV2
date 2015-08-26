@@ -1,5 +1,8 @@
 package net.xuele.view.menu.view
 {
+	import net.xuele.utils.InterfaceData;
+	import net.xuele.view.homework.utils.HomeworkUtils;
+
 	/**
 	 * 习题作业 
 	 * @author jianhua
@@ -13,7 +16,9 @@ package net.xuele.view.menu.view
 		}
 		override protected function itemClick():void
 		{
+			super.itemClick();
 			
+			HomeworkUtils.openHomeworkList();
 		}
 	}
 }

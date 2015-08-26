@@ -356,6 +356,10 @@ package net.xuele.view.resources.resShow
 				return;
 			}
 			this._soundChannel.stop();
+			if(this._pauseBtn.visible){
+				this._pauseBtn.visible=false;
+				this._playBtn.visible=true;
+			}
 		}
 		private function muteHandler(e:MouseEvent):void
 		{

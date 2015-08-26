@@ -1,0 +1,127 @@
+﻿{
+    "pages": [
+        [
+            {
+                "text": "006",
+                "x": 27.5,
+                "place": 1,
+                "y": 65,
+                "property": {
+                    "code": "a0bfba88254d6f94cc747a6c3e9e07ba",
+                    "height": 45,
+                    "ex": "jpg",
+                    "width": 45,
+                    "from": 1,
+                    "fileType": null
+                },
+                "isOpen": 0,
+                "type": 2,
+                "index": -1
+            },
+            {
+                "text": "《a o e》课件",
+                "x": 112.15,
+                "place": 0,
+                "y": 46,
+                "property": {
+                    "code": "c5f2dc683f8b23067a2ca04eeef9b4da",
+                    "height": 530,
+                    "ex": "doc",
+                    "width": 377.65,
+                    "from": 1,
+                    "fileType": null
+                },
+                "isOpen": 1,
+                "type": 1,
+                "index": 2
+            },
+            {
+                "text": "1413530201584",
+                "x": 498,
+                "place": -1,
+                "y": 90,
+                "property": {
+                    "code": "27832d64aabd46687189ca3cbee7e5cd",
+                    "height": 400,
+                    "ex": "mp4",
+                    "width": 480,
+                    "from": 1,
+                    "fileType": null
+                },
+                "isOpen": 1,
+                "type": 4,
+                "index": 3
+            }
+        ],
+        [],
+        [
+            {
+                "text": "枯夺人须\r枯\rqweqeqeqwqeqweqwe\req",
+                "x": 226,
+                "place": -1,
+                "y": 115,
+                "property": {
+                    "size": 48,
+                    "color": 52275,
+                    "bold": false,
+                    "underline": true,
+                    "italic": false
+                },
+                "isOpen": 1,
+                "type": 6,
+                "index": 2
+            },
+            {
+                "text": "listen and speak5",
+                "x": 27.5,
+                "place": 0,
+                "y": 10,
+                "property": {
+                    "smallImg": "http://192.168.3.94:8082/r/030006001124100/030006001124100001002/98x98_5ace120c-54dc-4009-8f77-08aaff2672b0.jpg",
+                    "code": null,
+                    "height": 45,
+                    "ex": "jpg",
+                    "width": 45,
+                    "from": 2,
+                    "fileType": null,
+                    "path": "http://192.168.3.94:8082/r/030006001124100/030006001124100001002/5ace120c-54dc-4009-8f77-08aaff2672b0.jpg"
+                },
+                "isOpen": 0,
+                "type": 2,
+                "index": -1
+            }
+        ]
+    ],
+    "resources": [
+        {
+            "fileCode": "d76ef120157fe208d61baf92a7293e29",
+            "name": "习惯行不行",
+            "fileType": null,
+            "ex": "mp3"
+        },
+        {
+            "fileCode": "27832d64aabd46687189ca3cbee7e5cd",
+            "name": "1413530201584",
+            "fileType": null,
+            "ex": "mp4"
+        },
+        {
+            "fileCode": "c5f2dc683f8b23067a2ca04eeef9b4da",
+            "name": "《a o e》课件",
+            "fileType": null,
+            "ex": "doc"
+        },
+        {
+            "fileCode": "a0bfba88254d6f94cc747a6c3e9e07ba",
+            "name": "006",
+            "fileType": null,
+            "ex": "jpg"
+        },
+        {
+            "fileCode": "accf5e4de2c97ac8fef18f432b14a609",
+            "name": "单韵母e",
+            "fileType": null,
+            "ex": "swf"
+        }
+    ]
+}

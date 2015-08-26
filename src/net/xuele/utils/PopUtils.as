@@ -1,7 +1,10 @@
 package net.xuele.utils
 {
+	import flash.display.Loader;
+	import flash.display.LoaderInfo;
 	import flash.events.IOErrorEvent;
 	import flash.events.ProgressEvent;
+	import flash.net.URLLoader;
 	
 	import net.xuele.commond.CommonControl;
 	import net.xuele.commond.CommondView;
@@ -22,6 +25,13 @@ package net.xuele.utils
 		public static function IOError(e:IOErrorEvent=null,n:int=0):void
 		{
 			trace(e.errorID,"IOError");
+			if(e!=null){
+				if(e.currentTarget is LoaderInfo){
+					LoaderInfo(e.currentTarget).loader.close();
+				}else if(e.currentTarget is URLLoader){
+					URLLoader(e.currentTarget).close();
+				}
+			}
 			var p:IPop=CommondView.popView.getChildByName("loading") as LoadingPop;
 			if(p!=null){
 				p.removeUI();

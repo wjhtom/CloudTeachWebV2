@@ -4,6 +4,7 @@ package net.xuele.view.resources.resBox
 	import flash.events.MouseEvent;
 	
 	import net.xuele.commond.CommondView;
+	import net.xuele.skins.ResVScrollBarSkin;
 	import net.xuele.utils.MainData;
 	import net.xuele.utils.PublicOperate;
 	import net.xuele.view.resources.control.ResControl;
@@ -19,6 +20,7 @@ package net.xuele.view.resources.resBox
 	import org.flexlite.domUI.components.Scroller;
 	import org.flexlite.domUI.components.UIAsset;
 	import org.flexlite.domUI.components.UIMovieClip;
+	import org.flexlite.domUI.core.ScrollPolicy;
 	import org.flexlite.domUI.events.UIEvent;
 	import org.flexlite.domUI.layouts.HorizontalLayout;
 	import org.flexlite.domUI.layouts.TileLayout;
@@ -90,12 +92,14 @@ package net.xuele.view.resources.resBox
 			
 			var scl:Scroller=new Scroller;
 			scl.width=890;
-			scl.height=288;
+			scl.height=300;
+			scl.horizontalScrollPolicy=ScrollPolicy.OFF;
 			scl.viewport=this._resGroup;
 			
 			var content:Group=new Group;
 //			content.addElement(bg);
 			content.addElement(scl);
+//			scl.verticalScrollBar.skinName=ResVScrollBarSkin;
 			scl.top=50;
 			scl.left=15;
 			this.addElement(content);
@@ -170,7 +174,7 @@ package net.xuele.view.resources.resBox
 		private function userRes():void
 		{
 			var len:int=MainData.myResourcesAry.length;
-			if(MainData._teachType==1){
+			if(MainData._teachType==1||MainData._teachType==4){
 				var addRes:McButton=new McButton;
 				addRes.skinName=PublicOperate.getUI("AddRes","movieclip");
 				this._resGroup.addElement(addRes);

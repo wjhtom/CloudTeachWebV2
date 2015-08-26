@@ -19,7 +19,7 @@ package net.xuele.view.menu.view
 		}
 		override protected function itemClick():void
 		{
-			super.itemClick();
+//			super.itemClick();
 			if(stage.displayState==StageDisplayState.FULL_SCREEN){
 				stage.displayState=StageDisplayState.NORMAL;
 				this._UIMovie.gotoAndStop(0);
